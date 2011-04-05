@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Travis Haynes"]
   s.date = %q{2011-04-05}
-  s.description = %q{TODO: longer description of your gem}
+  s.description = %q{Trackerific is a package tracking solution for Rails. Right now it supports USPS tracking. UPS and FedEx soon to come!}
   s.email = %q{travis.j.haynes@gmail.com}
   s.extra_rdoc_files = [
     "LICENSE.txt",
@@ -19,13 +19,15 @@ Gem::Specification.new do |s|
   s.files = [
     ".document",
     "Gemfile",
+    "Gemfile.lock",
     "LICENSE.txt",
     "README.rdoc",
     "Rakefile",
     "VERSION",
     "lib/trackerific.rb",
     "test/helper.rb",
-    "test/test_trackerific.rb"
+    "test/test_trackerific.rb",
+    "trackerific.gemspec"
   ]
   s.homepage = %q{http://github.com/travishaynes/trackerific}
   s.licenses = ["MIT"]
@@ -42,17 +44,23 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
+      s.add_runtime_dependency(%q<builder>, [">= 0"])
+      s.add_runtime_dependency(%q<xml-simple>, [">= 0"])
       s.add_development_dependency(%q<shoulda>, [">= 0"])
       s.add_development_dependency(%q<bundler>, ["~> 1.0.0"])
       s.add_development_dependency(%q<jeweler>, ["~> 1.5.2"])
       s.add_development_dependency(%q<rcov>, [">= 0"])
     else
+      s.add_dependency(%q<builder>, [">= 0"])
+      s.add_dependency(%q<xml-simple>, [">= 0"])
       s.add_dependency(%q<shoulda>, [">= 0"])
       s.add_dependency(%q<bundler>, ["~> 1.0.0"])
       s.add_dependency(%q<jeweler>, ["~> 1.5.2"])
       s.add_dependency(%q<rcov>, [">= 0"])
     end
   else
+    s.add_dependency(%q<builder>, [">= 0"])
+    s.add_dependency(%q<xml-simple>, [">= 0"])
     s.add_dependency(%q<shoulda>, [">= 0"])
     s.add_dependency(%q<bundler>, ["~> 1.0.0"])
     s.add_dependency(%q<jeweler>, ["~> 1.5.2"])

@@ -1,6 +1,43 @@
-= trackerific
+= Trackerific
 
-Description goes here.
+Trackerific is a package tracking solution for Rails. Currently the only supported tracking provider is USPS. FedEx and UPS are still in the works!
+
+== Installation:
+
+To use this gem, add this line to your Gemfile
+  gem 'trackerific'
+and then run
+  bundle install
+
+== Usage:
+
+Example for tracking a USPS package:
+
+  require 'trackerific'
+  usps = Trackerific::USPS.new('USERID') # replace with your USPS user id
+  tracking_info = usps.track_package('EJ958083578US') # replace with a valid tracking number
+  # print out the tracking information
+  puts "Tracking information for package ID: %s" % tracking_info[:package_id]
+  puts tracking_info[:summary]
+  puts "  * %s" % tracking_info[:details].join("\n  * ")
+
+The above code will output something like this:
+
+  Tracking information for package ID: EJ958083578US
+  Your item was delivered at 8:10 am on June 1 in Wilmington DE 19801.
+    * May 30 11:07 am NOTICE LEFT WILMINGTON DE 19801.
+    * May 30 10:08 am ARRIVAL AT UNIT WILMINGTON DE 19850.
+    * May 29 9:55 am ACCEPT OR PICKUP EDGEWATER NJ 07020.
+  
+== Exception handling:
+
+Here's an example of how to catch Trackerific specific exceptions:
+
+  begin
+    usps.track_package('EJ958083578US')
+  rescue Trackerific::Error => e
+    puts e.message
+  end
 
 == Contributing to trackerific
  

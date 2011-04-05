@@ -15,8 +15,8 @@ Jeweler::Tasks.new do |gem|
   gem.name = "trackerific"
   gem.homepage = "http://github.com/travishaynes/trackerific"
   gem.license = "MIT"
-  gem.summary = "Provides tracking details for USPS, UPS, and FedEx packages."
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.summary = %Q{Provides tracking details for USPS, UPS, and FedEx packages.}
+  gem.description = %Q{Trackerific is a package tracking solution for Rails. Right now it supports USPS tracking. UPS and FedEx soon to come!}
   gem.email = "travis.j.haynes@gmail.com"
   gem.authors = ["Travis Haynes"]
   # Include your dependencies below. Runtime dependencies are required when using your gem,
