@@ -2,13 +2,27 @@ GEM
   remote: http://rubygems.org/
   specs:
     builder (2.1.2)
+    crack (0.1.8)
+    curb (0.7.15)
     git (1.2.5)
+    gyoku (0.3.1)
+      builder (>= 2.1.2)
+    httpi (0.9.0)
+      ntlm-http (>= 0.1.1)
+      rack
     jeweler (1.5.2)
       bundler (~> 1.0.0)
       git (>= 1.2.5)
       rake
+    ntlm-http (0.1.1)
+    rack (1.2.2)
     rake (0.8.7)
     rcov (0.9.9)
+    savon (0.8.6)
+      builder (>= 2.1.2)
+      crack (~> 0.1.8)
+      gyoku (>= 0.3.0)
+      httpi (>= 0.7.8)
     shoulda (2.11.3)
     xml-simple (1.0.15)
 
@@ -18,7 +32,9 @@ PLATFORMS
 DEPENDENCIES
   builder
   bundler (~> 1.0.0)
+  curb
   jeweler (~> 1.5.2)
   rcov
+  savon
   shoulda
   xml-simple

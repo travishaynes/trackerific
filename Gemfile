@@ -2,6 +2,8 @@ source "http://rubygems.org"
 
 gem 'builder'
 gem 'xml-simple'
+gem 'savon'
+gem 'curb'
 
 group :development do
   gem "shoulda", ">= 0"
