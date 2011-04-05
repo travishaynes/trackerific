@@ -1,7 +1,9 @@
 module Trackerific
+  require 'savon'
+  
   class FedEx
-    TEST_WSDL = "%s/lib/wsdl/fedex/test/TrackService_v4.wsdl" % Rails.root
-    PROD_WSDL = "%s/lib/wsdl/fedex/prod_track_service_v4.wsdl" % Rails.root
+    TEST_WSDL = "%s/wsdl/fedex/test_track_service_v4.wsdl" % ::File.dirname(__FILE__)
+    PROD_WSDL = "%s/wsdl/fedex/prod_track_service_v4.wsdl" % ::File.dirname(__FILE__)
     
     def initialize(account, meter, key, password)
       @account = account
@@ -50,7 +52,7 @@ module Trackerific
           'wsdl:Minor' => '0'
         },
         'wsdl:PackageIdentifier' => {
-          'wsdl:Value' => @package_id
+          'wsdl:Value' => @package_id,
           'wsdl:Type' => 'TRACKING_NUMBER_OR_DOORTAG',
           :order! => ['wsdl:Value', 'wsdl:Type']
         },

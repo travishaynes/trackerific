@@ -30,11 +30,11 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  builder
+  builder (~> 2.1.2)
   bundler (~> 1.0.0)
-  curb
+  curb (~> 0.7.15)
   jeweler (~> 1.5.2)
   rcov
-  savon
+  savon (~> 0.8.6)
   shoulda
-  xml-simple
+  xml-simple (~> 1.0.15)

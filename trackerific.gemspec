@@ -24,7 +24,13 @@ Gem::Specification.new do |s|
     "README.rdoc",
     "Rakefile",
     "VERSION",
+    "lib/fedex.rb",
     "lib/trackerific.rb",
+    "lib/usps.rb",
+    "lib/wsdl/fedex/prod_track_service_v4.wsdl",
+    "lib/wsdl/fedex/test_track_service_v4.wsdl",
+    "lib/wsdl/ups/prod_track.wsdl",
+    "lib/wsdl/ups/test_track.wsdl",
     "test/helper.rb",
     "test/test_trackerific.rb",
     "trackerific.gemspec"

@@ -1,9 +1,9 @@
 source "http://rubygems.org"
 
-gem 'builder'
-gem 'xml-simple'
-gem 'savon'
-gem 'curb'
+gem 'builder', "~> 2.1.2"
+gem 'xml-simple', "~> 1.0.15"
+gem 'savon', "~> 0.8.6"
+gem 'curb', "~> 0.7.15"
 
 group :development do
   gem "shoulda", ">= 0"
