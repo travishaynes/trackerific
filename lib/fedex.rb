@@ -15,7 +15,7 @@ module Trackerific
       end
     end
     
-    def track(package_id)
+    def track_package(package_id)
       @package_id = package_id
       tracking_response = @soap_client.request :track do
         soap.input = 'wsdl:TrackRequest'
