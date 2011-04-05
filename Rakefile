@@ -15,7 +15,7 @@ Jeweler::Tasks.new do |gem|
   gem.name = "trackerific"
   gem.homepage = "http://github.com/travishaynes/trackerific"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
+  gem.summary = "Provides tracking details for USPS, UPS, and FedEx packages."
   gem.description = %Q{TODO: longer description of your gem}
   gem.email = "travis.j.haynes@gmail.com"
   gem.authors = ["Travis Haynes"]
