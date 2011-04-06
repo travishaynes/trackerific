@@ -13,7 +13,6 @@ and then run
 
 === Example for tracking a USPS package:
 
-  require 'trackerific'
   usps = Trackerific::USPS.new('USERID') # replace with your USPS user id
   tracking_info = usps.track_package('EJ958083578US') # replace with a valid tracking number
   # print out the tracking information
@@ -31,7 +30,6 @@ The above code will output something like this:
 
 === Example for tracking a FedEx package:
 
-  require 'trackerific'
   # change the following parameters to the credentials assigned to you by FedEx
   fedex = Trackerific::FedEx.new('account', 'meter', 'key', 'password')
   tracking_info = fedex.track_package('382544330058603')
