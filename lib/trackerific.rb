@@ -24,5 +24,5 @@ module Trackerific
   
   require 'usps'
   require 'fedex'
-  require 'ups'
+  #require 'ups'
 end
