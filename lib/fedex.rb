@@ -34,30 +34,31 @@ module Trackerific
     protected
     
     def soap_body
-      { 'wsdl:WebAuthenticationDetail' => {
-          'wsdl:UserCredential' => {
-            'wsdl:Key' => @key,
-            'wsdl:Password' => @password,
-            :order! => ['wsdl:Key', 'wsdl:Password']
+      {
+        :WebAuthenticationDetail => {
+          :UserCredential => {
+            :Key => @key,
+            :Password => @password,
+            :order! => [:Key, :Password]
           }
         },
-        'wsdl:ClientDetail' => {
-          'wsdl:AccountNumber' => @account,
-          'wsdl:MeterNumber' => @meter
+        :ClientDetail => {
+          :AccountNumber => @account,
+          :MeterNumber => @meter
         },
-        'wsdl:Version' => {
-          'wsdl:ServiceId' => 'trck',
-          'wsdl:Major' => '4',
-          'wsdl:Intermediate' => '1',
-          'wsdl:Minor' => '0'
+        :Version => {
+          :ServiceId => 'trck',
+          :Major => '4',
+          :Intermediate => '1',
+          :Minor => '0'
         },
-        'wsdl:PackageIdentifier' => {
-          'wsdl:Value' => @package_id,
-          'wsdl:Type' => 'TRACKING_NUMBER_OR_DOORTAG',
-          :order! => ['wsdl:Value', 'wsdl:Type']
+        :PackageIdentifier => {
+          :Value => @package_id,
+          :Type => 'TRACKING_NUMBER_OR_DOORTAG',
+          :order! => [:Value, :Type]
         },
-        'wsdl:IncludeDetailedScans' => 'true',
-        :order! => [ 'wsdl:WebAuthenticationDetail', 'wsdl:ClientDetail', 'wsdl:Version', 'wsdl:PackageIdentifier', 'wsdl:IncludeDetailedScans']
+        :IncludeDetailedScans => 'true',
+        :order! => [:WebAuthenticationDetail, :ClientDetail, :Version, :PackageIdentifier, :IncludeDetailedScans]
       }
     end
     
