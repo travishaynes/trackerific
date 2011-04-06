@@ -1,24 +1,26 @@
 module Trackerific
   require 'savon'
   
-  class FedEx
+  class FedEx < Base
     TEST_WSDL = "%s/wsdl/fedex/test_track_service_v4.wsdl" % ::File.dirname(__FILE__)
     PROD_WSDL = "%s/wsdl/fedex/prod_track_service_v4.wsdl" % ::File.dirname(__FILE__)
     
-    def initialize(account, meter, key, password)
-      @account = account
-      @meter = meter
-      @key = key
-      @password = password
+    def initialize(options = {})
+      super
+      @options = options
       @soap_client = Savon::Client.new do
         wsdl.document = Rails.env.production? ? PROD_WSDL : TEST_WSDL
       end
     end
     
+    def required_options
+      [:account, :meter, :key, :password]
+    end
+    
     def track_package(package_id)
-      @package_id = package_id
+      super
       tracking_response = @soap_client.request :track do
-        soap.input = 'wsdl:TrackRequest'
+        soap.input = 'wsdl:Track'
         soap.body = soap_body
       end.to_hash
       if tracking_response[:track_reply][:highest_severity] == 'ERROR'
@@ -37,14 +39,14 @@ module Trackerific
       {
         :WebAuthenticationDetail => {
           :UserCredential => {
-            :Key => @key,
-            :Password => @password,
+            :Key => @options[:key],
+            :Password => @options[:password],
             :order! => [:Key, :Password]
           }
         },
         :ClientDetail => {
-          :AccountNumber => @account,
-          :MeterNumber => @meter
+          :AccountNumber => @options[:account],
+          :MeterNumber => @options[:meter]
         },
         :Version => {
           :ServiceId => 'trck',

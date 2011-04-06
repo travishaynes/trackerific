@@ -3,25 +3,27 @@ module Trackerific
   require 'builder'
   require 'xmlsimple'
   
-  class USPS
+  class USPS < Base
     TEST_SCHEME = 'http'
     PROD_SCHEME = 'https'
     TEST_HOST = 'testing.shippingapis.com'
     PROD_HOST = 'secure.shippingapis.com'
     HTTP_PATH = '/ShippingAPITest.dll'
     API = 'TrackV2'
-  
-    def initialize(user_id)
-      @user_id = user_id
+    
+    def initialize(options = {})
+      super
+      @options = options
+    end
+    
+    def required_options
+      [:user_id]
     end
     
     def track_package(package_id)
-      @package_id = package_id
+      super
       http_response = Net::HTTP.get_response(build_uri)
-      case http_response
-        when Net::HTTPSuccess then http_response
-        else http_response.error!
-      end
+      http_response.error! unless http_response.is_a? Net::HTTPSuccess
       tracking_response = XmlSimple.xml_in(http_response.body)
       if tracking_response['TrackInfo'].nil?
         raise Trackerific::Error.new, tracking_response['Description'][0]
@@ -39,7 +41,7 @@ module Trackerific
     def build_xml_request
       tracking_request = ""
       builder = ::Builder::XmlMarkup.new(:target => tracking_request)
-      builder.TrackRequest(:USERID => @user_id) do |t|
+      builder.TrackRequest(:USERID => @options[:user_id]) do |t|
         t.TrackID(:ID => @package_id)
       end
       return tracking_request
