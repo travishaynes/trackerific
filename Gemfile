@@ -1,14 +1,17 @@
 source "http://rubygems.org"
 
+gem 'httparty'
 gem 'builder'
-gem 'xml-simple'
 gem 'savon'
 gem 'curb'
-gem 'httparty'
 
 group :development do
-  gem "shoulda"
-  gem "bundler"
-  gem "jeweler"
-  gem "rcov"
+  gem 'bundler'
+  gem 'jeweler'
+  gem 'rcov'
+end
+
+group :test do
+  gem 'rspec'
+  gem 'fakeweb'
 end
