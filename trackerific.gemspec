@@ -31,8 +31,10 @@ Gem::Specification.new do |s|
     "lib/usps.rb",
     "lib/wsdl/fedex/development.wsdl",
     "lib/wsdl/fedex/production.wsdl",
+    "test/fixtures/fedex/TrackReply.xml",
+    "test/fixtures/ups/success_response.xml",
     "test/helper.rb",
-    "trackerific-0.1.0.gem",
+    "test/test_trackerific.rb",
     "trackerific.gemspec"
   ]
   s.homepage = %q{http://github.com/travishaynes/trackerific}
@@ -41,7 +43,8 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.3.7}
   s.summary = %q{Trackerific provides package tracking to Rails.}
   s.test_files = [
-    "test/helper.rb"
+    "test/helper.rb",
+    "test/test_trackerific.rb"
   ]
 
   if s.respond_to? :specification_version then
@@ -49,6 +52,7 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
+      s.add_runtime_dependency(%q<rails>, [">= 3.0.0"])
       s.add_runtime_dependency(%q<httparty>, [">= 0"])
       s.add_runtime_dependency(%q<builder>, [">= 0"])
       s.add_runtime_dependency(%q<savon>, [">= 0"])
@@ -61,6 +65,7 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<savon>, ["~> 0.8.6"])
       s.add_runtime_dependency(%q<curb>, ["~> 0.7.15"])
     else
+      s.add_dependency(%q<rails>, [">= 3.0.0"])
       s.add_dependency(%q<httparty>, [">= 0"])
       s.add_dependency(%q<builder>, [">= 0"])
       s.add_dependency(%q<savon>, [">= 0"])
@@ -74,6 +79,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<curb>, ["~> 0.7.15"])
     end
   else
+    s.add_dependency(%q<rails>, [">= 3.0.0"])
     s.add_dependency(%q<httparty>, [">= 0"])
     s.add_dependency(%q<builder>, [">= 0"])
     s.add_dependency(%q<savon>, [">= 0"])

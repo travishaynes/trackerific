@@ -46,8 +46,7 @@ module Trackerific
       include HTTParty
       format :xml
       base_uri case Rails.env
-        when 'test' then 'mock://mock.shippingapis.com'
-        when 'development' then 'http://testing.shippingapis.com'
+        when 'test', 'development' then 'http://testing.shippingapis.com'
         when 'production' then 'https://secure.shippingapis.com'
       end
     end

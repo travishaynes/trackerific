@@ -1,4 +1,6 @@
 module Trackerific
+  require 'rails'
+  
   class Error < StandardError
   end
   

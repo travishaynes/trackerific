@@ -1,5 +1,4 @@
 module Trackerific
-  require 'xmlsimple'
   require 'httparty'
   
   class UPS < Base
@@ -74,8 +73,7 @@ module Trackerific
       include ::HTTParty
       format :xml
       base_uri case Rails.env
-        when 'test' then 'mock://mock.ups.com/ups.app/xml'
-        when 'development' then 'https://wwwcie.ups.com/ups.app/xml'
+        when 'test','development' then 'https://wwwcie.ups.com/ups.app/xml'
         when 'production' then 'https://www.ups.com/ups.app/xml'
       end
     end

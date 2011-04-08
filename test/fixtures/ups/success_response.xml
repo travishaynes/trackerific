@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<TrackResponse>
+	<Response>
+		<TransactionReference>
+			<CustomerContext>Your Test case summary Description</CustomerContext>
+			<XpciVersion>1.0</XpciVersion>
+		</TransactionReference>
+		<ResponseStatusCode>1</ResponseStatusCode>
+		<ResponseStatusDescription>Success</ResponseStatusDescription>
+	</Response>
+	<Shipment>
+		<Shipper>
+			<ShipperNumber>F00100</ShipperNumber>
+			<Address>
+				<City>HOBOKEN</City>
+				<StateProvinceCode>NJ</StateProvinceCode>
+				<PostalCode>07030</PostalCode>
+				<CountryCode>US</CountryCode>
+			</Address>
+		</Shipper>
+		<ShipmentWeight>
+			<UnitOfMeasurement>
+				<Code>LBS</Code>
+			</UnitOfMeasurement>
+			<Weight>35.00</Weight>
+		</ShipmentWeight>
+		<Service>
+			<Code>02</Code>
+			<Description>2ND DAY AIR</Description>
+		</Service>
+		<ShipmentIdentificationNumber>ATrackingNumber</ShipmentIdentificationNumber>
+		<Package>
+			<TrackingNumber>ATrackingNumber</TrackingNumber>
+			<Activity>
+				<ActivityLocation>
+					<Address>
+						<City>MAYSVILLE</City>
+						<PostalCode>26833   9700</PostalCode>
+						<CountryCode>US</CountryCode>
+					</Address>
+					<Code>MG</Code>
+					<Description>MET CUST MAN</Description>
+					<SignedForByName>Larry</SignedForByName>
+				</ActivityLocation>
+				<Status>
+					<StatusType>
+						<Code>D</Code>
+						<Description>DELIVERED</Description>
+					</StatusType>
+					<StatusCode>
+						<Code>KB</Code>
+					</StatusCode>
+				</Status>
+				<Date>20030313</Date>
+				<Time>160000</Time>
+			</Activity>
+			<PackageWeight>
+				<UnitOfMeasurement>
+					<Code>LBS</Code>
+				</UnitOfMeasurement>
+				<Weight>35.00</Weight>
+			</PackageWeight>
+		</Package>
+	</Shipment>
+</TrackResponse>

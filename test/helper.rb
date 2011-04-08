@@ -16,3 +16,4 @@ require 'trackerific'
 
 class Test::Unit::TestCase
 end
+
