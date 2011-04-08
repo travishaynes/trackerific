@@ -15,6 +15,7 @@ module Trackerific
     def track_package(package_id)
       super
       http_response = HTTP.post('/Track', :body => build_xml_request)
+      http_response.error! unless http_response.code == 200
       case http_response['TrackResponse']['Response']['ResponseStatusCode']
         when "0" then raise Trackerific::Error, parse_error_response(http_response)
         when "1" then return parse_success_response(http_response)
@@ -72,7 +73,11 @@ module Trackerific
     class HTTP
       include ::HTTParty
       format :xml
-      base_uri Rails.env.production? ? 'https://www.ups.com/ups.app/xml' : 'https://wwwcie.ups.com/ups.app/xml'
+      base_uri case Rails.env
+        when 'test' then 'mock://mock.ups.com/ups.app/xml'
+        when 'development' then 'https://wwwcie.ups.com/ups.app/xml'
+        when 'production' then 'https://www.ups.com/ups.app/xml'
+      end
     end
   end
 end
