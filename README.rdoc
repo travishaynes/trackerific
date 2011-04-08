@@ -1,7 +1,3 @@
-= Trackerific
-
-Trackerific is a package tracking solution for Rails. Currently the only supported tracking providers are USPS, and FedEx.
-
 == Installation:
 
 To use this gem, add this line to your Gemfile
@@ -11,15 +7,15 @@ and then run
 
 == Usage:
 
-=== Example for tracking a FedEx package:
+  # Track a FedEx package:
   fedex = Trackerific::FedEx.new :account => '123456789', :meter => '123456789', :key => 'kQdEJwuHBjtQ7g2', :password => 'qqPpiRoE5WdsMO78j8j5GRdoI'
   tracking_info = fedex.track_package('999999999999')
-
-=== Example for tracking a USPS package:
+  
+  # Track a USPS package:
   usps = Trackerific::USPS.new :user_id => '123USERID4567'
   tracking_info = usps.track_package('EJ958083578US')
-
-=== Example for tracking a UPS package:
+  
+  # Track a UPS package:
   ups = Trackerific::UPS.new :user_id => 'userid', :key => 'kQdEJwuHBjtQ7g2', :password => 'secret'
   tracking_info = ups.track_package('1Z12345E0291980793')
 
@@ -47,7 +43,7 @@ The above code would yield something that looks like this:
     * May 30 10:08 am ARRIVAL AT UNIT WILMINGTON DE 19850.
     * May 29 9:55 am ACCEPT OR PICKUP EDGEWATER NJ 07020.
 
-== Exception handling:
+=== Exception handling:
 
 Exception handling is esssential for tracking packages. If, for example, you enter the wrong number, or the tracking provider has yet to have added the tracking number to their system, a Trackerific::Error will be raised. Here's an example on how to handle Trackerific::Errors:
 
