@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<TrackResponse>
+  <Response>
+    <ResponseStatusCode>0</ResponseStatusCode>
+    <ResponseStatusDescription>Failure</ResponseStatusDescription>
+    <Error>
+      <ErrorSeverity>Hard</ErrorSeverity>
+      <ErrorCode>10002</ErrorCode>
+      <ErrorDescription>The XML document is well formed but the document is not valid</ErrorDescription>
+    </Error>
+  </Response>
+</TrackResponse>
