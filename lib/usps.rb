@@ -1,13 +1,8 @@
 module Trackerific
-  require 'net/http'
   require 'builder'
-  require 'xmlsimple'
+  require 'httparty'
   
   class USPS < Base
-    TEST_SCHEME = 'http'
-    PROD_SCHEME = 'https'
-    TEST_HOST = 'testing.shippingapis.com'
-    PROD_HOST = 'secure.shippingapis.com'
     HTTP_PATH = '/ShippingAPITest.dll'
     API = 'TrackV2'
     
@@ -22,17 +17,15 @@ module Trackerific
     
     def track_package(package_id)
       super
-      http_response = Net::HTTP.get_response(build_uri)
-      http_response.error! unless http_response.is_a? Net::HTTPSuccess
-      tracking_response = XmlSimple.xml_in(http_response.body)
-      if tracking_response['TrackInfo'].nil?
-        raise Trackerific::Error.new, tracking_response['Description'][0]
-      end
-      tracking_info = tracking_response['TrackInfo'][0]
-      return {
+      response = HTTP.get(HTTP_PATH, :query => {:API => API, :XML => build_xml_request}.to_query)
+      response.error! unless response.code == 200
+      raise Trackerific::Error, response['Error']['Description'] unless response['Error'].nil?
+      raise Trackerific::Error, "Tracking information not found in response from server." if response['TrackResponse'].nil?
+      tracking_info = response['TrackResponse']['TrackInfo']
+      {
         :package_id => tracking_info['ID'],
-        :summary    => tracking_info['TrackSummary'][0],
-        :details    => tracking_info['TrackDetail']
+        :summary => tracking_info['TrackSummary'],
+        :details => tracking_info['TrackDetail']
       }
     end
     
@@ -47,13 +40,16 @@ module Trackerific
       return tracking_request
     end
     
-    def build_uri
-      URI::HTTP.build({
-        :scheme => Rails.env.production? ? PROD_SCHEME : TEST_SCHEME,
-        :host   => Rails.env.production? ? PROD_HOST : TEST_HOST,
-        :path   => HTTP_PATH,
-        :query  => {:API => API, :XML => build_xml_request}.to_query
-      })
+    private
+    
+    class HTTP
+      include HTTParty
+      format :xml
+      base_uri case Rails.env
+        when 'test' then 'mock://mock.shippingapis.com'
+        when 'development' then 'http://testing.shippingapis.com'
+        when 'production' then 'https://secure.shippingapis.com'
+      end
     end
     
   end
