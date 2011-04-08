@@ -13,7 +13,7 @@ require 'shoulda'
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 require 'trackerific'
+require 'trackerific_test_app'
 
 class Test::Unit::TestCase
 end
-
