@@ -20,7 +20,7 @@ class TestUPS < Test::Unit::TestCase
       }
     end
     
-    should "return an error response" do
+    should "raise a Trackerific:Error exception" do
       FakeWeb.register_uri(:post, UPS_TRACK_URL, :body => load_fixture(:ups_error))
       assert_raises Trackerific::Error do
         tracking_response = @ups.track_package(@package_id)

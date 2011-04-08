@@ -31,10 +31,16 @@ Gem::Specification.new do |s|
     "lib/usps.rb",
     "lib/wsdl/fedex/development.wsdl",
     "lib/wsdl/fedex/production.wsdl",
-    "test/fixtures/fedex/TrackReply.xml",
+    "log/test.log",
+    "test/fixtures/fedex/success_response.xml",
+    "test/fixtures/ups/error_response.xml",
     "test/fixtures/ups/success_response.xml",
     "test/helper.rb",
+    "test/log/development.log",
+    "test/log/test.log",
     "test/test_trackerific.rb",
+    "test/test_ups.rb",
+    "test/trackerific_test_app.rb",
     "trackerific.gemspec"
   ]
   s.homepage = %q{http://github.com/travishaynes/trackerific}
@@ -44,7 +50,9 @@ Gem::Specification.new do |s|
   s.summary = %q{Trackerific provides package tracking to Rails.}
   s.test_files = [
     "test/helper.rb",
-    "test/test_trackerific.rb"
+    "test/test_trackerific.rb",
+    "test/test_ups.rb",
+    "test/trackerific_test_app.rb"
   ]
 
   if s.respond_to? :specification_version then
