@@ -11,33 +11,41 @@ and then run
 
 == Usage:
 
-=== Example for tracking a USPS package:
+=== Example for tracking a FedEx package:
+  fedex = Trackerific::FedEx.new :account => '123456789', :meter => '123456789', :key => 'kQdEJwuHBjtQ7g2', :password => 'qqPpiRoE5WdsMO78j8j5GRdoI'
+  tracking_info = fedex.track_package('999999999999')
 
-  usps = Trackerific::USPS.new :user_id => 'USERID' # replace with your USPS user id
-  tracking_info = usps.track_package('EJ958083578US') # replace with a valid tracking number
-  # print out the tracking information
+=== Example for tracking a USPS package:
+  usps = Trackerific::USPS.new :user_id => '123USERID4567'
+  tracking_info = usps.track_package('EJ958083578US')
+
+=== Example for tracking a UPS package:
+  ups = Trackerific::UPS.new :user_id => 'userid', :key => 'kQdEJwuHBjtQ7g2', :password => 'secret'
+  tracking_info = ups.track_package('1Z12345E0291980793')
+
+=== Tracking Results
+
+The tracking results for all three providers are returned in a Hash in this format:
+
+  {
+    :package_id => 'the package id being tracked',
+    :summary => 'summary of the tracking results',
+    :details => ['array containing each tracking status by date']
+  }
+
+Here's an example of how to print the tracking results out in a readable format:
+
   puts "Tracking information for package ID: %s" % tracking_info[:package_id]
   puts tracking_info[:summary]
   puts "  * %s" % tracking_info[:details].join("\n  * ")
-
-The above code will output something like this:
+  
+The above code would yield something that looks like this:
 
   Tracking information for package ID: EJ958083578US
   Your item was delivered at 8:10 am on June 1 in Wilmington DE 19801.
     * May 30 11:07 am NOTICE LEFT WILMINGTON DE 19801.
     * May 30 10:08 am ARRIVAL AT UNIT WILMINGTON DE 19850.
     * May 29 9:55 am ACCEPT OR PICKUP EDGEWATER NJ 07020.
-
-=== Example for tracking a FedEx package:
-
-  # change the following parameters to the credentials assigned to you by FedEx
-  fedex = Trackerific::FedEx.new :account => 'account', :meter => 'meter', :key => 'key', :password => 'password'
-  tracking_info = fedex.track_package('382544330058603')
-  puts "Tracking information for package ID: %s" % tracking_info[:package_id]
-  puts tracking_info[:summary]
-  puts "  * %s" % tracking_info[:details].join("\n  * ")
-
-The output of the above example will be the same format as the USPS example.
 
 == Exception handling:
 
