@@ -72,7 +72,7 @@ module Trackerific
     class HTTP
       include ::HTTParty
       format :xml
-      base_uri Rails.env.production? ? 'https://www.ups.com' : 'https://wwwcie.ups.com/ups.app/xml'
+      base_uri Rails.env.production? ? 'https://www.ups.com/ups.app/xml' : 'https://wwwcie.ups.com/ups.app/xml'
     end
   end
 end
