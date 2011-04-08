@@ -2,16 +2,7 @@ module Trackerific
   require 'savon'
   
   class FedEx < Base
-    TEST_WSDL = "%s/wsdl/fedex/test_track_service_v4.wsdl" % ::File.dirname(__FILE__)
-    PROD_WSDL = "%s/wsdl/fedex/prod_track_service_v4.wsdl" % ::File.dirname(__FILE__)
-    
-    def initialize(options = {})
-      super
-      @options = options
-      @soap_client = Savon::Client.new do
-        wsdl.document = Rails.env.production? ? PROD_WSDL : TEST_WSDL
-      end
-    end
+    include Trackerific::SoapClient
     
     def required_options
       [:account, :meter, :key, :password]
@@ -19,10 +10,14 @@ module Trackerific
     
     def track_package(package_id)
       super
-      tracking_response = @soap_client.request :track do
-        soap.input = 'wsdl:Track'
-        soap.body = soap_body
-      end.to_hash
+      begin
+        tracking_response = soap_client.request :track do
+          soap.input = 'wsdl:TrackRequest'
+          soap.body = soap_body
+        end.to_hash
+      rescue Savon::HTTP::Error => e
+        raise Trackerific::Error, e.message
+      end
       if tracking_response[:track_reply][:highest_severity] == 'ERROR'
         raise Trackerific::Error, tracking_response[:track_reply][:notifications][:message]
       end
@@ -51,7 +46,7 @@ module Trackerific
         :Version => {
           :ServiceId => 'trck',
           :Major => '4',
-          :Intermediate => '1',
+          :Intermediate => '0',
           :Minor => '0'
         },
         :PackageIdentifier => {

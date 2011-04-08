@@ -11,6 +11,7 @@ module Trackerific
       options.each do |k, v|
         raise ArgumentError.new("Invalid parameter: #{k}") unless required.include?(k)
       end
+      @options = options
     end
     
     def required_options
@@ -22,7 +23,8 @@ module Trackerific
     end
   end
   
+  require 'soap_client'
   require 'usps'
   require 'fedex'
-  #require 'ups'
+  require 'ups'
 end
