@@ -1,7 +1,7 @@
 == Installation:
 
 To use this gem, add this line to your Gemfile
-  gem 'trackerific'
+  gem 'trackerific', :git => 'http://github.com/travishaynes/trackerific.git'
 and then run
   bundle install
 
