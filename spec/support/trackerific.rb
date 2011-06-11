@@ -1,3 +1,5 @@
+# Provides a Rails application environment to use when running the specs.
+
 require 'rails'
 
 require "action_controller/railtie"

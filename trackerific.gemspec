@@ -17,7 +17,6 @@ Gem::Specification.new do |s|
     "README.rdoc"
   ]
   s.files = [
-    ".document",
     ".rspec",
     "Gemfile",
     "Gemfile.lock",
@@ -42,7 +41,7 @@ Gem::Specification.new do |s|
     "spec/lib/usps_spec.rb",
     "spec/spec_helper.rb",
     "spec/support/fixtures.rb",
-    "spec/support/trackerific_test_app.rb",
+    "spec/support/trackerific.rb",
     "trackerific.gemspec"
   ]
   s.homepage = %q{http://github.com/travishaynes/trackerific}
@@ -58,7 +57,7 @@ Gem::Specification.new do |s|
     "spec/lib/usps_spec.rb",
     "spec/spec_helper.rb",
     "spec/support/fixtures.rb",
-    "spec/support/trackerific_test_app.rb"
+    "spec/support/trackerific.rb"
   ]
 
   if s.respond_to? :specification_version then
@@ -67,47 +66,32 @@ Gem::Specification.new do |s|
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<rails>, [">= 3.0.0"])
-      s.add_runtime_dependency(%q<httparty>, [">= 0"])
-      s.add_runtime_dependency(%q<builder>, [">= 0"])
-      s.add_runtime_dependency(%q<savon>, [">= 0"])
-      s.add_runtime_dependency(%q<curb>, [">= 0"])
-      s.add_development_dependency(%q<bundler>, [">= 0"])
-      s.add_development_dependency(%q<jeweler>, [">= 0"])
-      s.add_development_dependency(%q<rspec>, [">= 0"])
-      s.add_development_dependency(%q<rspec-rails>, [">= 0"])
-      s.add_runtime_dependency(%q<builder>, ["~> 2.1.2"])
-      s.add_runtime_dependency(%q<xml-simple>, ["~> 1.0.15"])
-      s.add_runtime_dependency(%q<savon>, ["~> 0.8.6"])
-      s.add_runtime_dependency(%q<curb>, ["~> 0.7.15"])
+      s.add_runtime_dependency(%q<httparty>, [">= 0.7.7"])
+      s.add_runtime_dependency(%q<builder>, [">= 2.1.2"])
+      s.add_runtime_dependency(%q<savon>, [">= 0.8.6"])
+      s.add_runtime_dependency(%q<curb>, [">= 0.7.15"])
+      s.add_development_dependency(%q<bundler>, [">= 1.0.13"])
+      s.add_development_dependency(%q<jeweler>, [">= 1.5.2"])
+      s.add_development_dependency(%q<rspec-rails>, [">= 2.6.1"])
     else
       s.add_dependency(%q<rails>, [">= 3.0.0"])
-      s.add_dependency(%q<httparty>, [">= 0"])
-      s.add_dependency(%q<builder>, [">= 0"])
-      s.add_dependency(%q<savon>, [">= 0"])
-      s.add_dependency(%q<curb>, [">= 0"])
-      s.add_dependency(%q<bundler>, [">= 0"])
-      s.add_dependency(%q<jeweler>, [">= 0"])
-      s.add_dependency(%q<rspec>, [">= 0"])
-      s.add_dependency(%q<rspec-rails>, [">= 0"])
-      s.add_dependency(%q<builder>, ["~> 2.1.2"])
-      s.add_dependency(%q<xml-simple>, ["~> 1.0.15"])
-      s.add_dependency(%q<savon>, ["~> 0.8.6"])
-      s.add_dependency(%q<curb>, ["~> 0.7.15"])
+      s.add_dependency(%q<httparty>, [">= 0.7.7"])
+      s.add_dependency(%q<builder>, [">= 2.1.2"])
+      s.add_dependency(%q<savon>, [">= 0.8.6"])
+      s.add_dependency(%q<curb>, [">= 0.7.15"])
+      s.add_dependency(%q<bundler>, [">= 1.0.13"])
+      s.add_dependency(%q<jeweler>, [">= 1.5.2"])
+      s.add_dependency(%q<rspec-rails>, [">= 2.6.1"])
     end
   else
     s.add_dependency(%q<rails>, [">= 3.0.0"])
-    s.add_dependency(%q<httparty>, [">= 0"])
-    s.add_dependency(%q<builder>, [">= 0"])
-    s.add_dependency(%q<savon>, [">= 0"])
-    s.add_dependency(%q<curb>, [">= 0"])
-    s.add_dependency(%q<bundler>, [">= 0"])
-    s.add_dependency(%q<jeweler>, [">= 0"])
-    s.add_dependency(%q<rspec>, [">= 0"])
-    s.add_dependency(%q<rspec-rails>, [">= 0"])
-    s.add_dependency(%q<builder>, ["~> 2.1.2"])
-    s.add_dependency(%q<xml-simple>, ["~> 1.0.15"])
-    s.add_dependency(%q<savon>, ["~> 0.8.6"])
-    s.add_dependency(%q<curb>, ["~> 0.7.15"])
+    s.add_dependency(%q<httparty>, [">= 0.7.7"])
+    s.add_dependency(%q<builder>, [">= 2.1.2"])
+    s.add_dependency(%q<savon>, [">= 0.8.6"])
+    s.add_dependency(%q<curb>, [">= 0.7.15"])
+    s.add_dependency(%q<bundler>, [">= 1.0.13"])
+    s.add_dependency(%q<jeweler>, [">= 1.5.2"])
+    s.add_dependency(%q<rspec-rails>, [">= 2.6.1"])
   end
 end
 
