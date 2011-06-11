@@ -10,7 +10,6 @@ gem 'curb'
 group :development do
   gem 'bundler'
   gem 'jeweler'
-  gem 'rcov'
 end
 
 group :development, :test do
