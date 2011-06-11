@@ -4,10 +4,22 @@ module Trackerific
   class FedEx < Base
     include Trackerific::SoapClient
     
-    TEST_TRACKING_NUMBERS = ['183689015000001']
+    FEDEX_VERSION = {
+      :ServiceId => 'trck',
+      :Major => '4',
+      :Intermediate => '0',
+      :Minor => '0'
+    }
     
     def required_options
       [:account, :meter, :key, :password]
+    end
+    
+    def self.track_url
+      case Rails.env
+        when 'development', 'test' then "https://gatewaybeta.fedex.com:443/web-services/track"
+        when 'production' then "https://wsbeta.fedex.com:443/web-services/track"
+      end
     end
     
     def track_package(package_id)
@@ -45,12 +57,7 @@ module Trackerific
           :AccountNumber => @options[:account],
           :MeterNumber => @options[:meter]
         },
-        :Version => {
-          :ServiceId => 'trck',
-          :Major => '4',
-          :Intermediate => '0',
-          :Minor => '0'
-        },
+        :Version => FEDEX_VERSION,
         :PackageIdentifier => {
           :Value => @package_id,
           :Type => 'TRACKING_NUMBER_OR_DOORTAG',

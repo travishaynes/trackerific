@@ -29,6 +29,13 @@ module Trackerific
       }
     end
     
+    def self.track_url
+      case Rails.env
+        when 'test', 'development' then 'http://testing.shippingapis.com'
+        when 'production' then 'https://secure.shippingapis.com'
+      end
+    end
+    
     protected
     
     def build_xml_request
@@ -45,10 +52,7 @@ module Trackerific
     class HTTP
       include HTTParty
       format :xml
-      base_uri case Rails.env
-        when 'test', 'development' then 'http://testing.shippingapis.com'
-        when 'production' then 'https://secure.shippingapis.com'
-      end
+      base_uri USPS.track_url
     end
     
   end

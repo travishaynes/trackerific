@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+  <soapenv:Header/>
+  <env:Body xmlns:wsdl="http://fedex.com/ws/track/v4" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <ns:TrackReply xmlns:ns="http://fedex.com/ws/track/v4">
+      <ns:HighestSeverity>ERROR</ns:HighestSeverity>
+      <ns:Notifications>
+        <ns:Severity>ERROR</ns:Severity>
+        <ns:Source>prof</ns:Source>
+        <ns:Code>1000</ns:Code>
+        <ns:Message>Authentication Failed</ns:Message>
+      </ns:Notifications>
+      <ns:Version>
+        <ns:ServiceId>trck</ns:ServiceId>
+        <ns:Major>4</ns:Major>
+        <ns:Intermediate>0</ns:Intermediate>
+        <ns:Minor>0</ns:Minor>
+      </ns:Version>
+    </ns:TrackReply>
+  </env:Body>
+</soapenv:Envelope>

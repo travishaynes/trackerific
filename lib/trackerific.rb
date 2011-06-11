@@ -23,6 +23,10 @@ module Trackerific
     def track_package(package_id)
       @package_id = package_id
     end
+    
+    def self.track_url
+      ""
+    end
   end
   
   require 'soap_client'
