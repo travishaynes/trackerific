@@ -22,5 +22,6 @@ module Trackerific
   end
 end
 
+puts "Loading Rails environment ..."
 Rails.env = 'test'
 Trackerific::Application.initialize!

@@ -4,6 +4,8 @@ module Trackerific
   class FedEx < Base
     include Trackerific::SoapClient
     
+    TEST_TRACKING_NUMBERS = ['183689015000001']
+    
     def required_options
       [:account, :meter, :key, :password]
     end
