@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{trackerific}
-  s.version = "0.2.0"
+  s.version = "0.2.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Travis Haynes"]
@@ -69,7 +69,6 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<bundler>, [">= 1.0.13"])
       s.add_development_dependency(%q<jeweler>, [">= 1.5.2"])
       s.add_development_dependency(%q<rspec-rails>, [">= 2.6.1"])
-      s.add_development_dependency(%q<savon_spec>, [">= 0.1.6"])
       s.add_development_dependency(%q<ruby-debug19>, [">= 0"])
     else
       s.add_dependency(%q<rails>, [">= 3.0.0"])
@@ -78,7 +77,6 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<bundler>, [">= 1.0.13"])
       s.add_dependency(%q<jeweler>, [">= 1.5.2"])
       s.add_dependency(%q<rspec-rails>, [">= 2.6.1"])
-      s.add_dependency(%q<savon_spec>, [">= 0.1.6"])
       s.add_dependency(%q<ruby-debug19>, [">= 0"])
     end
   else
@@ -88,7 +86,6 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<bundler>, [">= 1.0.13"])
     s.add_dependency(%q<jeweler>, [">= 1.5.2"])
     s.add_dependency(%q<rspec-rails>, [">= 2.6.1"])
-    s.add_dependency(%q<savon_spec>, [">= 0.1.6"])
     s.add_dependency(%q<ruby-debug19>, [">= 0"])
   end
 end
