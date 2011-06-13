@@ -23,14 +23,21 @@ module Trackerific
     def track_package(package_id)
       @package_id = package_id
     end
-    
-    def self.track_url
-      ""
-    end
   end
   
-  require 'soap_client'
   require 'usps'
   require 'fedex'
   require 'ups'
+  
+  def tracking_service
+    case self
+      when /^.Z/, /^[HK].{10}$/ then Trackerific::UPS
+      when /^96.{20}$/ then Trackerific::FedEx
+      else case self.length
+        when 13, 20, 22, 30 then Trackerific::USPS
+        when 12, 15, 19 then Trackerific::FedEx
+        else nil
+      end
+    end
+  end
 end

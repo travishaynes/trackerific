@@ -3,8 +3,12 @@ module Trackerific
   require 'httparty'
   
   class USPS < Base
-    HTTP_PATH = '/ShippingAPITest.dll'
-    API = 'TrackV2'
+    include HTTParty
+    format :xml
+    base_uri defined?(Rails) ? case Rails.env
+      when 'test', 'development' then 'http://testing.shippingapis.com'
+      when 'production' then 'https://secure.shippingapis.com'
+    end : 'https://secure.shippingapis.com'
     
     def initialize(options = {})
       super
@@ -17,7 +21,7 @@ module Trackerific
     
     def track_package(package_id)
       super
-      response = HTTP.get(HTTP_PATH, :query => {:API => API, :XML => build_xml_request}.to_query)
+      response = self.class.get('/ShippingAPITest.dll', :query => {:API => 'TrackV2', :XML => build_xml_request}.to_query)
       response.error! unless response.code == 200
       raise Trackerific::Error, response['Error']['Description'] unless response['Error'].nil?
       raise Trackerific::Error, "Tracking information not found in response from server." if response['TrackResponse'].nil?
@@ -29,13 +33,6 @@ module Trackerific
       }
     end
     
-    def self.track_url
-      case Rails.env
-        when 'test', 'development' then 'http://testing.shippingapis.com'
-        when 'production' then 'https://secure.shippingapis.com'
-      end
-    end
-    
     protected
     
     def build_xml_request
@@ -45,14 +42,6 @@ module Trackerific
         t.TrackID(:ID => @package_id)
       end
       return tracking_request
-    end
-    
-    private
-    
-    class HTTP
-      include HTTParty
-      format :xml
-      base_uri USPS.track_url
     end
     
   end

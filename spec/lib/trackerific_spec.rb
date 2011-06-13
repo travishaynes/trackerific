@@ -18,12 +18,6 @@ describe 'Trackerific::Base' do
     end
   end
   
-  describe :track_url do
-    it "should return a String" do
-      Trackerific::Base.track_url().should be_kind_of String
-    end
-  end
-  
   context "with a new Trackerific::Base class that has required options" do
     context "has all the required options" do
       it "should be able to create a new instance" do

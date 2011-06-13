@@ -2,25 +2,25 @@ module Trackerific
   require 'httparty'
   
   class UPS < Base
+    include ::HTTParty
+    format :xml
+    base_uri defined?(Rails) ? case Rails.env
+      when 'test','development' then 'https://wwwcie.ups.com/ups.app/xml'
+      when 'production' then 'https://www.ups.com/ups.app/xml'
+    end : 'https://www.ups.com/ups.app/xml'
+    
     def required_options
       [:key, :user_id, :password]
     end
     
     def track_package(package_id)
       super
-      http_response = HTTP.post('/Track', :body => build_xml_request)
+      http_response = self.class.post('/Track', :body => build_xml_request)
       http_response.error! unless http_response.code == 200
       case http_response['TrackResponse']['Response']['ResponseStatusCode']
         when "0" then raise Trackerific::Error, parse_error_response(http_response)
         when "1" then return parse_success_response(http_response)
         else raise Trackerific::Error, "Invalid response code returned from server."
-      end
-    end
-    
-    def self.track_url
-      case Rails.env
-        when 'test','development' then 'https://wwwcie.ups.com/ups.app/xml'
-        when 'production' then 'https://www.ups.com/ups.app/xml'
       end
     end
     
@@ -67,14 +67,6 @@ module Trackerific
         tr.TrackingNumber @package_id
       end
       return xml
-    end
-    
-    private
-    
-    class HTTP
-      include ::HTTParty
-      format :xml
-      base_uri Trackerific::UPS.track_url
     end
   end
 end

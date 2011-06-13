@@ -8,8 +8,8 @@ and then run
 == Usage:
 
   # Track a FedEx package:
-  fedex = Trackerific::FedEx.new :account => '123456789', :meter => '123456789', :key => 'kQdEJwuHBjtQ7g2', :password => 'qqPpiRoE5WdsMO78j8j5GRdoI'
-  tracking_info = fedex.track_package('999999999999')
+  fedex = Trackerific::FedEx.new :account => '123456789', :meter => '123456789'
+  tracking_info = fedex.track_package('183689015000001')
   
   # Track a USPS package:
   usps = Trackerific::USPS.new :user_id => '123USERID4567'
