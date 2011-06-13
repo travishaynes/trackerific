@@ -15,16 +15,14 @@ module Trackerific
       when 'production' then 'https://secure.shippingapis.com'
     end : 'https://secure.shippingapis.com'
     
-    # The required option for tracking a UPS package is :user_id
-    #
-    # @return [Array] the required options for tracking a UPS package.
-    def required_options
-      [:user_id]
-    end
-    
-    # Tracks a USPS package.
-    # A Trackerific::Error is raised when a package cannot be tracked.
+    # Tracks a USPS package
+    # @param [String] package_id the package identifier
     # @return [Trackerific::Details] the tracking details
+    # @raise [Trackerific::Error] raised when the server returns an error (invalid credentials, tracking package, etc.)
+    # @example Track a package
+    #   usps = Trackerific::USPS.new user_id: 'user'
+    #   details = ups.track_package("EJ958083578US")
+    # @api public    
     def track_package(package_id)
       super
       # connect to the USPS shipping API via HTTParty
@@ -60,8 +58,16 @@ module Trackerific
     
     protected
     
+    # The required options for tracking a UPS package
+    # @return [Array] the required options for tracking a UPS package.
+    # @api private
+    def required_options
+      [:user_id]
+    end
+    
     # Builds an XML request to send to USPS
     # @return [String] the xml request
+    # @api private
     def build_xml_request
       xml = ""
       # set up the Builder

@@ -9,6 +9,8 @@ module Trackerific
   
   # Base class for Trackerific package tracking services.
   class Base
+    # Creates a new instance of Trackerific::Base with required options
+    # @api private
     def initialize(options = {})
       required = required_options
       # make sure all the required options exist
@@ -22,29 +24,56 @@ module Trackerific
       @options = options
     end
     
-    # Override this method if your subclass has required options.
+    # Gets the tracking information for the package from the server
+    # @param [String] package_id the package identifier
+    # @return [Trackerific::Details] the tracking details
+    # @example Override this method in your custom tracking provider to implement tracking
+    #   module Trackerific
+    #     class MyTrackingProvider < Base
+    #       def track_package
+    #         Trackerific::Details.new(
+    #           "summary of tracking events",
+    #           [Trackerific::Event.new(Time.now, "summary", "location")]
+    #         )
+    #       end
+    #     end
+    #   end
+    # @api public
+    def track_package(package_id)
+      @package_id = package_id
+    end
+    
+    protected
+    
+    # An array of options that are required to create a new instance of this class
     # @return [Array] the required options
+    # @example Override this method in your custom tracking provider to enforce some options
+    #   module Trackerific
+    #     class MyTrackingProvider < Base
+    #       def required_options
+    #         [:all, :these, :are, :required]
+    #       end
+    #     end
+    #   end
+    # @api private
     def required_options
       []
     end
     
-    # Override this method in your subclass to implement tracking a package.
-    # @return [Hash] the tracking details
-    def track_package(package_id)
-      @package_id = package_id
-    end
   end
   
   require 'usps'
   require 'fedex'
   require 'ups'
   
-  # Checks a string for a valid package identifier, and returns a Trackerific
-  # class that should be able to track the package.
-  #
-  # @param [String] the package identifier.
+  # Checks a string for a valid package tracking service
+  # @param [String] package_id the package identifier
   # @return [Trackerific::Base] the Trackerific class that can track the given
   #   package id, or nil if none found.
+  # @example Find out which service provider will track a valid FedEx number
+  #   include Trackerific
+  #   tracking_service "183689015000001" # => Trackerific::FedEx
+  # @api public
   def tracking_service(package_id)
     case package_id
       when /^.Z/, /^[HK].{10}$/ then Trackerific::UPS

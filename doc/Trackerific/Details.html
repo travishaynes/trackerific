@@ -134,7 +134,7 @@ summary, and the events.
 
   
     <span class="summary_desc"><div class='inline'><p>
-The tracking events.
+Read-only string for the events for this package.
 </p>
 </div></span>
   
@@ -156,7 +156,7 @@ The tracking events.
   
   
   
-  
+  <span class="private note title">Private</span>
 
   
     <span class="summary_desc"><div class='inline'><p>
@@ -184,7 +184,7 @@ Provides a new instance of Details.
 
   
     <span class="summary_desc"><div class='inline'><p>
-The package identifier.
+Read-only string for the package identifier.
 </p>
 </div></span>
   
@@ -208,7 +208,7 @@ The package identifier.
 
   
     <span class="summary_desc"><div class='inline'><p>
-A summary of the tracking status.
+Read-only string for the summary of the package&#8217;s tracking events.
 </p>
 </div></span>
   
@@ -230,7 +230,11 @@ A summary of the tracking status.
   
 </p><div class="docstring">
   <div class="discussion">
-    <p>
+    <p class="note private">
+  <strong>This method is part of a private API.</strong> 
+  You should avoid using this method if possible, as it may be removed or be changed in the future.
+</p>
+<p>
 Provides a new instance of Details
 </p>
 
@@ -243,7 +247,7 @@ Provides a new instance of Details
   
     <li>
       
-        <span class='name'>the</span>
+        <span class='name'>package_id</span>
       
       
         <span class='type'>(<tt>String</tt>)</span>
@@ -252,7 +256,7 @@ Provides a new instance of Details
       
         &mdash;
         <div class='inline'><p>
-package identifier
+the package identifier
 </p>
 </div>
       
@@ -260,7 +264,7 @@ package identifier
   
     <li>
       
-        <span class='name'>a</span>
+        <span class='name'>summary</span>
       
       
         <span class='type'>(<tt>String</tt>)</span>
@@ -269,7 +273,7 @@ package identifier
       
         &mdash;
         <div class='inline'><p>
-summary of the tracking status
+a summary of the tracking status
 </p>
 </div>
       
@@ -277,7 +281,7 @@ summary of the tracking status
   
     <li>
       
-        <span class='name'>the</span>
+        <span class='name'>events</span>
       
       
         <span class='type'>(<tt>Array</tt>, <tt><span class='object_link'><a href="Event.html" title="Trackerific::Event (class)">Trackerific::Event</a></span></tt>)</span>
@@ -286,7 +290,7 @@ summary of the tracking status
       
         &mdash;
         <div class='inline'><p>
-tracking events
+the tracking events
 </p>
 </div>
       
@@ -300,14 +304,14 @@ tracking events
       <pre class="lines">
 
 
-9
 10
 11
 12
-13</pre>
+13
+14</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/trackerific_details.rb', line 9</span>
+      <pre class="code"><span class="info file"># File 'lib/trackerific_details.rb', line 10</span>
 
 <span class='kw'>def</span> <span class='id initialize'>initialize</span><span class='lparen'>(</span><span class='id package_id'>package_id</span><span class='comma'>,</span> <span class='id summary'>summary</span><span class='comma'>,</span> <span class='id events'>events</span><span class='rparen'>)</span>
   <span class='ivar'>@package_id</span> <span class='op'>=</span> <span class='id package_id'>package_id</span>
@@ -336,14 +340,39 @@ tracking events
 </p><div class="docstring">
   <div class="discussion">
     <p>
-The tracking events
+Read-only string for the events for this package
 </p>
 
 
   </div>
 </div>
 <div class="tags">
-  <h3>Returns:</h3>
+  
+  <div class="examples">
+    <h3>Examples:</h3>
+    
+      <h4><div class='inline'><p>
+Print all the events for a tracked package
+</p>
+</div></h4>
+      <pre class="example code"><span class='id puts'>puts</span> <span class='id details'>details</span><span class='period'>.</span><span class='id events'>events</span></pre>
+    
+      <h4><div class='inline'><p>
+Get the date the package was shipped
+</p>
+</div></h4>
+      <pre class="example code"><span class='id details'>details</span><span class='period'>.</span><span class='id events'>events</span><span class='period'>.</span><span class='id last'>last</span><span class='period'>.</span><span class='id date'>date</span> <span class='comment'># =&gt; a DateTime value</span></pre>
+    
+      <h4><div class='inline'><p>
+A bulleted HTML list of the events (most current on top) in haml
+</p>
+</div></h4>
+      <pre class="example code">%ul
+  - details.events.each do |event|
+    %li= event</pre>
+    
+  </div>
+<h3>Returns:</h3>
 <ul class="return">
   
     <li>
@@ -369,12 +398,12 @@ the tracking events
       <pre class="lines">
 
 
-26
-27
-28</pre>
+45
+46
+47</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/trackerific_details.rb', line 26</span>
+      <pre class="code"><span class="info file"># File 'lib/trackerific_details.rb', line 45</span>
 
 <span class='kw'>def</span> <span class='id events'>events</span>
   <span class='ivar'>@events</span>
@@ -394,14 +423,25 @@ the tracking events
 </p><div class="docstring">
   <div class="discussion">
     <p>
-The package identifier
+Read-only string for the package identifier
 </p>
 
 
   </div>
 </div>
 <div class="tags">
-  <h3>Returns:</h3>
+  
+  <div class="examples">
+    <h3>Examples:</h3>
+    
+      <h4><div class='inline'><p>
+Get the id of a tracked package
+</p>
+</div></h4>
+      <pre class="example code"><span class='id details'>details</span><span class='period'>.</span><span class='id package_id'>package_id</span> <span class='comment'># =&gt; the package identifier</span></pre>
+    
+  </div>
+<h3>Returns:</h3>
 <ul class="return">
   
     <li>
@@ -427,12 +467,12 @@ the package identifier
       <pre class="lines">
 
 
-16
-17
-18</pre>
+21
+22
+23</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/trackerific_details.rb', line 16</span>
+      <pre class="code"><span class="info file"># File 'lib/trackerific_details.rb', line 21</span>
 
 <span class='kw'>def</span> <span class='id package_id'>package_id</span>
   <span class='ivar'>@package_id</span>
@@ -452,14 +492,25 @@ the package identifier
 </p><div class="docstring">
   <div class="discussion">
     <p>
-A summary of the tracking status
+Read-only string for the summary of the package&#8217;s tracking events
 </p>
 
 
   </div>
 </div>
 <div class="tags">
-  <h3>Returns:</h3>
+  
+  <div class="examples">
+    <h3>Examples:</h3>
+    
+      <h4><div class='inline'><p>
+Get the summary of a tracked package
+</p>
+</div></h4>
+      <pre class="example code"><span class='id details'>details</span><span class='period'>.</span><span class='id summary'>summary</span> <span class='comment'># =&gt; Summary of the tracking events (i.e. Delivered)</span></pre>
+    
+  </div>
+<h3>Returns:</h3>
 <ul class="return">
   
     <li>
@@ -485,12 +536,12 @@ a summary of the tracking status
       <pre class="lines">
 
 
-21
-22
-23</pre>
+30
+31
+32</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/trackerific_details.rb', line 21</span>
+      <pre class="code"><span class="info file"># File 'lib/trackerific_details.rb', line 30</span>
 
 <span class='kw'>def</span> <span class='id summary'>summary</span>
   <span class='ivar'>@summary</span>
@@ -505,7 +556,7 @@ a summary of the tracking status
 </div>
     
     <div id="footer">
-  Generated on Mon Jun 13 15:03:56 2011 by 
+  Generated on Mon Jun 13 16:20:06 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.7.1 (ruby-1.9.2).
 </div>

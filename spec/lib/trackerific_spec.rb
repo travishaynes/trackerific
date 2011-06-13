@@ -11,13 +11,7 @@ describe 'Trackerific::Base' do
   before(:all) do
     @base = Trackerific::Base.new
   end
-  
-  describe :required_options do
-    it "should return an Array" do
-      @base.required_options().should be_kind_of Array
-    end
-  end
-  
+
   describe "tracking_service" do
     include Trackerific
     context "when given a UPS tracking number" do

@@ -135,11 +135,11 @@ Base class for Trackerific package tracking services.
   
   
   
-  
+  <span class="private note title">Private</span>
 
   
     <span class="summary_desc"><div class='inline'><p>
-A new instance of Base.
+Creates a new instance of Trackerific::Base with required options.
 </p>
 </div></span>
   
@@ -149,7 +149,7 @@ A new instance of Base.
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#required_options-instance_method" title="#required_options (instance method)">- (Array) <strong>required_options</strong> </a>
+      <a href="#track_package-instance_method" title="#track_package (instance method)">- (Trackerific::Details) <strong>track_package</strong>(package_id) </a>
     
 
     
@@ -163,31 +163,7 @@ A new instance of Base.
 
   
     <span class="summary_desc"><div class='inline'><p>
-Override this method if your subclass has required options.
-</p>
-</div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#track_package-instance_method" title="#track_package (instance method)">- (Hash) <strong>track_package</strong>(package_id) </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'><p>
-Override this method in your subclass to implement tracking a package.
+Gets the tracking information for the package from the server.
 </p>
 </div></span>
   
@@ -209,8 +185,12 @@ Override this method in your subclass to implement tracking a package.
   
 </p><div class="docstring">
   <div class="discussion">
-    <p>
-A new instance of Base
+    <p class="note private">
+  <strong>This method is part of a private API.</strong> 
+  You should avoid using this method if possible, as it may be removed or be changed in the future.
+</p>
+<p>
+Creates a new instance of Trackerific::Base with required options
 </p>
 
 
@@ -224,8 +204,6 @@ A new instance of Base
       <pre class="lines">
 
 
-12
-13
 14
 15
 16
@@ -235,10 +213,12 @@ A new instance of Base
 20
 21
 22
-23</pre>
+23
+24
+25</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/trackerific.rb', line 12</span>
+      <pre class="code"><span class="info file"># File 'lib/trackerific.rb', line 14</span>
 
 <span class='kw'>def</span> <span class='id initialize'>initialize</span><span class='lparen'>(</span><span class='id options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id required'>required</span> <span class='op'>=</span> <span class='id required_options'>required_options</span>
@@ -265,87 +245,70 @@ A new instance of Base
     
     
       <div class="method_details first">
-  <p class="signature first" id="required_options-instance_method">
+  <p class="signature first" id="track_package-instance_method">
   
-    - (<tt>Array</tt>) <strong>required_options</strong> 
+    - (<tt><span class='object_link'><a href="Details.html" title="Trackerific::Details (class)">Trackerific::Details</a></span></tt>) <strong>track_package</strong>(package_id) 
   
 
   
 </p><div class="docstring">
   <div class="discussion">
     <p>
-Override this method if your subclass has required options.
+Gets the tracking information for the package from the server
 </p>
 
 
   </div>
 </div>
 <div class="tags">
-  <h3>Returns:</h3>
-<ul class="return">
+  
+  <div class="examples">
+    <h3>Examples:</h3>
+    
+      <h4><div class='inline'><p>
+Override this method in your custom tracking provider to implement tracking
+</p>
+</div></h4>
+      <pre class="example code"><span class='kw'>module</span> <span class='const'>Trackerific</span>
+  <span class='kw'>class</span> <span class='const'>MyTrackingProvider</span> <span class='op'>&lt;</span> <span class='const'>Base</span>
+    <span class='kw'>def</span> <span class='id track_package'>track_package</span>
+      <span class='const'>Trackerific</span><span class='op'>::</span><span class='const'>Details</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span>
+        <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>summary of tracking events</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+        <span class='lbracket'>[</span><span class='const'>Trackerific</span><span class='op'>::</span><span class='const'>Event</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='const'>Time</span><span class='period'>.</span><span class='id now'>now</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>summary</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>location</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='rbracket'>]</span>
+      <span class='rparen'>)</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    
+  </div>
+<h3>Parameters:</h3>
+<ul class="param">
   
     <li>
       
+        <span class='name'>package_id</span>
       
-        <span class='type'>(<tt>Array</tt>)</span>
+      
+        <span class='type'>(<tt>String</tt>)</span>
       
       
       
         &mdash;
         <div class='inline'><p>
-the required options
+the package identifier
 </p>
 </div>
       
     </li>
   
 </ul>
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-27
-28
-29</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/trackerific.rb', line 27</span>
-
-<span class='kw'>def</span> <span class='id required_options'>required_options</span>
-  <span class='lbracket'>[</span><span class='rbracket'>]</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <p class="signature " id="track_package-instance_method">
-  
-    - (<tt>Hash</tt>) <strong>track_package</strong>(package_id) 
-  
-
-  
-</p><div class="docstring">
-  <div class="discussion">
-    <p>
-Override this method in your subclass to implement tracking a package.
-</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  <h3>Returns:</h3>
+<h3>Returns:</h3>
 <ul class="return">
   
     <li>
       
       
-        <span class='type'>(<tt>Hash</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="Details.html" title="Trackerific::Details (class)">Trackerific::Details</a></span></tt>)</span>
       
       
       
@@ -365,12 +328,12 @@ the tracking details
       <pre class="lines">
 
 
-33
-34
-35</pre>
+42
+43
+44</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/trackerific.rb', line 33</span>
+      <pre class="code"><span class="info file"># File 'lib/trackerific.rb', line 42</span>
 
 <span class='kw'>def</span> <span class='id track_package'>track_package</span><span class='lparen'>(</span><span class='id package_id'>package_id</span><span class='rparen'>)</span>
   <span class='ivar'>@package_id</span> <span class='op'>=</span> <span class='id package_id'>package_id</span>
@@ -385,7 +348,7 @@ the tracking details
 </div>
     
     <div id="footer">
-  Generated on Mon Jun 13 15:03:56 2011 by 
+  Generated on Mon Jun 13 16:20:06 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.7.1 (ruby-1.9.2).
 </div>

@@ -134,30 +134,6 @@ Provides package tracking support for USPS.
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#required_options-instance_method" title="#required_options (instance method)">- (Array) <strong>required_options</strong> </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'><p>
-The required option for tracking a UPS package is :user_id.
-</p>
-</div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
       <a href="#track_package-instance_method" title="#track_package (instance method)">- (Trackerific::Details) <strong>track_package</strong>(package_id) </a>
     
 
@@ -206,65 +182,7 @@ Tracks a USPS package.
     
     
       <div class="method_details first">
-  <p class="signature first" id="required_options-instance_method">
-  
-    - (<tt>Array</tt>) <strong>required_options</strong> 
-  
-
-  
-</p><div class="docstring">
-  <div class="discussion">
-    <p>
-The required option for tracking a UPS package is :user_id
-</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  <h3>Returns:</h3>
-<ul class="return">
-  
-    <li>
-      
-      
-        <span class='type'>(<tt>Array</tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'><p>
-the required options for tracking a UPS package.
-</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-21
-22
-23</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/usps.rb', line 21</span>
-
-<span class='kw'>def</span> <span class='id required_options'>required_options</span>
-  <span class='lbracket'>[</span><span class='symbol'>:user_id</span><span class='rbracket'>]</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <p class="signature " id="track_package-instance_method">
+  <p class="signature first" id="track_package-instance_method">
   
     - (<tt><span class='object_link'><a href="Details.html" title="Trackerific::Details (class)">Trackerific::Details</a></span></tt>) <strong>track_package</strong>(package_id) 
   
@@ -273,15 +191,47 @@ the required options for tracking a UPS package.
 </p><div class="docstring">
   <div class="discussion">
     <p>
-Tracks a USPS package. A Trackerific::Error is raised when a package cannot
-be tracked.
+Tracks a USPS package
 </p>
 
 
   </div>
 </div>
 <div class="tags">
-  <h3>Returns:</h3>
+  
+  <div class="examples">
+    <h3>Examples:</h3>
+    
+      <h4><div class='inline'><p>
+Track a package
+</p>
+</div></h4>
+      <pre class="example code"><span class='id usps'>usps</span> <span class='op'>=</span> <span class='const'>Trackerific</span><span class='op'>::</span><span class='const'>USPS</span><span class='period'>.</span><span class='id new'>new</span> <span class='label'>user_id:</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>user</span><span class='tstring_end'>'</span></span>
+<span class='id details'>details</span> <span class='op'>=</span> <span class='id ups'>ups</span><span class='period'>.</span><span class='id track_package'>track_package</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>EJ958083578US</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span></pre>
+    
+  </div>
+<h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>package_id</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+the package identifier
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+<h3>Returns:</h3>
 <ul class="return">
   
     <li>
@@ -310,6 +260,13 @@ the tracking details
       
       
       
+        &mdash;
+        <div class='inline'><p>
+raised when the server returns an error (invalid credentials, tracking
+package, etc.)
+</p>
+</div>
+      
     </li>
   
 </ul>
@@ -320,6 +277,8 @@ the tracking details
       <pre class="lines">
 
 
+26
+27
 28
 29
 30
@@ -349,12 +308,10 @@ the tracking details
 54
 55
 56
-57
-58
-59</pre>
+57</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/usps.rb', line 28</span>
+      <pre class="code"><span class="info file"># File 'lib/usps.rb', line 26</span>
 
 <span class='kw'>def</span> <span class='id track_package'>track_package</span><span class='lparen'>(</span><span class='id package_id'>package_id</span><span class='rparen'>)</span>
   <span class='kw'>super</span>
@@ -398,7 +355,7 @@ the tracking details
 </div>
     
     <div id="footer">
-  Generated on Mon Jun 13 15:03:56 2011 by 
+  Generated on Mon Jun 13 16:20:06 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.7.1 (ruby-1.9.2).
 </div>

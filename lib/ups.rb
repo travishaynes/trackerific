@@ -14,17 +14,14 @@ module Trackerific
       when 'production' then 'https://www.ups.com/ups.app/xml'
     end : 'https://www.ups.com/ups.app/xml'
     
-    # The required options for tracking a UPS package are :key, :user_id, and
-    # :password.
-    #
-    # @return [Array] the required options for tracking a UPS package.
-    def required_options
-      [:key, :user_id, :password]
-    end
-    
-    # Tracks a UPS package.
-    # A Trackerific::Error is raised when a package cannot be tracked.
+    # Tracks a UPS package
+    # @param [String] package_id the package identifier
     # @return [Trackerific::Details] the tracking details
+    # @raise [Trackerific::Error] raised when the server returns an error (invalid credentials, tracking package, etc.)
+    # @example Track a package
+    #   ups = Trackerific::UPS.new key: 'api key', user_id: 'user', password: 'secret'
+    #   details = ups.track_package("1Z12345E0291980793")
+    # @api public
     def track_package(package_id)
       super
       # connect to UPS via HTTParty
@@ -42,8 +39,16 @@ module Trackerific
     
     protected
     
+    # The required options for tracking a UPS package
+    # @return [Array] the required options for tracking a UPS package.
+    # @api private
+    def required_options
+      [:key, :user_id, :password]
+    end
+    
     # Parses the response from UPS
     # @return [Trackerific::Details]
+    # @api private
     def parse_success_response(http_response)
       # get the activity from the UPS response
       activity = http_response['TrackResponse']['Shipment']['Package']['Activity']
@@ -72,14 +77,16 @@ module Trackerific
       )
     end
     
-    # Parses a UPS tracking response, and returns any errors.
+    # Parses a UPS tracking response, and returns any errors
     # @return [String] the UPS tracking error
+    # @api private
     def parse_error_response(http_response)
       http_response['TrackResponse']['Response']['Error']['ErrorDescription']
     end
     
-    # Builds the XML request to send to UPS for tracking a package.
+    # Builds the XML request to send to UPS for tracking a package
     # @return [String] the XML request
+    # @api private
     def build_xml_request
       xml = ""
       builder = ::Builder::XmlMarkup.new(:target => xml)

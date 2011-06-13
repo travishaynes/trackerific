@@ -9,15 +9,14 @@ module Trackerific
     format :xml
     base_uri "https://gateway.fedex.com"
     
-    # @return [Array] required options for tracking a FedEx package are :account
-    #   and :meter
-    def required_options
-      [:account, :meter]
-    end
-    
-    # Tracks a FedEx package.
-    # A Trackerific::Error is raised when a package cannot be tracked.
+    # Tracks a FedEx package
+    # @param [String] package_id the package identifier
     # @return [Trackerific::Details] the tracking details
+    # @raise [Trackerific::Error] raised when the server returns an error (invalid credentials, tracking package, etc.)
+    # @example Track a package
+    #   fedex = Trackerific::FedEx.new :account => 'account', :meter => 'meter'
+    #   details = fedex.track_package("183689015000001")
+    # @api public
     def track_package(package_id)
       super
       # request tracking information from FedEx via HTTParty
@@ -48,8 +47,17 @@ module Trackerific
     
     protected
     
+    # Returns an Array of required options used when creating a new instance
+    # @return [Array] required options for tracking a FedEx package are :account
+    #   and :meter
+    # @api private
+    def required_options
+      [:account, :meter]
+    end
+    
     # Builds the XML request to send to FedEx
     # @return [String] a FDXTrack2Request XML
+    # @api private
     def build_xml_request
       xml = ""
       # the API namespace
