@@ -19,17 +19,15 @@ describe "Trackerific::FedEx" do
           FEDEX_TRACK_URL,
           :body => load_fixture(:fedex_success_response)
         )
-        @valid_response = {
-          :package_id => "183689015000001",
-          :summary    => "Delivered",
-          :details    => [
-            "Jul 01 10:43 am Delivered Gainesville GA 30506",
-            "Jul 01 08:48 am On FedEx vehicle for delivery ATHENS GA 30601",
-            "Jul 01 05:07 am At local FedEx facility ATHENS GA 30601"
-          ]
-        }
+        @tracking = @fedex.track_package(@package_id)
       end
-      specify { @fedex.track_package(@package_id).should eq @valid_response }
+      specify { @tracking.should be_a Trackerific::Details }
+      it "should have at least one event" do
+        @tracking.events.length.should >= 1
+      end
+      it "should have a summary" do
+        @tracking.summary.should_not be_empty
+      end
     end
     context "with an error response from the server" do
       before(:all) do

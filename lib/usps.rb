@@ -1,7 +1,10 @@
+require 'date'
+
 module Trackerific
   require 'builder'
   require 'httparty'
   
+  # Provides package tracking support for USPS.
   class USPS < Base
     include HTTParty
     format :xml
@@ -15,10 +18,16 @@ module Trackerific
       @options = options
     end
     
+    # The required option for tracking a UPS package is :user_id
+    #
+    # @return [Array] the required options for tracking a UPS package.
     def required_options
       [:user_id]
     end
     
+    # Tracks a USPS package.
+    # A Trackerific::Error is raised when a package cannot be tracked.
+    # @return [Trackerific::Details] the tracking details
     def track_package(package_id)
       super
       response = self.class.get('/ShippingAPITest.dll', :query => {:API => 'TrackV2', :XML => build_xml_request}.to_query)
@@ -26,15 +35,29 @@ module Trackerific
       raise Trackerific::Error, response['Error']['Description'] unless response['Error'].nil?
       raise Trackerific::Error, "Tracking information not found in response from server." if response['TrackResponse'].nil?
       tracking_info = response['TrackResponse']['TrackInfo']
-      {
-        :package_id => tracking_info['ID'],
-        :summary => tracking_info['TrackSummary'],
-        :details => tracking_info['TrackDetail']
-      }
+      details = []
+      tracking_info['TrackDetail'].each do |d|
+        # each tracking detail is a string in this format:
+        # MM DD HH:MM am/pm DESCRIPTION CITY STATE ZIP.
+        # unfortunately, it will not be possible to tell the difference between
+        # the location, and the summary. So, for USPS, the location will be in
+        # the summary
+        d = d.split(" ")
+        date = DateTime.parse(d[0..3].join(" "))
+        desc = d[4..d.length].join(" ")
+        details << Trackerific::Event.new(date, desc, "")
+      end
+      Trackerific::Details.new(
+        tracking_info['ID'],
+        tracking_info['TrackSummary'],
+        details
+      )
     end
     
     protected
     
+    # Parses the response from UPS
+    # @return [Trackerific::Details]
     def build_xml_request
       tracking_request = ""
       builder = ::Builder::XmlMarkup.new(:target => tracking_request)

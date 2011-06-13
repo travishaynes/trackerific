@@ -1,0 +1,6 @@
+lib/ups.rb 2b98972c48bd4032d5a6cd2017549ce394e8ea0d
+lib/usps.rb b6e83100cd5225341ce5a61f0ff843440309e063
+lib/fedex.rb ba42d502349530fe2518303c23d2b8babecd5f2d
+lib/trackerific.rb e559eb82a7572089ee2cfd48cbe2ec662d3c4c18
+lib/trackerific_event.rb 21e48404ba7b8b90114ce0d74d38248a637a0452
+lib/trackerific_details.rb d3c5cc1844259f2889b4d82920b12ad57fe4d412

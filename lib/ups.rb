@@ -1,6 +1,9 @@
+require 'date'
+
 module Trackerific
   require 'httparty'
   
+  # Provides package tracking support for UPS.
   class UPS < Base
     include ::HTTParty
     format :xml
@@ -9,14 +12,25 @@ module Trackerific
       when 'production' then 'https://www.ups.com/ups.app/xml'
     end : 'https://www.ups.com/ups.app/xml'
     
+    # The required options for tracking a UPS package are :key, :user_id, and
+    # :password.
+    #
+    # @return [Array] the required options for tracking a UPS package.
     def required_options
       [:key, :user_id, :password]
     end
     
+    # Tracks a UPS package.
+    # A Trackerific::Error is raised when a package cannot be tracked.
+    # @return [Trackerific::Details] the tracking details
     def track_package(package_id)
       super
+      # connect to UPS via HTTParty
       http_response = self.class.post('/Track', :body => build_xml_request)
+      # throw any HTTP errors
       http_response.error! unless http_response.code == 200
+      # Check the response for errors, return a Trackerific::Error, or parse
+      # the response from UPS and return a Trackerific::Details
       case http_response['TrackResponse']['Response']['ResponseStatusCode']
         when "0" then raise Trackerific::Error, parse_error_response(http_response)
         when "1" then return parse_success_response(http_response)
@@ -26,32 +40,44 @@ module Trackerific
     
     protected
     
+    # Parses the response from UPS
+    # @return [Trackerific::Details]
     def parse_success_response(http_response)
+      # get the activity from the UPS response
       activity = http_response['TrackResponse']['Shipment']['Package']['Activity']
+      # if there's only one activity in the list, we need to put it in an array
       activity = [activity] if activity.is_a? Hash
+      # UPS does not provide a summary, so we'll just use the last tracking status
+      summary = activity.first['Status']['StatusType']['Description'].titleize
       details = []
       activity.each do |a|
-        status = a['Status']['StatusType']['Description']
-        if status != "UPS INTERNAL ACTIVITY CODE"
-          address = a['ActivityLocation']['Address'].map {|k,v| v}.join(" ")
-          date = "#{a['Date'].to_date} #{a['Time'][0..1]}:#{a['Time'][2..3]}:#{a['Time'][4..5]}".to_datetime
-          details << "#{date.strftime('%b %d %I:%M %P')} #{status}"
-        end
+        # the time format from UPS is HHMMSS, which cannot be directly converted
+        # to a Ruby time.
+        hours   = a['Time'][0..1]
+        minutes = a['Time'][2..3]
+        seconds = a['Time'][4..5]
+        date    = Date.parse(a['Date'])
+        date    = DateTime.parse("#{date} #{hours}:#{minutes}:#{seconds}")
+        desc    = a['Status']['StatusType']['Description'].titleize
+        loc     = a['ActivityLocation']['Address'].map {|k,v| v}.join(" ")
+        details << Trackerific::Event.new(date, desc, loc)
       end
-      # UPS does not provide a summary, so just use the last tracking details
-      summary = details.last
-      details.delete(summary)
-      return {
-        :package_id => @package_id,
-        :summary => summary,
-        :details => details.reverse
-      }
+      
+      Trackerific::Details.new(
+        @package_id,
+        summary,
+        details
+      )
     end
     
+    # Parses a UPS tracking response, and returns any errors.
+    # @return [String] the UPS tracking error
     def parse_error_response(http_response)
       http_response['TrackResponse']['Response']['Error']['ErrorDescription']
     end
     
+    # Builds the XML request to send to UPS for tracking a package.
+    # @return [String] the XML request
     def build_xml_request
       xml = ""
       builder = ::Builder::XmlMarkup.new(:target => xml)

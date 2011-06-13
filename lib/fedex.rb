@@ -2,15 +2,23 @@ require 'httparty'
 
 module Trackerific
   
+  # Provides package tracking support for FedEx
   class FedEx < Base
     include ::HTTParty
     format :xml
     base_uri "https://gateway.fedex.com"
     
+    # @return [Array] required options for tracking a FedEx package are :account
+    #   and :meter.
     def required_options
       [:account, :meter]
     end
     
+    # Tracks a FedEx package.
+    #
+    # A Trackerific::Error is raised when a package cannot be tracked.
+    #
+    # @return [Trackerific::Details] the tracking details
     def track_package(package_id)
       super
       http_response = self.class.post "/GatewayDC", :body => build_xml_request
@@ -22,23 +30,25 @@ module Trackerific
       details = track_reply["Package"]
       events = []
       details["Event"].each do |e|
-        date = Time.parse("#{e["Date"]} #{e["Time"]}").strftime('%b %d %I:%M %P')
+        date = Time.parse("#{e["Date"]} #{e["Time"]}")
         desc = e["Description"]
         addr = e["Address"]
         # Adds event in this format:
         # MM DD HH:MM am/pm Description City State Zip
-        events << "#{date} #{desc} #{addr["City"]} #{addr["StateOrProvinceCode"]} #{addr["PostalCode"]}"
+        events << Trackerific::Event.new(date, desc, "#{addr["StateOrProvinceCode"]} #{addr["PostalCode"]}")
       end
       
-      return {
-        :package_id => details["TrackingNumber"],
-        :summary    => details["StatusDescription"],
-        :details    => events
-      }
+      Details.new(
+        details["TrackingNumber"],
+        details["StatusDescription"],
+        events
+      )
     end
     
     protected
     
+    # Builds the XML request to send to FedEx
+    # @return [String] a FDXTrack2Request XML
     def build_xml_request
       xml = ""
       xmlns_api = "http://www.fedex.com/fsmapi"

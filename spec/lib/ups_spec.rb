@@ -19,13 +19,15 @@ describe "Trackerific::UPS" do
           UPS_TRACK_URL,
           :body => load_fixture(:ups_success_response)
         )
-        @valid_response = {
-          :package_id=>@package_id,
-          :summary=>"Mar 13 04:00 pm DELIVERED",
-          :details=>[]
-        }
+        @tracking = @ups.track_package(@package_id)
       end
-      specify { @ups.track_package(@package_id).should eq @valid_response }
+      specify { @tracking.should be_a Trackerific::Details }
+      it "should have at least one event" do
+        @tracking.events.length.should >= 1
+      end
+      it "should have a summary" do
+        @tracking.summary.should_not be_empty
+      end
     end
     context "with an error response from the server" do
       before(:all) do
