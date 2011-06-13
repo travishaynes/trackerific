@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{trackerific}
-  s.version = "0.1.2"
+  s.version = "0.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Travis Haynes"]
-  s.date = %q{2011-06-10}
+  s.date = %q{2011-06-13}
   s.description = %q{Trackerific provides USPS, FedEx and UPS package tracking to Rails.}
   s.email = %q{travis.j.haynes@gmail.com}
   s.extra_rdoc_files = [
@@ -25,17 +25,16 @@ Gem::Specification.new do |s|
     "Rakefile",
     "VERSION",
     "lib/fedex.rb",
-    "lib/soap_client.rb",
     "lib/trackerific.rb",
     "lib/ups.rb",
     "lib/usps.rb",
-    "lib/wsdl/fedex/development.wsdl",
-    "lib/wsdl/fedex/production.wsdl",
+    "spec/fixtures/fedex_error_response.xml",
     "spec/fixtures/fedex_success_response.xml",
     "spec/fixtures/ups_error_response.xml",
     "spec/fixtures/ups_success_response.xml",
+    "spec/fixtures/usps_error_response.xml",
+    "spec/fixtures/usps_success_response.xml",
     "spec/lib/fedex_spec.rb",
-    "spec/lib/soap_client_spec.rb",
     "spec/lib/trackerific_spec.rb",
     "spec/lib/ups_spec.rb",
     "spec/lib/usps_spec.rb",
@@ -51,7 +50,6 @@ Gem::Specification.new do |s|
   s.summary = %q{Trackerific provides package tracking to Rails.}
   s.test_files = [
     "spec/lib/fedex_spec.rb",
-    "spec/lib/soap_client_spec.rb",
     "spec/lib/trackerific_spec.rb",
     "spec/lib/ups_spec.rb",
     "spec/lib/usps_spec.rb",
@@ -68,30 +66,30 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<rails>, [">= 3.0.0"])
       s.add_runtime_dependency(%q<httparty>, [">= 0.7.7"])
       s.add_runtime_dependency(%q<builder>, [">= 2.1.2"])
-      s.add_runtime_dependency(%q<savon>, [">= 0.8.6"])
-      s.add_runtime_dependency(%q<curb>, [">= 0.7.15"])
       s.add_development_dependency(%q<bundler>, [">= 1.0.13"])
       s.add_development_dependency(%q<jeweler>, [">= 1.5.2"])
       s.add_development_dependency(%q<rspec-rails>, [">= 2.6.1"])
+      s.add_development_dependency(%q<savon_spec>, [">= 0.1.6"])
+      s.add_development_dependency(%q<ruby-debug19>, [">= 0"])
     else
       s.add_dependency(%q<rails>, [">= 3.0.0"])
       s.add_dependency(%q<httparty>, [">= 0.7.7"])
       s.add_dependency(%q<builder>, [">= 2.1.2"])
-      s.add_dependency(%q<savon>, [">= 0.8.6"])
-      s.add_dependency(%q<curb>, [">= 0.7.15"])
       s.add_dependency(%q<bundler>, [">= 1.0.13"])
       s.add_dependency(%q<jeweler>, [">= 1.5.2"])
       s.add_dependency(%q<rspec-rails>, [">= 2.6.1"])
+      s.add_dependency(%q<savon_spec>, [">= 0.1.6"])
+      s.add_dependency(%q<ruby-debug19>, [">= 0"])
     end
   else
     s.add_dependency(%q<rails>, [">= 3.0.0"])
     s.add_dependency(%q<httparty>, [">= 0.7.7"])
     s.add_dependency(%q<builder>, [">= 2.1.2"])
-    s.add_dependency(%q<savon>, [">= 0.8.6"])
-    s.add_dependency(%q<curb>, [">= 0.7.15"])
     s.add_dependency(%q<bundler>, [">= 1.0.13"])
     s.add_dependency(%q<jeweler>, [">= 1.5.2"])
     s.add_dependency(%q<rspec-rails>, [">= 2.6.1"])
+    s.add_dependency(%q<savon_spec>, [">= 0.1.6"])
+    s.add_dependency(%q<ruby-debug19>, [">= 0"])
   end
 end
 
