@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{trackerific}
-  s.version = "0.2.1"
+  s.version = "0.3.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Travis Haynes"]
@@ -18,14 +18,41 @@ Gem::Specification.new do |s|
   ]
   s.files = [
     ".rspec",
+    ".yardoc/checksums",
+    ".yardoc/objects/root.dat",
+    ".yardoc/proxy_types",
     "Gemfile",
     "Gemfile.lock",
     "LICENSE.txt",
     "README.rdoc",
     "Rakefile",
     "VERSION",
+    "doc/Trackerific.html",
+    "doc/Trackerific/Base.html",
+    "doc/Trackerific/Details.html",
+    "doc/Trackerific/Error.html",
+    "doc/Trackerific/Event.html",
+    "doc/Trackerific/FedEx.html",
+    "doc/Trackerific/UPS.html",
+    "doc/Trackerific/USPS.html",
+    "doc/_index.html",
+    "doc/class_list.html",
+    "doc/css/common.css",
+    "doc/css/full_list.css",
+    "doc/css/style.css",
+    "doc/file.README.html",
+    "doc/file_list.html",
+    "doc/frames.html",
+    "doc/index.html",
+    "doc/js/app.js",
+    "doc/js/full_list.js",
+    "doc/js/jquery.js",
+    "doc/method_list.html",
+    "doc/top-level-namespace.html",
     "lib/fedex.rb",
     "lib/trackerific.rb",
+    "lib/trackerific_details.rb",
+    "lib/trackerific_event.rb",
     "lib/ups.rb",
     "lib/usps.rb",
     "spec/fixtures/fedex_error_response.xml",
@@ -35,6 +62,8 @@ Gem::Specification.new do |s|
     "spec/fixtures/usps_error_response.xml",
     "spec/fixtures/usps_success_response.xml",
     "spec/lib/fedex_spec.rb",
+    "spec/lib/trackerific_details_spec.rb",
+    "spec/lib/trackerific_event_spec.rb",
     "spec/lib/trackerific_spec.rb",
     "spec/lib/ups_spec.rb",
     "spec/lib/usps_spec.rb",
@@ -50,6 +79,8 @@ Gem::Specification.new do |s|
   s.summary = %q{Trackerific provides package tracking to Rails.}
   s.test_files = [
     "spec/lib/fedex_spec.rb",
+    "spec/lib/trackerific_details_spec.rb",
+    "spec/lib/trackerific_event_spec.rb",
     "spec/lib/trackerific_spec.rb",
     "spec/lib/ups_spec.rb",
     "spec/lib/usps_spec.rb",
