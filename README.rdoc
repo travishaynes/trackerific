@@ -9,40 +9,42 @@ and then run
 
   # Track a FedEx package:
   fedex = Trackerific::FedEx.new :account => '123456789', :meter => '123456789'
-  tracking_info = fedex.track_package('183689015000001')
+  details = fedex.track_package('183689015000001')
   
   # Track a USPS package:
   usps = Trackerific::USPS.new :user_id => '123USERID4567'
-  tracking_info = usps.track_package('EJ958083578US')
+  details = usps.track_package('EJ958083578US')
   
   # Track a UPS package:
   ups = Trackerific::UPS.new :user_id => 'userid', :key => 'kQdEJwuHBjtQ7g2', :password => 'secret'
-  tracking_info = ups.track_package('1Z12345E0291980793')
+  details = ups.track_package('1Z12345E0291980793')
 
-=== Tracking Results
+=== Tracking Details
 
-The tracking results for all three providers are returned in a Hash in this
-format:
+The tracking information is returned in a Trackerific::Details instance.
 
-  {
-    :package_id => 'the package id being tracked',
-    :summary => 'summary of the tracking results',
-    :details => ['array containing each tracking status by date']
-  }
+  details.summary # => a summary of the tracking events
+  details.events  # => an Array of Trackerific::Events
 
-Here's an example of how to print the tracking results out in a readable format:
+You can easily print out the tracking events just by doing:
 
-  puts "Tracking information for package ID: %s" % tracking_info[:package_id]
-  puts tracking_info[:summary]
-  puts "  * %s" % tracking_info[:details].join("\n  * ")
-  
-The above code would yield something that looks like this:
+  puts details.events         # for all the events
+  puts details.events.first   # for just one event
 
-  Tracking information for package ID: EJ958083578US
-  Your item was delivered at 8:10 am on June 1 in Wilmington DE 19801.
-    * May 30 11:07 am NOTICE LEFT WILMINGTON DE 19801.
-    * May 30 10:08 am ARRIVAL AT UNIT WILMINGTON DE 19850.
-    * May 29 9:55 am ACCEPT OR PICKUP EDGEWATER NJ 07020.
+Or, if you need specific information about an event:
+
+  details.events.last.date         # => the date the package was shipped
+  details.events.first.date        # => the last date the package was updated
+  details.events.first.description # => a description of an event
+  details.events.first.location    # => the location of the package during that event
+
+location will not work for USPS packages, because USPS does not provide that
+information seperately from the description. So for USPS packages, the location
+will always be at the end of the description.
+
+Note that events.last will return the first event the tracking provider
+supplied. This is because the events are listed in LIFO order, so the most
+recent events will always be at the top of the list.
 
 === Finding a Tracking Service Provider
 

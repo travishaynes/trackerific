@@ -71,48 +71,50 @@ and then run
 <pre class="code">
   <span class='comment'># Track a FedEx package:
 </span>  <span class='id fedex'>fedex</span> <span class='op'>=</span> <span class='const'>Trackerific</span><span class='op'>::</span><span class='const'>FedEx</span><span class='period'>.</span><span class='id new'>new</span> <span class='symbol'>:account</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>123456789</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:meter</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>123456789</span><span class='tstring_end'>'</span></span>
-  <span class='id tracking_info'>tracking_info</span> <span class='op'>=</span> <span class='id fedex'>fedex</span><span class='period'>.</span><span class='id track_package'>track_package</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>183689015000001</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
+  <span class='id details'>details</span> <span class='op'>=</span> <span class='id fedex'>fedex</span><span class='period'>.</span><span class='id track_package'>track_package</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>183689015000001</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
   
   <span class='comment'># Track a USPS package:
 </span>  <span class='id usps'>usps</span> <span class='op'>=</span> <span class='const'>Trackerific</span><span class='op'>::</span><span class='const'>USPS</span><span class='period'>.</span><span class='id new'>new</span> <span class='symbol'>:user_id</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>123USERID4567</span><span class='tstring_end'>'</span></span>
-  <span class='id tracking_info'>tracking_info</span> <span class='op'>=</span> <span class='id usps'>usps</span><span class='period'>.</span><span class='id track_package'>track_package</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>EJ958083578US</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
+  <span class='id details'>details</span> <span class='op'>=</span> <span class='id usps'>usps</span><span class='period'>.</span><span class='id track_package'>track_package</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>EJ958083578US</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
   
   <span class='comment'># Track a UPS package:
 </span>  <span class='id ups'>ups</span> <span class='op'>=</span> <span class='const'>Trackerific</span><span class='op'>::</span><span class='const'>UPS</span><span class='period'>.</span><span class='id new'>new</span> <span class='symbol'>:user_id</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>userid</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:key</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>kQdEJwuHBjtQ7g2</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:password</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>secret</span><span class='tstring_end'>'</span></span>
-  <span class='id tracking_info'>tracking_info</span> <span class='op'>=</span> <span class='id ups'>ups</span><span class='period'>.</span><span class='id track_package'>track_package</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>1Z12345E0291980793</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
+  <span class='id details'>details</span> <span class='op'>=</span> <span class='id ups'>ups</span><span class='period'>.</span><span class='id track_package'>track_package</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>1Z12345E0291980793</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
 </pre>
-<h3>Tracking Results</h3>
+<h3>Tracking Details</h3>
 <p>
-The tracking results for all three providers are returned in a Hash in this
-format:
+The tracking information is returned in a Trackerific::Details instance.
 </p>
 <pre class="code">
-  <span class='lbrace'>{</span>
-    <span class='symbol'>:package_id</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>the package id being tracked</span><span class='tstring_end'>'</span></span><span class='comma'>,</span>
-    <span class='symbol'>:summary</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>summary of the tracking results</span><span class='tstring_end'>'</span></span><span class='comma'>,</span>
-    <span class='symbol'>:details</span> <span class='op'>=&gt;</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>array containing each tracking status by date</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
-  <span class='rbrace'>}</span>
-</pre>
+  <span class='id details'>details</span><span class='period'>.</span><span class='id summary'>summary</span> <span class='comment'># =&gt; a summary of the tracking events
+</span>  <span class='id details'>details</span><span class='period'>.</span><span class='id events'>events</span>  <span class='comment'># =&gt; an Array of Trackerific::Events
+</span></pre>
 <p>
-Here&#8217;s an example of how to print the tracking results out in a
-readable format:
+You can easily print out the tracking events just by doing:
 </p>
 <pre class="code">
-  <span class='id puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Tracking information for package ID: %s</span><span class='tstring_end'>&quot;</span></span> <span class='op'>%</span> <span class='id tracking_info'>tracking_info</span><span class='lbracket'>[</span><span class='symbol'>:package_id</span><span class='rbracket'>]</span>
-  <span class='id puts'>puts</span> <span class='id tracking_info'>tracking_info</span><span class='lbracket'>[</span><span class='symbol'>:summary</span><span class='rbracket'>]</span>
-  <span class='id puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>  * %s</span><span class='tstring_end'>&quot;</span></span> <span class='op'>%</span> <span class='id tracking_info'>tracking_info</span><span class='lbracket'>[</span><span class='symbol'>:details</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n  * </span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-  
-</pre>
+  <span class='id puts'>puts</span> <span class='id details'>details</span><span class='period'>.</span><span class='id events'>events</span>         <span class='comment'># for all the events
+</span>  <span class='id puts'>puts</span> <span class='id details'>details</span><span class='period'>.</span><span class='id events'>events</span><span class='period'>.</span><span class='id first'>first</span>   <span class='comment'># for just one event
+</span></pre>
 <p>
-The above code would yield something that looks like this:
+Or, if you need specific information about an event:
 </p>
 <pre class="code">
-  Tracking information for package ID: EJ958083578US
-  Your item was delivered at 8:10 am on June 1 in Wilmington DE 19801.
-    * May 30 11:07 am NOTICE LEFT WILMINGTON DE 19801.
-    * May 30 10:08 am ARRIVAL AT UNIT WILMINGTON DE 19850.
-    * May 29 9:55 am ACCEPT OR PICKUP EDGEWATER NJ 07020.
-</pre>
+  <span class='id details'>details</span><span class='period'>.</span><span class='id events'>events</span><span class='period'>.</span><span class='id last'>last</span><span class='period'>.</span><span class='id date'>date</span>         <span class='comment'># =&gt; the date the package was shipped
+</span>  <span class='id details'>details</span><span class='period'>.</span><span class='id events'>events</span><span class='period'>.</span><span class='id first'>first</span><span class='period'>.</span><span class='id date'>date</span>        <span class='comment'># =&gt; the last date the package was updated
+</span>  <span class='id details'>details</span><span class='period'>.</span><span class='id events'>events</span><span class='period'>.</span><span class='id first'>first</span><span class='period'>.</span><span class='id description'>description</span> <span class='comment'># =&gt; a description of an event
+</span>  <span class='id details'>details</span><span class='period'>.</span><span class='id events'>events</span><span class='period'>.</span><span class='id first'>first</span><span class='period'>.</span><span class='id location'>location</span>    <span class='comment'># =&gt; the location of the package during that event
+</span></pre>
+<p>
+location will not work for USPS packages, because USPS does not provide
+that information seperately from the description. So for USPS packages, the
+location will always be at the end of the description.
+</p>
+<p>
+Note that events.last will return the first event the tracking provider
+supplied. This is because the events are listed in LIFO order, so the most
+recent events will always be at the top of the list.
+</p>
 <h3>Finding a Tracking Service Provider</h3>
 <p>
 If you do not know the tracking service provider of a package id, you can
@@ -204,7 +206,7 @@ Copyright &#169; 2011 Travis Haynes. See LICENSE.txt for further details.
 </div></div>
     
     <div id="footer">
-  Generated on Mon Jun 13 13:53:33 2011 by 
+  Generated on Mon Jun 13 14:22:51 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.7.1 (ruby-1.9.2).
 </div>
