@@ -100,6 +100,9 @@ GEM
     treetop (1.4.9)
       polyglot (>= 0.3.1)
     tzinfo (0.3.26)
+    yard (0.7.1)
+    yardstick (0.4.0)
+      yard (~> 0.7.0)
 
 PLATFORMS
   ruby
@@ -112,4 +115,5 @@ DEPENDENCIES
   jeweler (>= 1.5.2)
   rails (>= 3.0.0)
   rspec-rails (>= 2.6.1)
-  ruby-debug19
+  ruby-debug19 (>= 0.11.6)
+  yardstick (>= 0.4.0)

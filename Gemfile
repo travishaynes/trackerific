@@ -12,7 +12,8 @@ end
 
 group :development, :test do
   gem "rspec-rails", ">= 2.6.1"
-  gem "ruby-debug19", :require => "ruby-debug"
+  gem "ruby-debug19", ">= 0.11.6", :require => "ruby-debug"
+  gem 'yardstick', ">= 0.4.0"
 end
 
 group :test do

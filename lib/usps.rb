@@ -6,17 +6,14 @@ module Trackerific
   
   # Provides package tracking support for USPS.
   class USPS < Base
+    # setup HTTParty
     include HTTParty
     format :xml
+    # use the test site for Rails development, production for everything else
     base_uri defined?(Rails) ? case Rails.env
       when 'test', 'development' then 'http://testing.shippingapis.com'
       when 'production' then 'https://secure.shippingapis.com'
     end : 'https://secure.shippingapis.com'
-    
-    def initialize(options = {})
-      super
-      @options = options
-    end
     
     # The required option for tracking a UPS package is :user_id
     #
@@ -30,10 +27,16 @@ module Trackerific
     # @return [Trackerific::Details] the tracking details
     def track_package(package_id)
       super
+      # connect to the USPS shipping API via HTTParty
       response = self.class.get('/ShippingAPITest.dll', :query => {:API => 'TrackV2', :XML => build_xml_request}.to_query)
+      # throw any HTTP errors
       response.error! unless response.code == 200
+      # raise a Trackerific::Error if there is an error in the response, or if the
+      # tracking response is malformed
       raise Trackerific::Error, response['Error']['Description'] unless response['Error'].nil?
       raise Trackerific::Error, "Tracking information not found in response from server." if response['TrackResponse'].nil?
+      # get the tracking information from the response, and convert into a
+      # Trackerific::Details
       tracking_info = response['TrackResponse']['TrackInfo']
       details = []
       tracking_info['TrackDetail'].each do |d|
@@ -47,6 +50,7 @@ module Trackerific
         desc = d[4..d.length].join(" ")
         details << Trackerific::Event.new(date, desc, "")
       end
+      # return the details
       Trackerific::Details.new(
         tracking_info['ID'],
         tracking_info['TrackSummary'],
@@ -56,15 +60,18 @@ module Trackerific
     
     protected
     
-    # Parses the response from UPS
-    # @return [Trackerific::Details]
+    # Builds an XML request to send to USPS
+    # @return [String] the xml request
     def build_xml_request
-      tracking_request = ""
-      builder = ::Builder::XmlMarkup.new(:target => tracking_request)
+      xml = ""
+      # set up the Builder
+      builder = ::Builder::XmlMarkup.new(:target => xml)
+      # build the request
       builder.TrackRequest(:USERID => @options[:user_id]) do |t|
         t.TrackID(:ID => @package_id)
       end
-      return tracking_request
+      # return the XML
+      xml
     end
     
   end

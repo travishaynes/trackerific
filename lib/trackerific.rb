@@ -11,9 +11,11 @@ module Trackerific
   class Base
     def initialize(options = {})
       required = required_options
+      # make sure all the required options exist
       required.each do |k|
         raise ArgumentError.new("Missing required parameter: #{k}") unless options.has_key?(k)
       end
+      # make sure no invalid options exist
       options.each do |k, v|
         raise ArgumentError.new("Invalid parameter: #{k}") unless required.include?(k)
       end

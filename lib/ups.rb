@@ -5,8 +5,10 @@ module Trackerific
   
   # Provides package tracking support for UPS.
   class UPS < Base
+    # setup HTTParty
     include ::HTTParty
     format :xml
+    # use the test site for Rails development, production for everything else
     base_uri defined?(Rails) ? case Rails.env
       when 'test','development' then 'https://wwwcie.ups.com/ups.app/xml'
       when 'production' then 'https://www.ups.com/ups.app/xml'

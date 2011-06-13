@@ -215,7 +215,7 @@ Tracks a FedEx package.
 </p><div class="docstring">
   <div class="discussion">
     <p>
-Required options for tracking a FedEx package are :account and :meter.
+Required options for tracking a FedEx package are :account and :meter
 </p>
 
 
@@ -234,7 +234,7 @@ Required options for tracking a FedEx package are :account and :meter.
       
         &mdash;
         <div class='inline'><p>
-required options for tracking a FedEx package are :account and :meter.
+required options for tracking a FedEx package are :account and :meter
 </p>
 </div>
       
@@ -248,12 +248,12 @@ required options for tracking a FedEx package are :account and :meter.
       <pre class="lines">
 
 
-13
 14
-15</pre>
+15
+16</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/fedex.rb', line 13</span>
+      <pre class="code"><span class="info file"># File 'lib/fedex.rb', line 14</span>
 
 <span class='kw'>def</span> <span class='id required_options'>required_options</span>
   <span class='lbracket'>[</span><span class='symbol'>:account</span><span class='comma'>,</span> <span class='symbol'>:meter</span><span class='rbracket'>]</span>
@@ -273,10 +273,8 @@ required options for tracking a FedEx package are :account and :meter.
 </p><div class="docstring">
   <div class="discussion">
     <p>
-Tracks a FedEx package.
-</p>
-<p>
-A Trackerific::Error is raised when a package cannot be tracked.
+Tracks a FedEx package. A Trackerific::Error is raised when a package
+cannot be tracked.
 </p>
 
 
@@ -322,6 +320,7 @@ the tracking details
       <pre class="lines">
 
 
+21
 22
 23
 24
@@ -346,31 +345,34 @@ the tracking details
 43
 44
 45
-46</pre>
+46
+47</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/fedex.rb', line 22</span>
+      <pre class="code"><span class="info file"># File 'lib/fedex.rb', line 21</span>
 
 <span class='kw'>def</span> <span class='id track_package'>track_package</span><span class='lparen'>(</span><span class='id package_id'>package_id</span><span class='rparen'>)</span>
   <span class='kw'>super</span>
-  <span class='id http_response'>http_response</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id class'>class</span><span class='period'>.</span><span class='id post'>post</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/GatewayDC</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:body</span> <span class='op'>=&gt;</span> <span class='id build_xml_request'>build_xml_request</span>
-  <span class='id http_response'>http_response</span><span class='period'>.</span><span class='id error!'>error!</span> <span class='kw'>unless</span> <span class='id http_response'>http_response</span><span class='period'>.</span><span class='id code'>code</span> <span class='op'>==</span> <span class='int'>200</span>
-  
-  <span class='id track_reply'>track_reply</span> <span class='op'>=</span> <span class='id http_response'>http_response</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>FDXTrack2Reply</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
-  <span class='id raise'>raise</span> <span class='const'>Trackerific</span><span class='op'>::</span><span class='const'>Error</span><span class='comma'>,</span> <span class='id track_reply'>track_reply</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Error</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Message</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='kw'>unless</span> <span class='id track_reply'>track_reply</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Error</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id nil?'>nil?</span>
-  
-  <span class='id details'>details</span> <span class='op'>=</span> <span class='id track_reply'>track_reply</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Package</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
-  <span class='id events'>events</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='comment'># request tracking information from FedEx via HTTParty
+</span>  <span class='id http_response'>http_response</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id class'>class</span><span class='period'>.</span><span class='id post'>post</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/GatewayDC</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:body</span> <span class='op'>=&gt;</span> <span class='id build_xml_request'>build_xml_request</span>
+  <span class='comment'># raise any HTTP errors
+</span>  <span class='id http_response'>http_response</span><span class='period'>.</span><span class='id error!'>error!</span> <span class='kw'>unless</span> <span class='id http_response'>http_response</span><span class='period'>.</span><span class='id code'>code</span> <span class='op'>==</span> <span class='int'>200</span>
+  <span class='comment'># get the tracking information from the reply
+</span>  <span class='id track_reply'>track_reply</span> <span class='op'>=</span> <span class='id http_response'>http_response</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>FDXTrack2Reply</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='comment'># raise a Trackerific::Error if there is an error in the reply
+</span>  <span class='id raise'>raise</span> <span class='const'>Trackerific</span><span class='op'>::</span><span class='const'>Error</span><span class='comma'>,</span> <span class='id track_reply'>track_reply</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Error</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Message</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='kw'>unless</span> <span class='id track_reply'>track_reply</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Error</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id nil?'>nil?</span>
+  <span class='comment'># get the details from the reply
+</span>  <span class='id details'>details</span> <span class='op'>=</span> <span class='id track_reply'>track_reply</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Package</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='comment'># convert them into Trackerific::Events
+</span>  <span class='id events'>events</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
   <span class='id details'>details</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Event</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id e'>e</span><span class='op'>|</span>
     <span class='id date'>date</span> <span class='op'>=</span> <span class='const'>Time</span><span class='period'>.</span><span class='id parse'>parse</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id e'>e</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Date</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id e'>e</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Time</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
     <span class='id desc'>desc</span> <span class='op'>=</span> <span class='id e'>e</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Description</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
     <span class='id addr'>addr</span> <span class='op'>=</span> <span class='id e'>e</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Address</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
-    <span class='comment'># Adds event in this format:
-</span>    <span class='comment'># MM DD HH:MM am/pm Description City State Zip
-</span>    <span class='id events'>events</span> <span class='op'>&lt;&lt;</span> <span class='const'>Trackerific</span><span class='op'>::</span><span class='const'>Event</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='id date'>date</span><span class='comma'>,</span> <span class='id desc'>desc</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id addr'>addr</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>StateOrProvinceCode</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id addr'>addr</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>PostalCode</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+    <span class='id events'>events</span> <span class='op'>&lt;&lt;</span> <span class='const'>Trackerific</span><span class='op'>::</span><span class='const'>Event</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='id date'>date</span><span class='comma'>,</span> <span class='id desc'>desc</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id addr'>addr</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>StateOrProvinceCode</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id addr'>addr</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>PostalCode</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
   <span class='kw'>end</span>
-  
-  <span class='const'>Details</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span>
+  <span class='comment'># Return a Trackerific::Details containing all the events
+</span>  <span class='const'>Trackerific</span><span class='op'>::</span><span class='const'>Details</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span>
     <span class='id details'>details</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>TrackingNumber</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='comma'>,</span>
     <span class='id details'>details</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>StatusDescription</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='comma'>,</span>
     <span class='id events'>events</span>
@@ -386,7 +388,7 @@ the tracking details
 </div>
     
     <div id="footer">
-  Generated on Mon Jun 13 14:22:51 2011 by 
+  Generated on Mon Jun 13 15:03:56 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.7.1 (ruby-1.9.2).
 </div>
