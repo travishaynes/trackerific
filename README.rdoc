@@ -21,7 +21,8 @@ and then run
 
 === Tracking Results
 
-The tracking results for all three providers are returned in a Hash in this format:
+The tracking results for all three providers are returned in a Hash in this
+format:
 
   {
     :package_id => 'the package id being tracked',
@@ -43,9 +44,24 @@ The above code would yield something that looks like this:
     * May 30 10:08 am ARRIVAL AT UNIT WILMINGTON DE 19850.
     * May 29 9:55 am ACCEPT OR PICKUP EDGEWATER NJ 07020.
 
+=== Finding a Tracking Service Provider
+
+If you do not know the tracking service provider of a package id, you can use
+the tracking_service helper method to get a Trackerific class that most likely
+will be able to track the given package id.
+
+  include Trackerific
+  tracking_service "183689015000001"    # => Trackerific::FedEx
+  tracking_service "1Z12345E0291980793" # => Trackerific::UPS
+  tracking_service "EJ958083578US"      # => Trackerific::USPS
+  tracking_service "unknown package id" # => nil
+
 === Exception handling:
 
-Exception handling is esssential for tracking packages. If, for example, you enter the wrong number, or the tracking provider has yet to have added the tracking number to their system, a Trackerific::Error will be raised. Here's an example on how to handle Trackerific::Errors:
+Exception handling is esssential for tracking packages. If, for example,
+you enter the wrong number, or the tracking provider has yet to have added the
+tracking number to their system, a Trackerific::Error will be raised. Here's an
+example on how to handle Trackerific::Errors:
 
   begin
     usps.track_package('EJ958083578US')
@@ -55,13 +71,18 @@ Exception handling is esssential for tracking packages. If, for example, you ent
 
 == Contributing to trackerific
  
-* Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet
-* Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it
+* Check out the latest master to make sure the feature hasn't been implemented
+or the bug hasn't been fixed yet
+* Check out the issue tracker to make sure someone already hasn't requested it
+and/or contributed it
 * Fork the project
 * Start a feature/bugfix branch
 * Commit and push until you are happy with your contribution
-* Make sure to add tests for it. This is important so I don't break it in a future version unintentionally.
-* Please try not to mess with the Rakefile, version, or history. If you want to have your own version, or is otherwise necessary, that is fine, but please isolate to its own commit so I can cherry-pick around it.
+* Make sure to add tests for it. This is important so I don't break it in a
+future version unintentionally.
+* Please try not to mess with the Rakefile, version, or history. If you want to
+have your own version, or is otherwise necessary, that is fine, but please
+isolate to its own commit so I can cherry-pick around it.
 
 == Copyright
 

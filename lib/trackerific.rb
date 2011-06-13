@@ -29,11 +29,11 @@ module Trackerific
   require 'fedex'
   require 'ups'
   
-  def tracking_service
-    case self
+  def tracking_service(package_id)
+    case package_id
       when /^.Z/, /^[HK].{10}$/ then Trackerific::UPS
       when /^96.{20}$/ then Trackerific::FedEx
-      else case self.length
+      else case package_id.length
         when 13, 20, 22, 30 then Trackerific::USPS
         when 12, 15, 19 then Trackerific::FedEx
         else nil
