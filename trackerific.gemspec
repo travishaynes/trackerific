@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{trackerific}
-  s.version = "0.3.2"
+  s.version = "0.3.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Travis Haynes"]
@@ -46,24 +46,28 @@ Gem::Specification.new do |s|
     "doc/js/jquery.js",
     "doc/method_list.html",
     "doc/top-level-namespace.html",
-    "lib/fedex.rb",
     "lib/trackerific.rb",
-    "lib/trackerific_details.rb",
-    "lib/trackerific_event.rb",
-    "lib/ups.rb",
-    "lib/usps.rb",
+    "lib/trackerific/base.rb",
+    "lib/trackerific/details.rb",
+    "lib/trackerific/error.rb",
+    "lib/trackerific/event.rb",
+    "lib/trackerific/services/fedex.rb",
+    "lib/trackerific/services/ups.rb",
+    "lib/trackerific/services/usps.rb",
     "spec/fixtures/fedex_error_response.xml",
     "spec/fixtures/fedex_success_response.xml",
     "spec/fixtures/ups_error_response.xml",
     "spec/fixtures/ups_success_response.xml",
     "spec/fixtures/usps_error_response.xml",
     "spec/fixtures/usps_success_response.xml",
-    "spec/lib/fedex_spec.rb",
-    "spec/lib/trackerific_details_spec.rb",
-    "spec/lib/trackerific_event_spec.rb",
+    "spec/lib/trackerific/base_spec.rb",
+    "spec/lib/trackerific/details_spec.rb",
+    "spec/lib/trackerific/error_spec.rb",
+    "spec/lib/trackerific/event_spec.rb",
+    "spec/lib/trackerific/services/fedex_spec.rb",
+    "spec/lib/trackerific/services/ups_spec.rb",
+    "spec/lib/trackerific/services/usps_spec.rb",
     "spec/lib/trackerific_spec.rb",
-    "spec/lib/ups_spec.rb",
-    "spec/lib/usps_spec.rb",
     "spec/spec_helper.rb",
     "spec/support/fixtures.rb",
     "spec/support/trackerific.rb",
@@ -74,17 +78,6 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.7}
   s.summary = %q{Trackerific provides package tracking to Rails.}
-  s.test_files = [
-    "spec/lib/fedex_spec.rb",
-    "spec/lib/trackerific_details_spec.rb",
-    "spec/lib/trackerific_event_spec.rb",
-    "spec/lib/trackerific_spec.rb",
-    "spec/lib/ups_spec.rb",
-    "spec/lib/usps_spec.rb",
-    "spec/spec_helper.rb",
-    "spec/support/fixtures.rb",
-    "spec/support/trackerific.rb"
-  ]
 
   if s.respond_to? :specification_version then
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
@@ -97,6 +90,7 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<bundler>, [">= 1.0.13"])
       s.add_development_dependency(%q<jeweler>, [">= 1.5.2"])
       s.add_development_dependency(%q<rspec-rails>, [">= 2.6.1"])
+      s.add_development_dependency(%q<rspec_multi_matchers>, [">= 1.1.0"])
       s.add_development_dependency(%q<ruby-debug19>, [">= 0.11.6"])
       s.add_development_dependency(%q<yardstick>, [">= 0.4.0"])
     else
@@ -106,6 +100,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<bundler>, [">= 1.0.13"])
       s.add_dependency(%q<jeweler>, [">= 1.5.2"])
       s.add_dependency(%q<rspec-rails>, [">= 2.6.1"])
+      s.add_dependency(%q<rspec_multi_matchers>, [">= 1.1.0"])
       s.add_dependency(%q<ruby-debug19>, [">= 0.11.6"])
       s.add_dependency(%q<yardstick>, [">= 0.4.0"])
     end
@@ -116,6 +111,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<bundler>, [">= 1.0.13"])
     s.add_dependency(%q<jeweler>, [">= 1.5.2"])
     s.add_dependency(%q<rspec-rails>, [">= 2.6.1"])
+    s.add_dependency(%q<rspec_multi_matchers>, [">= 1.1.0"])
     s.add_dependency(%q<ruby-debug19>, [">= 0.11.6"])
     s.add_dependency(%q<yardstick>, [">= 0.4.0"])
   end
