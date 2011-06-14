@@ -4,7 +4,6 @@ describe "Trackerific" do
   include Trackerific
   
   describe "tracking_service" do
-    include Trackerific
     
     context "when given a UPS tracking number" do
       specify { tracking_service("1Z12345E0291980793").should eq Trackerific::UPS }
