@@ -1,14 +1,18 @@
+# Provides easy access to XML fixtures
 module Fixtures
-  
-  def load_fixture(name, ext = :xml)
-    
-    file_name = File.join("spec/fixtures/", "#{name.to_s}.#{ext.to_s}")
-    f = File.open(file_name, 'r')
-    data = "";
-    f.lines.each { |line| data += line }
-    f.close
-    return data
-    
+  # Gets the path to the fixtures
+  # @return [String]
+  # @api private
+  def fixture_path
+    File.join(File.dirname(__FILE__), "..", "fixtures")
   end
-  
+  # Loads a fixture
+  # @param [String] name the name of the fixture to load
+  # @param [Symbol] ext the exention of the fixture. defaults to :xml
+  # @return [String] the contents of the file
+  # @api private
+  def load_fixture(name, ext = :xml)
+    file_name = File.join(fixture_path, "#{name.to_s}.#{ext.to_s}")
+    File.read(file_name)
+  end
 end
