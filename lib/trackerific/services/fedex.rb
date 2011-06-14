@@ -45,8 +45,8 @@ module Trackerific
       )
     end
     
-    # A regex that matches valid package identifiers for FedEx package ids
-    # @return [Regexp] the regular expression
+    # An Array of Regexp that matches valid FedEx package IDs
+    # @return [Array, Regexp] the regular expression
     # @api private
     def self.package_id_matchers
       [ /^[0-9]{15}$/ ]

@@ -58,7 +58,7 @@ will be able to track the given package id.
   tracking_service "EJ958083578US"      # => Trackerific::USPS
   tracking_service "unknown package id" # => nil
 
-=== Exception handling:
+=== Exception handling
 
 Exception handling is esssential for tracking packages. If, for example,
 you enter the wrong number, or the tracking provider has yet to have added the
@@ -72,7 +72,7 @@ example on how to handle Trackerific::Errors:
   end
 
 == Contributing to trackerific
- 
+
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet
 * Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it
 * Fork the project

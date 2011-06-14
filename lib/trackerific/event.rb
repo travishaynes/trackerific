@@ -2,7 +2,7 @@ module Trackerific
   # Provides details for a tracking event
   class Event
     # Provides a new instance of Event
-    # @param [Time] date the date / time of the event
+    # @param [DateTime] date the date / time of the event
     # @param [String] description the event's description
     # @param [String] location where the event took place
     # @api private

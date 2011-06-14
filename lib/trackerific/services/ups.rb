@@ -37,8 +37,8 @@ module Trackerific
       end
     end
     
-    # A regex that matches valid package identifiers for UPS package ids
-    # @return [Regexp] the regular expression
+    # An Array of Regexp that matches valid UPS package IDs.
+    # @return [Array, Regexp] the regular expression
     # @api private
     def self.package_id_matchers
       [ /^.Z/, /^[HK].{10}$/ ]
