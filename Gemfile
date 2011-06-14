@@ -19,4 +19,5 @@ end
 
 group :test do
   gem "fakeweb", ">= 1.3.0"
+  gem 'simplecov', '>= 0.4.0', :require => false
 end

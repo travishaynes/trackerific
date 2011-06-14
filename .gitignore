@@ -3,3 +3,4 @@ pkg
 log
 .yardoc
 measurement
+coverage
