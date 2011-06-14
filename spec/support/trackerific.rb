@@ -13,6 +13,7 @@ module Trackerific
   
   Application.configure do
     config.active_support.deprecation = :stderr
+    config.logger = Logger.new(STDOUT)
   end
 end
 
