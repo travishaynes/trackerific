@@ -12,6 +12,7 @@ end
 
 group :development, :test do
   gem "rspec-rails", ">= 2.6.1"
+  gem "rspec_multi_matchers", ">= 1.1.0"
   gem "ruby-debug19", ">= 0.11.6", :require => "ruby-debug"
   gem 'yardstick', ">= 0.4.0"
 end

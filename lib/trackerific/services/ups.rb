@@ -37,14 +37,20 @@ module Trackerific
       end
     end
     
-    protected
-    
-    # The required options for tracking a UPS package
-    # @return [Array] the required options for tracking a UPS package.
+    # A regex that matches valid package identifiers for UPS package ids
+    # @return [Regexp] the regular expression
     # @api private
-    def required_options
+    def self.package_id_matchers
+      [ /^.Z/, /^[HK].{10}$/ ]
+    end    
+    # The required options for tracking a UPS package
+    # @return [Array] the required options for tracking a UPS package
+    # @api private
+    def self.required_options
       [:key, :user_id, :password]
     end
+    
+    protected
     
     # Parses the response from UPS
     # @return [Trackerific::Details]

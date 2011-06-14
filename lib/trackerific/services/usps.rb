@@ -56,14 +56,21 @@ module Trackerific
       )
     end
     
-    protected
+    # A regex that matches valid package identifiers for USPS package ids
+    # @return [Regexp] the regular expression
+    # @api private
+    def self.package_id_matchers
+      [ /^E\D{1}\d{9}\D{2}$|^9\d{15,21}$/ ]
+    end    
     
     # The required options for tracking a UPS package
-    # @return [Array] the required options for tracking a UPS package.
+    # @return [Array] the required options for tracking a UPS package
     # @api private
-    def required_options
+    def self.required_options
       [:user_id]
     end
+    
+    protected
     
     # Builds an XML request to send to USPS
     # @return [String] the xml request

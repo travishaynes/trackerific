@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'bundler/setup'
 require 'trackerific'
+require 'rspec_multi_matchers'
 
 # load all the support files
 Dir["spec/support/**/*.rb"].each { |f| require File.expand_path(f) }

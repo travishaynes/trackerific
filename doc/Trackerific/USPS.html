@@ -93,7 +93,7 @@
   
   
     <dt class="r1 last">Defined in:</dt>
-    <dd class="r1 last">lib/usps.rb</dd>
+    <dd class="r1 last">lib/trackerific/services/usps.rb</dd>
   
 </dl>
 <div class="clear"></div>
@@ -123,6 +123,63 @@ Provides package tracking support for USPS.
   
   
 
+  
+    <h2>
+      Class Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#package_id_matchers-class_method" title="package_id_matchers (class method)">+ (Regexp) <strong>package_id_matchers</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  <span class="private note title">Private</span>
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+A regex that matches valid package identifiers for USPS package ids.
+</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#required_options-class_method" title="required_options (class method)">+ (Array) <strong>required_options</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  <span class="private note title">Private</span>
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+The required options for tracking a UPS package.
+</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
   
     <h2>
       Instance Method Summary
@@ -176,6 +233,136 @@ Tracks a USPS package.
   
 </div>
 
+
+  <div id="class_method_details" class="method_details_list">
+    <h2>Class Method Details</h2>
+    
+    
+      <div class="method_details first">
+  <p class="signature first" id="package_id_matchers-class_method">
+  
+    + (<tt>Regexp</tt>) <strong>package_id_matchers</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p class="note private">
+  <strong>This method is part of a private API.</strong> 
+  You should avoid using this method if possible, as it may be removed or be changed in the future.
+</p>
+<p>
+A regex that matches valid package identifiers for USPS package ids
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Regexp</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+the regular expression
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+62
+63
+64</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/trackerific/services/usps.rb', line 62</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id package_id_matchers'>package_id_matchers</span>
+  <span class='lbracket'>[</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^E\D{1}\d{9}\D{2}$|^9\d{15,21}$</span><span class='regexp_end'>/</span></span> <span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="required_options-class_method">
+  
+    + (<tt>Array</tt>) <strong>required_options</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p class="note private">
+  <strong>This method is part of a private API.</strong> 
+  You should avoid using this method if possible, as it may be removed or be changed in the future.
+</p>
+<p>
+The required options for tracking a UPS package
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+the required options for tracking a UPS package
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+69
+70
+71</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/trackerific/services/usps.rb', line 69</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id required_options'>required_options</span>
+  <span class='lbracket'>[</span><span class='symbol'>:user_id</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
 
   <div id="instance_method_details" class="method_details_list">
     <h2>Instance Method Details</h2>
@@ -311,7 +498,7 @@ package, etc.)
 57</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/usps.rb', line 26</span>
+      <pre class="code"><span class="info file"># File 'lib/trackerific/services/usps.rb', line 26</span>
 
 <span class='kw'>def</span> <span class='id track_package'>track_package</span><span class='lparen'>(</span><span class='id package_id'>package_id</span><span class='rparen'>)</span>
   <span class='kw'>super</span>
@@ -355,7 +542,7 @@ package, etc.)
 </div>
     
     <div id="footer">
-  Generated on Mon Jun 13 16:20:06 2011 by 
+  Generated on Mon Jun 13 21:28:36 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.7.1 (ruby-1.9.2).
 </div>
