@@ -56,7 +56,7 @@ module Trackerific
       )
     end
     
-    # An Array of Regexp that matches valid USPS package IDs.
+    # An Array of Regexp that matches valid USPS package IDs
     # @return [Array, Regexp] the regular expression
     # @api private
     def self.package_id_matchers

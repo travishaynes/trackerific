@@ -1,4 +1,4 @@
-== Installation:
+== Installation
 
 To use this gem, add this line to your Gemfile
   gem 'trackerific'
@@ -70,6 +70,61 @@ example on how to handle Trackerific::Errors:
   rescue Trackerific::Error => e
     puts e.message
   end
+
+== Extending
+
+Here is a basic outline of a custom Trackerific service.
+
+lib/trackerific/services/my_tracking_service.rb:
+  module Trackerific
+    class MyTrackingService < Trackerific::Base
+      def self.required_options
+        # any options your service requires. these are usually user credentials
+        [ :some, :options ]
+      end
+      def self.package_id_matchers
+        # write some custom regex matchers for your tracking package IDs
+        [ /^[0-9]{15}$/ ] # fedex package matcher
+      end
+      def track_package(package_id)
+        # implement your tracking code here
+        Trackerific::Details.new(
+          "summary",
+          [
+            Trackerific::Event.new(Time.now, "description", "location"),
+            Trackerific::Event.new(Time.now, "description", "location")
+          ]
+        )
+      end
+    end
+  end
+
+spec/lib/trackerific/services/my_tracking_service_spec.rb:
+  describe "Trackerific::MyTrackingService" do
+    describe :required_options do
+      subject { Trackerific::MyTrackingService.required_options }
+      it { should include(:some) }
+      it { should include(:options) }
+    end
+    describe :package_id_matchers do
+      it "should be an Array of Regexp" do
+        Trackerific::MyTrackingService.package_id_matchers.should each { |m| m.should be_a Regexp }
+      end
+    end
+    describe :track_package do
+      pending "your track_package specs"
+    end
+  end
+
+Please make sure to include comments, documentation, and specs for your service.
+Trackerific uses {RSpec}[https://github.com/dchelimsky/rspec] for tests,
+{simplecov}[https://github.com/colszowka/simplecov] for code coverage,
+and {Yardoc}[http://yardoc.org/] for documentation. You can also take advantage
+of {yardstick}[https://github.com/dkubb/yardstick] to help verify the coverage
+of the comments of your code. You can use the rake task:
+  rake yardstick_measure
+which will generate a measurement/report.txt file.
+
 
 == Contributing to trackerific
 

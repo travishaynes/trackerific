@@ -54,7 +54,7 @@
     
     <iframe id="search_frame"></iframe>
     
-    <div id="content"><div id='filecontents'><h2>Installation:</h2>
+    <div id="content"><div id='filecontents'><h2>Installation</h2>
 <p>
 To use this gem, add this line to your Gemfile
 </p>
@@ -128,7 +128,7 @@ likely will be able to track the given package id.
 </span>  <span class='id tracking_service'>tracking_service</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>EJ958083578US</span><span class='tstring_end'>&quot;</span></span>      <span class='comment'># =&gt; Trackerific::USPS
 </span>  <span class='id tracking_service'>tracking_service</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>unknown package id</span><span class='tstring_end'>&quot;</span></span> <span class='comment'># =&gt; nil
 </span></pre>
-<h3>Exception handling:</h3>
+<h3>Exception handling</h3>
 <p>
 Exception handling is esssential for tracking packages. If, for example,
 you enter the wrong number, or the tracking provider has yet to have added
@@ -142,10 +142,74 @@ Here&#8217;s an example on how to handle Trackerific::Errors:
     <span class='id puts'>puts</span> <span class='id e'>e</span><span class='period'>.</span><span class='id message'>message</span>
   <span class='kw'>end</span>
 </pre>
-<h2>Contributing to trackerific</h2>
+<h2>Extending</h2>
+<p>
+Here is a basic outline of a custom Trackerific service.
+</p>
+<p>
+lib/trackerific/services/my_tracking_service.rb:
+</p>
 <pre class="code">
- 
+  <span class='kw'>module</span> <span class='const'>Trackerific</span>
+    <span class='kw'>class</span> <span class='const'>MyTrackingService</span> <span class='op'>&lt;</span> <span class='const'>Trackerific</span><span class='op'>::</span><span class='const'>Base</span>
+      <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id required_options'>required_options</span>
+        <span class='comment'># any options your service requires. these are usually user credentials
+</span>        <span class='lbracket'>[</span> <span class='symbol'>:some</span><span class='comma'>,</span> <span class='symbol'>:options</span> <span class='rbracket'>]</span>
+      <span class='kw'>end</span>
+      <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id package_id_matchers'>package_id_matchers</span>
+        <span class='comment'># write some custom regex matchers for your tracking package IDs
+</span>        <span class='lbracket'>[</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^[0-9]{15}$</span><span class='regexp_end'>/</span></span> <span class='rbracket'>]</span> <span class='comment'># fedex package matcher
+</span>      <span class='kw'>end</span>
+      <span class='kw'>def</span> <span class='id track_package'>track_package</span><span class='lparen'>(</span><span class='id package_id'>package_id</span><span class='rparen'>)</span>
+        <span class='comment'># implement your tracking code here
+</span>        <span class='const'>Trackerific</span><span class='op'>::</span><span class='const'>Details</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span>
+          <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>summary</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+          <span class='lbracket'>[</span>
+            <span class='const'>Trackerific</span><span class='op'>::</span><span class='const'>Event</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='const'>Time</span><span class='period'>.</span><span class='id now'>now</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>description</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>location</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='comma'>,</span>
+            <span class='const'>Trackerific</span><span class='op'>::</span><span class='const'>Event</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='const'>Time</span><span class='period'>.</span><span class='id now'>now</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>description</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>location</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+          <span class='rbracket'>]</span>
+        <span class='rparen'>)</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
 </pre>
+<p>
+spec/lib/trackerific/services/my_tracking_service_spec.rb:
+</p>
+<pre class="code">
+  <span class='id describe'>describe</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Trackerific::MyTrackingService</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span>
+    <span class='id describe'>describe</span> <span class='symbol'>:required_options</span> <span class='kw'>do</span>
+      <span class='id subject'>subject</span> <span class='lbrace'>{</span> <span class='const'>Trackerific</span><span class='op'>::</span><span class='const'>MyTrackingService</span><span class='period'>.</span><span class='id required_options'>required_options</span> <span class='rbrace'>}</span>
+      <span class='id it'>it</span> <span class='lbrace'>{</span> <span class='id should'>should</span> <span class='id include'>include</span><span class='lparen'>(</span><span class='symbol'>:some</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+      <span class='id it'>it</span> <span class='lbrace'>{</span> <span class='id should'>should</span> <span class='id include'>include</span><span class='lparen'>(</span><span class='symbol'>:options</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+    <span class='kw'>end</span>
+    <span class='id describe'>describe</span> <span class='symbol'>:package_id_matchers</span> <span class='kw'>do</span>
+      <span class='id it'>it</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>should be an Array of Regexp</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span>
+        <span class='const'>Trackerific</span><span class='op'>::</span><span class='const'>MyTrackingService</span><span class='period'>.</span><span class='id package_id_matchers'>package_id_matchers</span><span class='period'>.</span><span class='id should'>should</span> <span class='id each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id m'>m</span><span class='op'>|</span> <span class='id m'>m</span><span class='period'>.</span><span class='id should'>should</span> <span class='id be_a'>be_a</span> <span class='const'>Regexp</span> <span class='rbrace'>}</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+    <span class='id describe'>describe</span> <span class='symbol'>:track_package</span> <span class='kw'>do</span>
+      <span class='id pending'>pending</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>your track_package specs</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+</pre>
+<p>
+Please make sure to include comments, documentation, and specs for your
+service. Trackerific uses <a
+href="https://github.com/dchelimsky/rspec">RSpec</a> for tests, <a
+href="https://github.com/colszowka/simplecov">simplecov</a> for code
+coverage, and <a href="http://yardoc.org/">Yardoc</a> for documentation.
+You can also take advantage of <a
+href="https://github.com/dkubb/yardstick">yardstick</a> to help verify the
+coverage of the comments of your code. You can use the rake task:
+</p>
+<pre class="code">
+  <span class='id rake'>rake</span> <span class='id yardstick_measure'>yardstick_measure</span>
+</pre>
+<p>
+which will generate a measurement/report.txt file.
+</p>
+<h2>Contributing to trackerific</h2>
 <ul>
 <li><p>
 Check out the latest master to make sure the feature hasn&#8217;t been
@@ -188,7 +252,7 @@ Copyright &#169; 2011 Travis Haynes. See LICENSE.txt for further details.
 </div></div>
     
     <div id="footer">
-  Generated on Mon Jun 13 21:28:36 2011 by 
+  Generated on Tue Jun 14 08:41:59 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.7.1 (ruby-1.9.2).
 </div>

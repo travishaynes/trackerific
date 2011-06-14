@@ -134,7 +134,7 @@ Provides package tracking support for USPS.
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#package_id_matchers-class_method" title="package_id_matchers (class method)">+ (Regexp) <strong>package_id_matchers</strong> </a>
+      <a href="#package_id_matchers-class_method" title="package_id_matchers (class method)">+ (Array, Regexp) <strong>package_id_matchers</strong> </a>
     
 
     
@@ -148,7 +148,7 @@ Provides package tracking support for USPS.
 
   
     <span class="summary_desc"><div class='inline'><p>
-A regex that matches valid package identifiers for USPS package ids.
+An Array of Regexp that matches valid USPS package IDs.
 </p>
 </div></span>
   
@@ -241,7 +241,7 @@ Tracks a USPS package.
       <div class="method_details first">
   <p class="signature first" id="package_id_matchers-class_method">
   
-    + (<tt>Regexp</tt>) <strong>package_id_matchers</strong> 
+    + (<tt>Array</tt>, <tt>Regexp</tt>) <strong>package_id_matchers</strong> 
   
 
   
@@ -252,7 +252,7 @@ Tracks a USPS package.
   You should avoid using this method if possible, as it may be removed or be changed in the future.
 </p>
 <p>
-A regex that matches valid package identifiers for USPS package ids
+An Array of Regexp that matches valid USPS package IDs
 </p>
 
 
@@ -265,7 +265,7 @@ A regex that matches valid package identifiers for USPS package ids
     <li>
       
       
-        <span class='type'>(<tt>Regexp</tt>)</span>
+        <span class='type'>(<tt>Array</tt>, <tt>Regexp</tt>)</span>
       
       
       
@@ -542,7 +542,7 @@ package, etc.)
 </div>
     
     <div id="footer">
-  Generated on Mon Jun 13 21:28:36 2011 by 
+  Generated on Tue Jun 14 08:42:00 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.7.1 (ruby-1.9.2).
 </div>
