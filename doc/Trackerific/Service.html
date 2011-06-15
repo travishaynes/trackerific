@@ -4,7 +4,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>
-  Class: Trackerific::Base
+  Class: Trackerific::Service
   
     &mdash; Documentation by YARD 0.7.1
   
@@ -33,10 +33,10 @@
     <div id="header">
       <div id="menu">
   
-    <a href="../_index.html">Index (B)</a> &raquo; 
+    <a href="../_index.html">Index (S)</a> &raquo; 
     <span class='title'><span class='object_link'><a href="../Trackerific.html" title="Trackerific (module)">Trackerific</a></span></span>
      &raquo; 
-    <span class="title">Base</span>
+    <span class="title">Service</span>
   
   
   <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
@@ -56,7 +56,7 @@
     
     <iframe id="search_frame"></iframe>
     
-    <div id="content"><h1>Class: Trackerific::Base
+    <div id="content"><h1>Class: Trackerific::Service
   
   
   
@@ -71,7 +71,7 @@
         <ul class="fullTree">
           <li>Object</li>
           
-            <li class="next">Trackerific::Base</li>
+            <li class="next">Trackerific::Service</li>
           
         </ul>
         <a href="#" class="inheritanceTree">show all</a>
@@ -83,11 +83,15 @@
     
   
     
+      <dt class="r2">Includes:</dt>
+      <dd class="r2"><span class='object_link'><a href="../OptionsHelper.html" title="OptionsHelper (module)">OptionsHelper</a></span></dd>
+      
+    
   
   
   
-    <dt class="r2 last">Defined in:</dt>
-    <dd class="r2 last">lib/trackerific/base.rb</dd>
+    <dt class="r1 last">Defined in:</dt>
+    <dd class="r1 last">lib/trackerific/service.rb</dd>
   
 </dl>
 <div class="clear"></div>
@@ -95,7 +99,7 @@
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
     <p>
-Base class for Trackerific package tracking services.
+Base class for Trackerific services
 </p>
 
 
@@ -109,8 +113,15 @@ Base class for Trackerific package tracking services.
 </div>
 
 
+  
+  
+  
+  
 
 
+  
+  
+  
 
   
     <h2>
@@ -181,7 +192,7 @@ class.
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">- (Base) <strong>initialize</strong>(options = {}) </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (Service) <strong>initialize</strong>(options = {}) </a>
     
 
     
@@ -197,7 +208,7 @@ class.
 
   
     <span class="summary_desc"><div class='inline'><p>
-Creates a new instance of Trackerific::Base with required options.
+Creates a new instance of Trackerific::Service with required options.
 </p>
 </div></span>
   
@@ -231,13 +242,23 @@ Gets the tracking information for the package from the server.
     </ul>
   
 
+
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="../OptionsHelper.html" title="OptionsHelper (module)">OptionsHelper</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../OptionsHelper.html#validate_options-instance_method" title="OptionsHelper#validate_options (method)">#validate_options</a></span></p>
 <div id="constructor_details" class="method_details_list">
   <h2>Constructor Details</h2>
   
     <div class="method_details first">
   <p class="signature first" id="initialize-instance_method">
   
-    - (<tt><span class='object_link'><a href="" title="Trackerific::Base (class)">Base</a></span></tt>) <strong>initialize</strong>(options = {}) 
+    - (<tt><span class='object_link'><a href="" title="Trackerific::Service (class)">Service</a></span></tt>) <strong>initialize</strong>(options = {}) 
   
 
   
@@ -248,7 +269,7 @@ Gets the tracking information for the package from the server.
   You should avoid using this method if possible, as it may be removed or be changed in the future.
 </p>
 <p>
-Creates a new instance of Trackerific::Base with required options
+Creates a new instance of Trackerific::Service with required options
 </p>
 
 
@@ -262,32 +283,16 @@ Creates a new instance of Trackerific::Base with required options
       <pre class="lines">
 
 
-6
-7
 8
 9
 10
-11
-12
-13
-14
-15
-16
-17</pre>
+11</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/trackerific/base.rb', line 6</span>
+      <pre class="code"><span class="info file"># File 'lib/trackerific/service.rb', line 8</span>
 
 <span class='kw'>def</span> <span class='id initialize'>initialize</span><span class='lparen'>(</span><span class='id options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
-  <span class='id required'>required</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id class'>class</span><span class='period'>.</span><span class='id required_options'>required_options</span>
-  <span class='comment'># make sure all the required options exist
-</span>  <span class='id required'>required</span><span class='period'>.</span><span class='id each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id k'>k</span><span class='op'>|</span>
-    <span class='id raise'>raise</span> <span class='const'>ArgumentError</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Missing required parameter: </span><span class='embexpr_beg'>#{</span><span class='id k'>k</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id options'>options</span><span class='period'>.</span><span class='id has_key?'>has_key?</span><span class='lparen'>(</span><span class='id k'>k</span><span class='rparen'>)</span>
-  <span class='kw'>end</span>
-  <span class='comment'># make sure no invalid options exist
-</span>  <span class='id options'>options</span><span class='period'>.</span><span class='id each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id k'>k</span><span class='comma'>,</span> <span class='id v'>v</span><span class='op'>|</span>
-    <span class='id raise'>raise</span> <span class='const'>ArgumentError</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Invalid parameter: </span><span class='embexpr_beg'>#{</span><span class='id k'>k</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id required'>required</span><span class='period'>.</span><span class='id include?'>include?</span><span class='lparen'>(</span><span class='id k'>k</span><span class='rparen'>)</span>
-  <span class='kw'>end</span>
+  <span class='id validate_options'>validate_options</span> <span class='id options'>options</span><span class='comma'>,</span> <span class='kw'>self</span><span class='period'>.</span><span class='id class'>class</span><span class='period'>.</span><span class='id required_options'>required_options</span>
   <span class='ivar'>@options</span> <span class='op'>=</span> <span class='id options'>options</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -328,7 +333,7 @@ Override this method in your custom tracking service
 </p>
 </div></h4>
       <pre class="example code"><span class='kw'>module</span> <span class='const'>Trackerific</span>
-  <span class='kw'>class</span> <span class='const'>MyTrackingService</span> <span class='op'>&lt;</span> <span class='const'>Base</span>
+  <span class='kw'>class</span> <span class='const'>MyTrackingService</span> <span class='op'>&lt;</span> <span class='const'>Service</span>
     <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id package_id_matchers'>package_id_matchers</span>
       <span class='lbracket'>[</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^.Z</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^[HK].{10}$</span><span class='regexp_end'>/</span></span> <span class='rbracket'>]</span>  <span class='comment'># matchers for UPS package identifiers
 </span>    <span class='kw'>end</span>
@@ -362,14 +367,14 @@ an array of regular expressions
       <pre class="lines">
 
 
-50
-51
-52</pre>
+46
+47
+48</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/trackerific/base.rb', line 50</span>
+      <pre class="code"><span class="info file"># File 'lib/trackerific/service.rb', line 46</span>
 
-<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id package_id_matchers'>package_id_matchers</span>
+<span class='kw'>def</span> <span class='id package_id_matchers'>package_id_matchers</span>
   <span class='kw'>nil</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -405,7 +410,7 @@ options
 </p>
 </div></h4>
       <pre class="example code"><span class='kw'>module</span> <span class='const'>Trackerific</span>
-  <span class='kw'>class</span> <span class='const'>MyTrackingService</span> <span class='op'>&lt;</span> <span class='const'>Base</span>
+  <span class='kw'>class</span> <span class='const'>MyTrackingService</span> <span class='op'>&lt;</span> <span class='const'>Service</span>
     <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id required_options'>required_options</span>
       <span class='lbracket'>[</span><span class='symbol'>:all</span><span class='comma'>,</span> <span class='symbol'>:these</span><span class='comma'>,</span> <span class='symbol'>:are</span><span class='comma'>,</span> <span class='symbol'>:required</span><span class='rbracket'>]</span>
     <span class='kw'>end</span>
@@ -439,14 +444,14 @@ the required options
       <pre class="lines">
 
 
-65
-66
-67</pre>
+61
+62
+63</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/trackerific/base.rb', line 65</span>
+      <pre class="code"><span class="info file"># File 'lib/trackerific/service.rb', line 61</span>
 
-<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id required_options'>required_options</span>
+<span class='kw'>def</span> <span class='id required_options'>required_options</span>
   <span class='lbracket'>[</span><span class='rbracket'>]</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -486,7 +491,7 @@ Override this method in your custom tracking service to implement tracking
 </p>
 </div></h4>
       <pre class="example code"><span class='kw'>module</span> <span class='const'>Trackerific</span>
-  <span class='kw'>class</span> <span class='const'>MyTrackingService</span> <span class='op'>&lt;</span> <span class='const'>Base</span>
+  <span class='kw'>class</span> <span class='const'>MyTrackingService</span> <span class='op'>&lt;</span> <span class='const'>Trackerific</span><span class='op'>::</span><span class='const'>Service</span>
     <span class='kw'>def</span> <span class='id track_package'>track_package</span>
       <span class='comment'># your tracking code here
 </span>      <span class='const'>Trackerific</span><span class='op'>::</span><span class='const'>Details</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span>
@@ -545,12 +550,12 @@ the tracking details
       <pre class="lines">
 
 
-35
-36
-37</pre>
+29
+30
+31</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/trackerific/base.rb', line 35</span>
+      <pre class="code"><span class="info file"># File 'lib/trackerific/service.rb', line 29</span>
 
 <span class='kw'>def</span> <span class='id track_package'>track_package</span><span class='lparen'>(</span><span class='id package_id'>package_id</span><span class='rparen'>)</span>
   <span class='ivar'>@package_id</span> <span class='op'>=</span> <span class='id package_id'>package_id</span>
@@ -565,7 +570,7 @@ the tracking details
 </div>
     
     <div id="footer">
-  Generated on Tue Jun 14 16:43:37 2011 by 
+  Generated on Wed Jun 15 15:30:27 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.7.1 (ruby-1.9.2).
 </div>

@@ -4,7 +4,7 @@ module Trackerific
   require 'httparty'
   
   # Provides package tracking support for UPS.
-  class UPS < Base
+  class UPS < Trackerific::Service
     # setup HTTParty
     include ::HTTParty
     format :xml
@@ -13,6 +13,21 @@ module Trackerific
       when 'test','development' then 'https://wwwcie.ups.com/ups.app/xml'
       when 'production' then 'https://www.ups.com/ups.app/xml'
     end : 'https://www.ups.com/ups.app/xml'
+    
+    class << self
+      # An Array of Regexp that matches valid UPS package IDs
+      # @return [Array, Regexp] the regular expression
+      # @api private
+      def package_id_matchers
+        [ /^.Z/, /^[HK].{10}$/ ]
+      end    
+      # The required options for tracking a UPS package
+      # @return [Array] the required options for tracking a UPS package
+      # @api private
+      def required_options
+        [:key, :user_id, :password]
+      end
+    end
     
     # Tracks a UPS package
     # @param [String] package_id the package identifier
@@ -35,19 +50,6 @@ module Trackerific
         when "1" then return parse_success_response(http_response)
         else raise Trackerific::Error, "Invalid response code returned from server."
       end
-    end
-    
-    # An Array of Regexp that matches valid UPS package IDs
-    # @return [Array, Regexp] the regular expression
-    # @api private
-    def self.package_id_matchers
-      [ /^.Z/, /^[HK].{10}$/ ]
-    end    
-    # The required options for tracking a UPS package
-    # @return [Array] the required options for tracking a UPS package
-    # @api private
-    def self.required_options
-      [:key, :user_id, :password]
     end
     
     protected

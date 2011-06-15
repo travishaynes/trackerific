@@ -67,7 +67,47 @@ and then run
 <pre class="code">
   <span class='id bundle'>bundle</span> <span class='id install'>install</span>
 </pre>
-<h2>Usage:</h2>
+<h2>Usage</h2>
+<h3>Configuration</h3>
+<p>
+To take advantage of Trackerific&#8217;s automatic service discovery, you
+will need to configure your credentials for each service.
+</p>
+<pre class="code">
+  <span class='comment'># config/initializers/trackerific.rb
+</span>  <span class='id require'>require</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>trackerific</span><span class='tstring_end'>'</span></span>
+  <span class='const'>Trackerific</span><span class='period'>.</span><span class='id configure'>configure</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id config'>config</span><span class='op'>|</span>
+    <span class='id config'>config</span><span class='period'>.</span><span class='id fedex'>fedex</span> <span class='symbol'>:account</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>account</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:meter</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>123456789</span><span class='tstring_end'>'</span></span>
+    <span class='id config'>config</span><span class='period'>.</span><span class='id ups'>ups</span> <span class='symbol'>:key</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>key</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:user_id</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>userid</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:password</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>secret</span><span class='tstring_end'>'</span></span>
+    <span class='id config'>config</span><span class='period'>.</span><span class='id usps'>usps</span> <span class='symbol'>:user_id</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>userid</span><span class='tstring_end'>'</span></span>
+  <span class='kw'>end</span>
+</pre>
+<h3>Tracking with Automatic Service Discovery</h3>
+<p>
+Once you configured the services, tracking a package is as easy as
+</p>
+<pre class="code">
+  <span class='id include'>include</span> <span class='const'>Trackerific</span>
+  <span class='id details'>details</span> <span class='op'>=</span> <span class='id track_package'>track_package</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>package id</span><span class='tstring_end'>&quot;</span></span>
+</pre>
+<h3>Finding a Tracking Service Provider</h3>
+<p>
+If you do not know the tracking service provider of a package id, or you
+used track_package, and you need to know which service was used to track
+it, you can use the tracking_service helper method.
+</p>
+<pre class="code">
+  <span class='id include'>include</span> <span class='const'>Trackerific</span>
+  <span class='id tracking_service'>tracking_service</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>183689015000001</span><span class='tstring_end'>&quot;</span></span>    <span class='comment'># =&gt; Trackerific::FedEx
+</span>  <span class='id tracking_service'>tracking_service</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>1Z12345E0291980793</span><span class='tstring_end'>&quot;</span></span> <span class='comment'># =&gt; Trackerific::UPS
+</span>  <span class='id tracking_service'>tracking_service</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>EJ958083578US</span><span class='tstring_end'>&quot;</span></span>      <span class='comment'># =&gt; Trackerific::USPS
+</span>  <span class='id tracking_service'>tracking_service</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>unknown package id</span><span class='tstring_end'>&quot;</span></span> <span class='comment'># =&gt; nil
+</span></pre>
+<h3>Tracking a Package with a Specific Service</h3>
+<p>
+Use this method if you need to specify exactly which service to track a
+package.
+</p>
 <pre class="code">
   <span class='comment'># Track a FedEx package:
 </span>  <span class='id fedex'>fedex</span> <span class='op'>=</span> <span class='const'>Trackerific</span><span class='op'>::</span><span class='const'>FedEx</span><span class='period'>.</span><span class='id new'>new</span> <span class='symbol'>:account</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>123456789</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:meter</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>123456789</span><span class='tstring_end'>'</span></span>
@@ -115,19 +155,6 @@ Note that events.last will return the first event the tracking provider
 supplied. This is because the events are listed in LIFO order, so the most
 recent events will always be at the top of the list.
 </p>
-<h3>Finding a Tracking Service Provider</h3>
-<p>
-If you do not know the tracking service provider of a package id, you can
-use the tracking_service helper method to get a Trackerific class that most
-likely will be able to track the given package id.
-</p>
-<pre class="code">
-  <span class='id include'>include</span> <span class='const'>Trackerific</span>
-  <span class='id tracking_service'>tracking_service</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>183689015000001</span><span class='tstring_end'>&quot;</span></span>    <span class='comment'># =&gt; Trackerific::FedEx
-</span>  <span class='id tracking_service'>tracking_service</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>1Z12345E0291980793</span><span class='tstring_end'>&quot;</span></span> <span class='comment'># =&gt; Trackerific::UPS
-</span>  <span class='id tracking_service'>tracking_service</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>EJ958083578US</span><span class='tstring_end'>&quot;</span></span>      <span class='comment'># =&gt; Trackerific::USPS
-</span>  <span class='id tracking_service'>tracking_service</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>unknown package id</span><span class='tstring_end'>&quot;</span></span> <span class='comment'># =&gt; nil
-</span></pre>
 <h3>Exception handling</h3>
 <p>
 Exception handling is esssential for tracking packages. If, for example,
@@ -252,7 +279,7 @@ Copyright &#169; 2011 Travis Haynes. See LICENSE.txt for further details.
 </div></div>
     
     <div id="footer">
-  Generated on Tue Jun 14 16:43:37 2011 by 
+  Generated on Wed Jun 15 15:30:26 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.7.1 (ruby-1.9.2).
 </div>

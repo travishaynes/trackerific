@@ -3,11 +3,28 @@ require 'httparty'
 module Trackerific
   
   # Provides package tracking support for FedEx
-  class FedEx < Base
+  class FedEx < Trackerific::Service
     # setup HTTParty
     include ::HTTParty
     format :xml
     base_uri "https://gateway.fedex.com"
+    
+    class << self
+      # An Array of Regexp that matches valid FedEx package IDs
+      # @return [Array, Regexp] the regular expression
+      # @api private
+      def package_id_matchers
+        [ /^[0-9]{15}$/ ]
+      end
+      
+      # Returns an Array of required options used when creating a new instance
+      # @return [Array] required options for tracking a FedEx package are :account
+      #   and :meter
+      # @api private
+      def required_options
+        [:account, :meter]
+      end
+    end
     
     # Tracks a FedEx package
     # @param [String] package_id the package identifier
@@ -43,21 +60,6 @@ module Trackerific
         details["StatusDescription"],
         events
       )
-    end
-    
-    # An Array of Regexp that matches valid FedEx package IDs
-    # @return [Array, Regexp] the regular expression
-    # @api private
-    def self.package_id_matchers
-      [ /^[0-9]{15}$/ ]
-    end
-    
-    # Returns an Array of required options used when creating a new instance
-    # @return [Array] required options for tracking a FedEx package are :account
-    #   and :meter
-    # @api private
-    def self.required_options
-      [:account, :meter]
     end
     
     protected

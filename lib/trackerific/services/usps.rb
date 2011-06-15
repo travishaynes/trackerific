@@ -5,7 +5,7 @@ module Trackerific
   require 'httparty'
   
   # Provides package tracking support for USPS.
-  class USPS < Base
+  class USPS < Trackerific::Service
     # setup HTTParty
     include HTTParty
     format :xml
@@ -14,6 +14,22 @@ module Trackerific
       when 'test', 'development' then 'http://testing.shippingapis.com'
       when 'production' then 'https://secure.shippingapis.com'
     end : 'https://secure.shippingapis.com'
+    
+    class << self
+      # An Array of Regexp that matches valid USPS package IDs
+      # @return [Array, Regexp] the regular expression
+      # @api private
+      def package_id_matchers
+        [ /^E\D{1}\d{9}\D{2}$|^9\d{15,21}$/ ]
+      end    
+      
+      # The required options for tracking a UPS package
+      # @return [Array] the required options for tracking a UPS package
+      # @api private
+      def required_options
+        [:user_id]
+      end
+    end
     
     # Tracks a USPS package
     # @param [String] package_id the package identifier
@@ -54,20 +70,6 @@ module Trackerific
         tracking_info['TrackSummary'],
         details
       )
-    end
-    
-    # An Array of Regexp that matches valid USPS package IDs
-    # @return [Array, Regexp] the regular expression
-    # @api private
-    def self.package_id_matchers
-      [ /^E\D{1}\d{9}\D{2}$|^9\d{15,21}$/ ]
-    end    
-    
-    # The required options for tracking a UPS package
-    # @return [Array] the required options for tracking a UPS package
-    # @api private
-    def self.required_options
-      [:user_id]
     end
     
     protected

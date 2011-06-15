@@ -5,7 +5,43 @@ To use this gem, add this line to your Gemfile
 and then run
   bundle install
 
-== Usage:
+== Usage
+
+=== Configuration
+
+To take advantage of Trackerific's automatic service discovery, you will need to
+configure your credentials for each service.
+
+  # config/initializers/trackerific.rb
+  require 'trackerific'
+  Trackerific.configure do |config|
+    config.fedex :account => 'account', :meter => '123456789'
+    config.ups :key => 'key', :user_id => 'userid', :password => 'secret'
+    config.usps :user_id => 'userid'
+  end
+
+=== Tracking with Automatic Service Discovery
+
+Once you configured the services, tracking a package is as easy as
+
+  include Trackerific
+  details = track_package "package id"
+
+=== Finding a Tracking Service Provider
+
+If you do not know the tracking service provider of a package id, or you used
+track_package, and you need to know which service was used to track it, you can
+use the tracking_service helper method.
+
+  include Trackerific
+  tracking_service "183689015000001"    # => Trackerific::FedEx
+  tracking_service "1Z12345E0291980793" # => Trackerific::UPS
+  tracking_service "EJ958083578US"      # => Trackerific::USPS
+  tracking_service "unknown package id" # => nil
+
+=== Tracking a Package with a Specific Service
+
+Use this method if you need to specify exactly which service to track a package.
 
   # Track a FedEx package:
   fedex = Trackerific::FedEx.new :account => '123456789', :meter => '123456789'
@@ -45,18 +81,6 @@ will always be at the end of the description.
 Note that events.last will return the first event the tracking provider
 supplied. This is because the events are listed in LIFO order, so the most
 recent events will always be at the top of the list.
-
-=== Finding a Tracking Service Provider
-
-If you do not know the tracking service provider of a package id, you can use
-the tracking_service helper method to get a Trackerific class that most likely
-will be able to track the given package id.
-
-  include Trackerific
-  tracking_service "183689015000001"    # => Trackerific::FedEx
-  tracking_service "1Z12345E0291980793" # => Trackerific::UPS
-  tracking_service "EJ958083578US"      # => Trackerific::USPS
-  tracking_service "unknown package id" # => nil
 
 === Exception handling
 
