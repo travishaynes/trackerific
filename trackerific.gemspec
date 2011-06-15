@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{trackerific}
-  s.version = "0.3.5"
+  s.version = "0.4.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Travis Haynes"]
-  s.date = %q{2011-06-14}
+  s.date = %q{2011-06-15}
   s.description = %q{Trackerific provides USPS, FedEx and UPS package tracking to Rails.}
   s.email = %q{travis.j.haynes@gmail.com}
   s.extra_rdoc_files = [
@@ -24,12 +24,14 @@ Gem::Specification.new do |s|
     "README.rdoc",
     "Rakefile",
     "VERSION",
+    "doc/OptionsHelper.html",
     "doc/Trackerific.html",
-    "doc/Trackerific/Base.html",
+    "doc/Trackerific/Configuration.html",
     "doc/Trackerific/Details.html",
     "doc/Trackerific/Error.html",
     "doc/Trackerific/Event.html",
     "doc/Trackerific/FedEx.html",
+    "doc/Trackerific/Service.html",
     "doc/Trackerific/UPS.html",
     "doc/Trackerific/USPS.html",
     "doc/_index.html",
@@ -46,11 +48,13 @@ Gem::Specification.new do |s|
     "doc/js/jquery.js",
     "doc/method_list.html",
     "doc/top-level-namespace.html",
+    "lib/helpers/options_helper.rb",
     "lib/trackerific.rb",
-    "lib/trackerific/base.rb",
+    "lib/trackerific/configuration.rb",
     "lib/trackerific/details.rb",
     "lib/trackerific/error.rb",
     "lib/trackerific/event.rb",
+    "lib/trackerific/service.rb",
     "lib/trackerific/services/fedex.rb",
     "lib/trackerific/services/ups.rb",
     "lib/trackerific/services/usps.rb",
@@ -60,10 +64,11 @@ Gem::Specification.new do |s|
     "spec/fixtures/ups_success_response.xml",
     "spec/fixtures/usps_error_response.xml",
     "spec/fixtures/usps_success_response.xml",
-    "spec/lib/trackerific/base_spec.rb",
+    "spec/lib/trackerific/configuration_spec.rb",
     "spec/lib/trackerific/details_spec.rb",
     "spec/lib/trackerific/error_spec.rb",
     "spec/lib/trackerific/event_spec.rb",
+    "spec/lib/trackerific/service_spec.rb",
     "spec/lib/trackerific/services/fedex_spec.rb",
     "spec/lib/trackerific/services/ups_spec.rb",
     "spec/lib/trackerific/services/usps_spec.rb",
@@ -89,20 +94,20 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<builder>, [">= 2.1.2"])
       s.add_development_dependency(%q<bundler>, [">= 1.0.13"])
       s.add_development_dependency(%q<jeweler>, [">= 1.5.2"])
+      s.add_development_dependency(%q<yardstick>, [">= 0.4.0"])
       s.add_development_dependency(%q<rspec-rails>, [">= 2.6.1"])
       s.add_development_dependency(%q<rspec_multi_matchers>, [">= 1.1.0"])
       s.add_development_dependency(%q<ruby-debug19>, [">= 0.11.6"])
-      s.add_development_dependency(%q<yardstick>, [">= 0.4.0"])
     else
       s.add_dependency(%q<rails>, [">= 3.0.0"])
       s.add_dependency(%q<httparty>, [">= 0.7.7"])
       s.add_dependency(%q<builder>, [">= 2.1.2"])
       s.add_dependency(%q<bundler>, [">= 1.0.13"])
       s.add_dependency(%q<jeweler>, [">= 1.5.2"])
+      s.add_dependency(%q<yardstick>, [">= 0.4.0"])
       s.add_dependency(%q<rspec-rails>, [">= 2.6.1"])
       s.add_dependency(%q<rspec_multi_matchers>, [">= 1.1.0"])
       s.add_dependency(%q<ruby-debug19>, [">= 0.11.6"])
-      s.add_dependency(%q<yardstick>, [">= 0.4.0"])
     end
   else
     s.add_dependency(%q<rails>, [">= 3.0.0"])
@@ -110,10 +115,10 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<builder>, [">= 2.1.2"])
     s.add_dependency(%q<bundler>, [">= 1.0.13"])
     s.add_dependency(%q<jeweler>, [">= 1.5.2"])
+    s.add_dependency(%q<yardstick>, [">= 0.4.0"])
     s.add_dependency(%q<rspec-rails>, [">= 2.6.1"])
     s.add_dependency(%q<rspec_multi_matchers>, [">= 1.1.0"])
     s.add_dependency(%q<ruby-debug19>, [">= 0.11.6"])
-    s.add_dependency(%q<yardstick>, [">= 0.4.0"])
   end
 end
 
