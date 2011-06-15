@@ -1,7 +1,8 @@
 require 'spec_helper'
 
 describe Trackerific::Event do
-  before(:all) do
+  
+  before do
     @date = Time.now
     @description = "description"
     @location = "location"
@@ -9,20 +10,24 @@ describe Trackerific::Event do
   end
   
   describe :date do
-    specify { @event.date.should be_a Time }
+    subject { @event.date }
+    it { should be @date }
   end
   
   describe :description do
-    specify { @event.description.should be_a String }
+    subject { @event.description }
+    it { should be @description }
   end
   
   describe :location do
-    specify { @event.location.should be_a String }
+    subject { @event.location }
+    it { should be @location }
   end
   
   describe :to_s do
-    it "should be in format mmm dd hh:mm am/pm.*" do
-      @event.to_s.should =~ /(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) (0[1-9]|[1-2][0-9]|3[01]) \d{2}:\d{2} (am|pm).*/
-    end
+    before { @regex = /(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) (0[1-9]|[1-2][0-9]|3[01]) \d{2}:\d{2} (am|pm).*/ }
+    subject { @event.to_s }
+    it("should be in format mmm dd hh:mm am/pm.*") { should =~ @regex }
   end
+  
 end

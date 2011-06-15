@@ -1,3 +1,4 @@
+# Code coverage
 require 'simplecov'
 SimpleCov.start
 
