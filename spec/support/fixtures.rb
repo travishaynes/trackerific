@@ -7,8 +7,10 @@ module Fixtures
     File.join(File.dirname(__FILE__), "..", "fixtures")
   end
   # Loads a fixture
-  # @param [String] name the name of the fixture to load
+  # @param [Symbol] name the fixture to load
   # @param [Symbol] ext the exention of the fixture. defaults to :xml
+  # @example Load ups_success_response.xml
+  #   response = load_fixture :ups_success_response
   # @return [String] the contents of the file
   # @api private
   def load_fixture(name, ext = :xml)
