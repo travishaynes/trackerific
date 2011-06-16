@@ -7,6 +7,9 @@ and then run
 
 == Usage
 
+If you would like to see a functional example of this gem in action, check out the
+sample Rails app here: {package-tracker}[https://github.com/travishaynes/package-tracker]
+
 === Configuration
 
 To take advantage of Trackerific's automatic service discovery, you will need to
