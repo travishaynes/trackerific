@@ -1,8 +1,10 @@
 require 'spec_helper'
 
 class TestServiceClass < Trackerific::Service
-  def self.required_options
-    [:required, :also_required]
+  class << self
+    def required_options
+      [:required, :also_required]
+    end
   end
 end
 

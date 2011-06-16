@@ -62,6 +62,22 @@ module Trackerific
         []
       end
       
+      # Provides a humanized string that provides the name of the service (i.e. "FedEx")
+      # @return [String] the service name
+      # @note This defaults to using the class name.
+      # @example Override this method in your custom tracking service to provide a name
+      #   module Trackerific
+      #     class MyTrackingService < Service
+      #       def self.service_name
+      #         "my custom tracking service"
+      #       end
+      #     end
+      #   end
+      # @api public
+      def service_name
+        self.to_s.split("::")[1]
+      end
+      
     end
     
   end
