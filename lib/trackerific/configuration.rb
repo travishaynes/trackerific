@@ -15,8 +15,8 @@ module Trackerific
       services = Trackerific.services.map { |service| service.to_s.downcase.to_sym }
       # Do not accept any configuration values for anything except services
       raise NoMethodError unless services.include? sym
-      # Only accept Hashes
       unless args.empty?
+        # Only accept Hashes
         raise ArgumentError unless args[0].class == Hash
         # Validate configuration values against the required options for that service
         validate_options args[0], Trackerific.service_get(sym).required_options

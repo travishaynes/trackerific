@@ -74,7 +74,7 @@ module Trackerific
   def track_package(package_id)
     # find the service that will be able to track this package
     service = tracking_service package_id
-    raise Trackerific::Error "Cannot find a service to track package id #{package_id}" if service.nil?
+    raise Trackerific::Error, "Cannot find a service to track package id #{package_id}" if service.nil?
     # get the name of the service
     service_name = service.to_s.split('::')[1].downcase
     # get the default configuration for the service
