@@ -46,4 +46,15 @@ describe Trackerific do
     
   end
   
+  describe :track_package do
+    
+    before do
+      @details = track_package "XXXXXXXXXX"
+    end
+    
+    subject { @details }
+    
+    it { should be_kind_of Trackerific::Details }
+  end
+  
 end

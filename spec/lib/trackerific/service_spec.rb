@@ -10,6 +10,14 @@ end
 
 describe Trackerific::Service do
   
+  describe :required_options do
+    specify { Trackerific::Service.required_options.should be_kind_of Array }
+  end
+  
+  describe :service_name do
+    specify { Trackerific::Service.service_name.should be_kind_of String }
+  end
+  
   context "with a new Trackerific::Service class that has required options" do
     
     context "has all the required options" do

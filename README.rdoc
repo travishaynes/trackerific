@@ -152,6 +152,14 @@ of the comments of your code. You can use the rake task:
   rake yardstick_measure
 which will generate a measurement/report.txt file.
 
+=== Testing with Trackerific
+
+Trackerific provides a mocked service you can use in your unit tests of your
+application. The mocked service will be available in development and test
+environments only, and disabled in production.
+
+  details = track_package("XXXXXXXXXX") # => returns a populated Trackerific::Details
+  details = track_package("XXXxxxxxxx") # => throws a Trackerific::Errror exception
 
 == Contributing to trackerific
 
