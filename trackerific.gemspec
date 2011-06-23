@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{trackerific}
-  s.version = "0.4.2"
+  s.version = "0.5.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Travis Haynes"]
-  s.date = %q{2011-06-16}
+  s.date = %q{2011-06-23}
   s.description = %q{Trackerific provides USPS, FedEx and UPS package tracking to Rails.}
   s.email = %q{travis.j.haynes@gmail.com}
   s.extra_rdoc_files = [
@@ -56,6 +56,7 @@ Gem::Specification.new do |s|
     "lib/trackerific/event.rb",
     "lib/trackerific/service.rb",
     "lib/trackerific/services/fedex.rb",
+    "lib/trackerific/services/mock_service.rb",
     "lib/trackerific/services/ups.rb",
     "lib/trackerific/services/usps.rb",
     "spec/fixtures/fedex_error_response.xml",
@@ -64,12 +65,14 @@ Gem::Specification.new do |s|
     "spec/fixtures/ups_success_response.xml",
     "spec/fixtures/usps_error_response.xml",
     "spec/fixtures/usps_success_response.xml",
+    "spec/lib/helpers/options_helper_spec.rb",
     "spec/lib/trackerific/configuration_spec.rb",
     "spec/lib/trackerific/details_spec.rb",
     "spec/lib/trackerific/error_spec.rb",
     "spec/lib/trackerific/event_spec.rb",
     "spec/lib/trackerific/service_spec.rb",
     "spec/lib/trackerific/services/fedex_spec.rb",
+    "spec/lib/trackerific/services/mock_service_spec.rb",
     "spec/lib/trackerific/services/ups_spec.rb",
     "spec/lib/trackerific/services/usps_spec.rb",
     "spec/lib/trackerific_spec.rb",
