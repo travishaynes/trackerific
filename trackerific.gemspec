@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{trackerific}
-  s.version = "0.5.2"
+  s.version = "0.5.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Travis Haynes"]
-  s.date = %q{2011-06-23}
+  s.date = %q{2011-06-24}
   s.description = %q{Trackerific provides USPS, FedEx and UPS package tracking to Rails.}
   s.email = %q{travis.j.haynes@gmail.com}
   s.extra_rdoc_files = [
