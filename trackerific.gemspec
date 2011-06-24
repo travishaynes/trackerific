@@ -6,7 +6,8 @@
 Gem::Specification.new do |s|
   s.name = %q{trackerific}
   s.version = "0.5.3"
-
+  
+  s.rubyforge_project = "trackerific"
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Travis Haynes"]
   s.date = %q{2011-06-24}

@@ -9,7 +9,7 @@ module Trackerific
     # setup HTTParty
     include HTTParty
     format :xml
-    base_uri Rails.env.production? ? "https://secure.shippingapis.com" : "http://testing.shippingapis.com"
+    base_uri Rails.env.production? ? "http://production.shippingapis.com" : "http://testing.shippingapis.com"
     
     class << self
       # An Array of Regexp that matches valid USPS package IDs
@@ -65,7 +65,7 @@ module Trackerific
         date = DateTime.parse(d[0..3].join(" "))
         desc = d[4..d.length].join(" ")
         details << Trackerific::Event.new(date, desc, "")
-      end
+      end unless tracking_info['TrackDetail'].nil?
       # return the details
       Trackerific::Details.new(
         tracking_info['ID'],
