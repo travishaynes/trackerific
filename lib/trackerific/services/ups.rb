@@ -106,6 +106,7 @@ module Trackerific
       builder.TrackRequest do |tr|
         tr.Request do |r|
           r.RequestAction 'Track'
+          r.RequestOption 'activity'
         end
         tr.TrackingNumber @package_id
       end
