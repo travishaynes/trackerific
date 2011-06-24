@@ -19,7 +19,8 @@ module Trackerific
     # @api private
     def services
       # a service is any Trackerific class that descends from Trackerific::Service
-      Trackerific.constants.reject { |const|
+      # [:UPS, :FedEx, :USPS, :MockService]
+      @services ||= Trackerific.constants.reject { |const|
         const unless Trackerific.const_get(const).superclass == Trackerific::Service
       }
     end
@@ -53,7 +54,7 @@ module Trackerific
       cls.package_id_matchers.each do |matcher|
         # return this class if the regular expression matches
         return cls if package_id =~ matcher
-      end
+      end unless cls.package_id_matchers.nil?
     end
     # if we've made it this far, nothing matched
     nil
