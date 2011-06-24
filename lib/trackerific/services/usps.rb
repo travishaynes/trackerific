@@ -9,11 +9,7 @@ module Trackerific
     # setup HTTParty
     include HTTParty
     format :xml
-    # use the test site for Rails development, production for everything else
-    base_uri defined?(Rails) ? case Rails.env
-      when 'test', 'development' then 'http://testing.shippingapis.com'
-      when 'production' then 'https://secure.shippingapis.com'
-    end : 'https://secure.shippingapis.com'
+    base_uri Rails.env.production? ? "https://secure.shippingapis.com" : "http://testing.shippingapis.com"
     
     class << self
       # An Array of Regexp that matches valid USPS package IDs
@@ -42,7 +38,13 @@ module Trackerific
     def track_package(package_id)
       super
       # connect to the USPS shipping API via HTTParty
-      response = self.class.get('/ShippingAPITest.dll', :query => {:API => 'TrackV2', :XML => build_xml_request}.to_query)
+      response = self.class.get(
+        Rails.env.production? ? "/ShippingAPI.dll" : "/ShippingAPITest.dll",
+        :query => {
+          :API => 'TrackV2',
+          :XML => build_xml_request
+        }.to_query
+      )
       # throw any HTTP errors
       response.error! unless response.code == 200
       # raise a Trackerific::Error if there is an error in the response, or if the
