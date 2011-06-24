@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{trackerific}
-  s.version = "0.5.4"
+  s.version = "0.5.5"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Travis Haynes"]
@@ -84,6 +84,7 @@ Gem::Specification.new do |s|
   s.homepage = %q{http://github.com/travishaynes/trackerific}
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
+  s.rubyforge_project = %q{trackerific}
   s.rubygems_version = %q{1.3.7}
   s.summary = %q{Trackerific provides package tracking to Rails.}
 
