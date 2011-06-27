@@ -5,7 +5,7 @@ describe OptionsHelper do
   
   describe :validate_options do
   
-    context "with all required options" do
+    context "with all required parameters" do
       before do
         @required = [:hello, :world]
         @options = {:hello => true, :world => true}
@@ -14,7 +14,7 @@ describe OptionsHelper do
       it { should be true }
     end
     
-    context "with missing required options" do
+    context "with missing required parameters" do
       before do
         @required = [:hello, :world]
         @options = {:hello => true}
@@ -22,7 +22,7 @@ describe OptionsHelper do
       specify { lambda { validate_options(@options, @required) }.should raise_error(ArgumentError) }
     end
     
-    context "with no required options" do
+    context "with no required parameters" do
       before do
         @required = []
         @options = {}

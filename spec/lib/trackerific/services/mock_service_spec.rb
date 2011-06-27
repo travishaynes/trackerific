@@ -1,14 +1,29 @@
 require 'spec_helper'
 
 describe Trackerific::MockService do
-  describe :required_options do
-    subject { Trackerific::MockService.required_options }
+
+  specify("it should descend from Trackerific::Service") {
+    Trackerific::MockService.superclass.should be Trackerific::Service
+  }
+  
+  describe :required_parameters do
+    subject { Trackerific::MockService.required_parameters }
     it { should be_empty }
   end
   
   describe :package_id_matchers do
-    subject { Trackerific::MockService.package_id_matchers }
-    it("should be an Array of Regexp") { should each { |m| m.should be_a Regexp } }
+  
+    context "when in development or test mode" do
+      subject { Trackerific::MockService.package_id_matchers }
+      it("should be an Array of Regexp") { should each { |m| m.should be_a Regexp } }
+    end
+    
+    context "when in production mode" do
+      before { Rails.env = "production" }
+      subject { Trackerific::MockService.package_id_matchers }
+      it { should be_empty }
+      after { Rails.env = "test"}
+    end
   end
   
   describe :track_package do

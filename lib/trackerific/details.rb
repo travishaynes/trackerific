@@ -2,18 +2,23 @@ module Trackerific
   # Details returned when tracking a package. Stores the package identifier,
   # a summary, and the events.
   class Details
+    include OptionsHelper
+    
     # Provides a new instance of Details
-    # @param [String] package_id the package identifier
-    # @param [String] summary a summary of the tracking status
-    # @param [Array, Trackerific::Event] events the tracking events
+    # @param [Hash] details The details for this package
     # @api private
-    def initialize(package_id, summary, events)
-      @package_id = package_id
-      @summary = summary
-      @events = events
+    def initialize(details = {})
+      required = [:package_id, :summary, :events]
+      valid = required + [:weight, :via]
+      validate_options(details, required, valid)
+      @package_id = details[:package_id]
+      @summary = details[:summary]
+      @events = details[:events]
+      @weight = details[:weight] || nil
+      @via = details[:via] || nil
     end
     
-    # Read-only string for the package identifier
+    # The package identifier
     # @example Get the id of a tracked package
     #   details.package_id # => the package identifier
     # @return [String] the package identifier
@@ -22,7 +27,7 @@ module Trackerific
       @package_id
     end
     
-    # Read-only string for the summary of the package's tracking events
+    # Summary of the package's tracking events
     # @example Get the summary of a tracked package
     #   details.summary # => Summary of the tracking events (i.e. Delivered)
     # @return [String] a summary of the tracking status
@@ -31,7 +36,7 @@ module Trackerific
       @summary
     end
     
-    # Read-only string for the events for this package
+    # The events for this package
     # @example Print all the events for a tracked package
     #   puts details.events
     # @example Get the date the package was shipped
@@ -44,6 +49,27 @@ module Trackerific
     # @api public
     def events
       @events
+    end
+    
+    # The weight of the package (may not be supported by all services)
+    # @example Get the weight of a package
+    #   details.weight[:weight] # => the weight
+    #   details.weight[:units]  # => the units of measurement for the weight (i.e. "LBS")
+    # @return [Hash] Example: { units: 'LBS', weight: 19.1 }
+    # @api public
+    def weight
+      @weight
+    end
+    
+    # Example: UPS 2ND DAY AIR. May not be supported by all services
+    # @example Get how the package was shipped
+    #   ups = Trackerific::UPS.new :user_id => "userid"
+    #   details = ups.track_package "1Z12345E0291980793"
+    #   details.via # => "UPS 2ND DAY AIR"
+    # @return [String] The service used to ship the package
+    # @api public
+    def via
+      @via
     end
   end
 end

@@ -3,10 +3,10 @@ module Trackerific
   class Service
     include OptionsHelper
     
-    # Creates a new instance of Trackerific::Service with required options
+    # Creates a new instance of Trackerific::Service
     # @api private
     def initialize(options = {})
-      validate_options options, self.class.required_options
+      validate_options options, self.class.required_parameters, self.class.valid_options
       @options = options
     end
     
@@ -48,21 +48,37 @@ module Trackerific
       end
       
       # An array of options that are required to create a new instance of this class
-      # @return [Array] the required options
+      # @return [Array] the required parameters
       # @example Override this method in your custom tracking service to enforce some options
       #   module Trackerific
       #     class MyTrackingService < Service
-      #       def self.required_options
+      #       def self.required_parameters
       #         [:all, :these, :are, :required]
       #       end
       #     end
       #   end
       # @api semipublic
-      def required_options
+      def required_parameters
         []
       end
       
-      # Provides a humanized string that provides the name of the service (i.e. "FedEx")
+      # An array of valid options used for creating this class
+      # @return [Array] the valid options
+      # @example Override this method in your custom tracking service to add options
+      #   module Trackerific
+      #     class MyTrackingService < Service
+      #       def self.valid_options
+      #         # NOTE: make sure to include the required parameters in this list!
+      #         required_parameters + [:some, :more, :options]
+      #       end
+      #     end
+      #   end
+      # @api semipublic
+      def valid_options
+        required_parameters + []
+      end
+      
+      # Provides a humanized string that provides the name of the service
       # @return [String] the service name
       # @note This defaults to using the class name.
       # @example Override this method in your custom tracking service to provide a name

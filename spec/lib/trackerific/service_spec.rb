@@ -2,7 +2,7 @@ require 'spec_helper'
 
 class TestServiceClass < Trackerific::Service
   class << self
-    def required_options
+    def required_parameters
       [:required, :also_required]
     end
   end
@@ -10,8 +10,8 @@ end
 
 describe Trackerific::Service do
   
-  describe :required_options do
-    specify { Trackerific::Service.required_options.should be_kind_of Array }
+  describe :required_parameters do
+    specify { Trackerific::Service.required_parameters.should be_kind_of Array }
   end
   
   describe :service_name do

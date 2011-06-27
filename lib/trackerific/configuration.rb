@@ -18,8 +18,8 @@ module Trackerific
       unless args.empty?
         # Only accept Hashes
         raise ArgumentError unless args[0].class == Hash
-        # Validate configuration values against the required options for that service
-        validate_options args[0], Trackerific.service_get(sym).required_options
+        # Validate configuration values against the required parameters for that service
+        validate_options args[0], Trackerific.service_get(sym).required_parameters
         # Store the configuration options
         @options[sym] = args[0]
       end

@@ -6,11 +6,24 @@ UPS_TRACK_URL = 'https://wwwcie.ups.com/ups.app/xml/Track'
 describe "Trackerific::UPS" do
   include Fixtures
   
-  describe :required_options do
-    subject { Trackerific::UPS.required_options }
+  specify("it should descend from Trackerific::Service") {
+    Trackerific::UPS.superclass.should be Trackerific::Service
+  }
+  
+  describe :required_parameters do
+    subject { Trackerific::UPS.required_parameters }
     it { should include(:key) }
     it { should include(:user_id) }
     it { should include(:password) }
+  end
+  
+  describe :valid_options do
+    it "should include required_parameters" do
+      valid = Trackerific::UPS.valid_options
+      Trackerific::UPS.required_parameters.each do |opt|
+        valid.should include opt
+      end
+    end
   end
   
   describe :package_id_matchers do
@@ -58,6 +71,8 @@ describe "Trackerific::UPS" do
       specify { lambda { @ups.track_package("invalid package id") }.should raise_error(Trackerific::Error) }
       
     end
+    
+    pending "when server returns corrupted xml"
     
   end
   

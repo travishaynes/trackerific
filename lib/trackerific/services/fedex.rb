@@ -17,11 +17,11 @@ module Trackerific
         [ /^[0-9]{15}$/ ]
       end
       
-      # Returns an Array of required options used when creating a new instance
-      # @return [Array] required options for tracking a FedEx package are :account
+      # Returns an Array of required parameters used when creating a new instance
+      # @return [Array] required parameters for tracking a FedEx package are :account
       #   and :meter
       # @api private
-      def required_options
+      def required_parameters
         [:account, :meter]
       end
     end
@@ -52,13 +52,17 @@ module Trackerific
         date = Time.parse("#{e["Date"]} #{e["Time"]}")
         desc = e["Description"]
         addr = e["Address"]
-        events << Trackerific::Event.new(date, desc, "#{addr["StateOrProvinceCode"]} #{addr["PostalCode"]}")
+        events << Trackerific::Event.new(
+          :date         => date,
+          :description  => desc,
+          :location     => "#{addr["StateOrProvinceCode"]} #{addr["PostalCode"]}"
+        )
       end
       # Return a Trackerific::Details containing all the events
       Trackerific::Details.new(
-        details["TrackingNumber"],
-        details["StatusDescription"],
-        events
+        :package_id => details["TrackingNumber"],
+        :summary    => details["StatusDescription"],
+        :events     => events
       )
     end
     

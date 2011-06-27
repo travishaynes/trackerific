@@ -48,13 +48,15 @@ describe Trackerific do
   
   describe :track_package do
     
-    before do
-      @details = track_package "XXXXXXXXXX"
+    context "with a valid package id" do
+      before { @details = track_package "XXXXXXXXXX" }
+      subject { @details }
+      it { should be_kind_of Trackerific::Details }
     end
     
-    subject { @details }
-    
-    it { should be_kind_of Trackerific::Details }
+    context "with an invalid package id" do
+      specify { lambda { track_package "XXXxxxxxxx" }.should raise_error(Trackerific::Error) }
+    end
   end
   
 end

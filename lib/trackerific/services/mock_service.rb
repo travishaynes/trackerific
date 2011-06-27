@@ -10,17 +10,14 @@ module Trackerific
       # @return [Array, Regexp] the regular expression
       # @api private
       def package_id_matchers
-        if defined?(Rails)
-          return [ /XXXXXXXXXX/, /XXXxxxxxxx/ ] unless Rails.env.production?
-        else
-          return [ ] # no matchers in production mode
-        end
+        return [ /XXXXXXXXXX/, /XXXxxxxxxx/ ] unless Rails.env.production?
+        return [ ]
       end
       
-      # Returns an Array of required options used when creating a new instance
-      # @return [Array] required options
+      # Returns an Array of required parameters used when creating a new instance
+      # @return [Array] required parameters
       # @api private
-      def required_options
+      def required_parameters
         [ ]
       end
     end
@@ -38,12 +35,24 @@ module Trackerific
       super
       if package_id == "XXXXXXXXXX"
         Trackerific::Details.new(
-          package_id,
-          "Your package was delivered.",
-          [
-            Trackerific::Event.new(Date.today, "Package delivered.", "SANTA MARIA, CA"),
-            Trackerific::Event.new(Date.today - 1, "Package scanned.", "SANTA BARBARA, CA"),
-            Trackerific::Event.new(Date.today - 2, "Package picked up for delivery.", "LOS ANGELES, CA")
+          :package_id => package_id,
+          :summary    => "Your package was delivered.",
+          :events     => [
+            Trackerific::Event.new(
+              :date         => Date.today,
+              :description  => "Package delivered.",
+              :location     => "SANTA MARIA, CA"
+            ),
+            Trackerific::Event.new(
+              :date         => Date.today - 1,
+              :description  => "Package scanned.",
+              :location     => "SANTA BARBARA, CA"
+            ),
+            Trackerific::Event.new(
+              :date         => Date.today - 2,
+              :description  => "Package picked up for delivery.",
+              :location     => "LOS ANGELES, CA"
+            )
           ]
         )
       else

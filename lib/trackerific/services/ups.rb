@@ -21,10 +21,10 @@ module Trackerific
       def package_id_matchers
         [ /^.Z/, /^[HK].{10}$/ ]
       end    
-      # The required options for tracking a UPS package
-      # @return [Array] the required options for tracking a UPS package
+      # The required parameters for tracking a UPS package
+      # @return [Array] the required parameters for tracking a UPS package
       # @api private
-      def required_options
+      def required_parameters
         [:key, :user_id, :password]
       end
     end
@@ -64,7 +64,7 @@ module Trackerific
       activity = [activity] if activity.is_a? Hash
       # UPS does not provide a summary, so we'll just use the last tracking status
       summary = activity.first['Status']['StatusType']['Description'].titleize
-      details = []
+      events = []
       activity.each do |a|
         # the time format from UPS is HHMMSS, which cannot be directly converted
         # to a Ruby time.
@@ -75,13 +75,17 @@ module Trackerific
         date    = DateTime.parse("#{date} #{hours}:#{minutes}:#{seconds}")
         desc    = a['Status']['StatusType']['Description'].titleize
         loc     = a['ActivityLocation']['Address'].map {|k,v| v}.join(" ")
-        details << Trackerific::Event.new(date, desc, loc)
+        events << Trackerific::Event.new(
+          :date         => date,
+          :description  => desc,
+          :location     => loc
+        )
       end
       
       Trackerific::Details.new(
-        @package_id,
-        summary,
-        details
+        :package_id => @package_id,
+        :summary    => summary,
+        :events     => events
       )
     end
     

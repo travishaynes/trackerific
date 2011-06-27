@@ -3,13 +3,26 @@ require 'fakeweb'
 
 FEDEX_TRACK_URL = "https://gateway.fedex.com/GatewayDC"
 
-describe "Trackerific::FedEx" do
+describe Trackerific::FedEx do
   include Fixtures
   
-  describe :required_options do
-    subject { Trackerific::FedEx.required_options }
+  specify("it should descend from Trackerific::Service") {
+    Trackerific::FedEx.superclass.should be Trackerific::Service
+  }
+  
+  describe :required_parameters do
+    subject { Trackerific::FedEx.required_parameters }
     it { should include(:account) }
     it { should include(:meter) }
+  end
+  
+  describe :valid_options do
+    it "should include required_parameters" do
+      valid = Trackerific::FedEx.valid_options
+      Trackerific::FedEx.required_parameters.each do |opt|
+        valid.should include opt
+      end
+    end
   end
   
   describe :package_id_matchers do

@@ -16,7 +16,7 @@ Jeweler::Tasks.new do |gem|
   gem.homepage = "http://github.com/travishaynes/trackerific"
   gem.license = "MIT"
   gem.summary = %Q{Trackerific provides package tracking to Rails.}
-  gem.description = %Q{Trackerific provides USPS, FedEx and UPS package tracking to Rails.}
+  gem.description = %Q{Package tracking made easy for Rails. Currently supported services include FedEx, UPS, and USPS.}
   gem.email = "travis.j.haynes@gmail.com"
   gem.authors = ["Travis Haynes"]
   gem.rubyforge_project = "trackerific"

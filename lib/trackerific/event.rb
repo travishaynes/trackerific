@@ -1,15 +1,17 @@
 module Trackerific
   # Provides details for a tracking event
   class Event
+    include OptionsHelper
+    
     # Provides a new instance of Event
-    # @param [DateTime] date the date / time of the event
-    # @param [String] description the event's description
-    # @param [String] location where the event took place
+    # @param [Hash] details The details of the event
     # @api private
-    def initialize(date, description, location)
-      @date = date
-      @description = description
-      @location = location
+    def initialize(details = {})
+      required_details = [:date, :description, :location]
+      validate_options details, required_details
+      @date         = details[:date]
+      @description  = details[:description]
+      @location     = details[:location]
     end
     
     # The date and time of the event
