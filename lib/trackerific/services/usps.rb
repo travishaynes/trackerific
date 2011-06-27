@@ -104,7 +104,7 @@ module Trackerific
       )
     end
     
-    # Gets the city/state of a zipcode
+    # Gets the city/state of a zipcode - requires access to USPS address APIs
     # @param [String] zipcode The zipcode to find the city/state for
     # @return [Hash] { zip: 'the zipcode, 'city: "the city", state: "the state" }
     # @example Lookup zipcode for Beverly Hills, CA

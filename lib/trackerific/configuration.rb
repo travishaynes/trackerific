@@ -19,7 +19,8 @@ module Trackerific
         # Only accept Hashes
         raise ArgumentError unless args[0].class == Hash
         # Validate configuration values against the required parameters for that service
-        validate_options args[0], Trackerific.service_get(sym).required_parameters
+        service = Trackerific.service_get(sym)
+        validate_options args[0], service.required_parameters, service.valid_options
         # Store the configuration options
         @options[sym] = args[0]
       end
