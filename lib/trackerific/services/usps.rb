@@ -48,52 +48,20 @@ module Trackerific
       # connect to the USPS shipping API via HTTParty
       response = self.class.get(
         Rails.env.production? ? "/ShippingAPI.dll" : "/ShippingAPITest.dll",
-        :query => {
-          :API => 'TrackV2',
-          :XML => build_tracking_xml_request
-        }.to_query
+        :query => { :API => 'TrackV2', :XML => build_tracking_xml_request }.to_query
       )
       # raise any errors
       error = check_response_for_errors(response, :TrackV2)
       raise error unless error.nil?
-      # get the tracking information from the response, and convert into a
-      # Trackerific::Details
+      # get the tracking information from the response
       tracking_info = response['TrackResponse']['TrackInfo']
       events = []
-      # check if we should look up the exact location of the details
-      use_city_state_lookup = @options[:use_city_state_lookup] || false
-      # parse the details
+      # parse the tracking events out of the USPS tracking info
       tracking_info['TrackDetail'].each do |d|
-        # each tracking detail is a string in this format:
-        # MM DD HH:MM am/pm DESCRIPTION CITY STATE ZIP
-        d = d.split(" ")
-        date = DateTime.parse(d[0..3].join(" "))
-        desc = d[4..d.length].join(" ")
-        # the zip code is always the last word, if it is all numbers
-        if use_city_state_lookup then
-          # this gets the exact location of the package, and is very accurate,
-          # however, it requires access to the shipping services in USPS
-          zip = d[d.length-1]
-          loc = ""
-          # check if zip is a number
-          if zip.to_i.to_s == zip
-            loc = city_state_lookup(zip)
-            loc = "#{loc[:city].titelize}, #{loc[:state]} #{loc[:zip]}"
-            # attempt to delete the location from the description
-            desc = desc.gsub("#{loc[:city]} #{loc[:state]} #{loc[:zip]}", "")
-          end
-        else
-          # extract the location from the description - not always accurate,
-          # but better than nothing
-          d = desc.split(" ") # => ['the', 'description', 'city', 'state', 'zip']
-          desc = d[0..d.length-4].join(" ") # => "the description"
-          loc = d[d.length-3, d.length] # => ['city', 'state', 'zip']
-          loc = "#{loc[0].titleize}, #{loc[1]} #{loc[2]}" # "City, STATE zip"
-        end
         events << Trackerific::Event.new(
-          :date         => date,
-          :description  => desc.capitalize,
-          :location     => loc
+          :date         => date_of_event(d),
+          :description  => description_of_event(d).capitalize,
+          :location     => location_of_event(d)
         )
       end unless tracking_info['TrackDetail'].nil?
       # return the details
@@ -134,7 +102,54 @@ module Trackerific
       }
     end
     
-    protected
+    private
+    
+    # Parses a USPS tracking event, and returns its date
+    # @param [String] event The tracking event to parse
+    # @return [DateTime] The date / time of the event
+    # @api private
+    def date_of_event(event)
+      # get the date out of
+      # Mon DD HH:MM am/pm THE DESCRIPTION CITY STATE ZIP.
+      d = event.split(" ")
+      DateTime.parse(d[0..3].join(" "))
+    end
+    
+    # Parses a USPS tracking event, and returns its description
+    # @param [String] event The tracking event to parse
+    # @return [DateTime] The description of the event
+    # @api private
+    def description_of_event(event)
+      # get the description out of
+      # Mon DD HH:MM am/pm THE DESCRIPTION CITY STATE ZIP.
+      d = event.split(" ")
+      d[4..d.length-4].join(" ").capitalize
+    end
+    
+    # Parses a USPS tracking event, and returns its location
+    # @param [String] event The tracking event to parse
+    # @return The location of the event
+    # @api private
+    def location_of_event(event)
+      # remove periods, and split by spaces
+      d = event.gsub(".", "").split(" ")
+      l = d[d.length-3, d.length] # => ['city', 'state', 'zip']
+      # this is the location from the USPS tracking XML. it is not guaranteed
+      # to be completely accurate, since there's no way to know if it will
+      # always be the last 3 words.
+      city  = l[0]
+      state = l[1]
+      zip   = l[2]
+      # for greater accuracy, we can use the city/state lookup API from USPS
+      if @options[:use_city_state_lookup]
+        l = city_state_lookup(zip)
+        # these will be nil if USPS does not have the zipcode in their database
+        city  = l[:city]  unless l[:city].nil?
+        state = l[:state] unless l[:state].nil?
+        zip   = l[:zip]   unless l[:zip].nil?
+      end
+      "#{city.titleize}, #{state} #{zip}"
+    end
     
     # Checks a HTTParty response for USPS, or HTTP errors
     # @param [HTTParty::Response] response The HTTParty response to check
