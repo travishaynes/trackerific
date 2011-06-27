@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{trackerific}
-  s.version = "0.6.0"
+  s.version = "0.6.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Travis Haynes"]
@@ -25,6 +25,7 @@ Gem::Specification.new do |s|
     "Rakefile",
     "VERSION",
     "changelog",
+    "examples/custom_service_spec.rb",
     "lib/helpers/options_helper.rb",
     "lib/trackerific.rb",
     "lib/trackerific/configuration.rb",
