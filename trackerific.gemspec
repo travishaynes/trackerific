@@ -5,12 +5,12 @@
 
 Gem::Specification.new do |s|
   s.name = %q{trackerific}
-  s.version = "0.5.5"
+  s.version = "0.6.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Travis Haynes"]
-  s.date = %q{2011-06-24}
-  s.description = %q{Trackerific provides USPS, FedEx and UPS package tracking to Rails.}
+  s.date = %q{2011-06-27}
+  s.description = %q{Package tracking made easy for Rails. Currently supported services include FedEx, UPS, and USPS.}
   s.email = %q{travis.j.haynes@gmail.com}
   s.extra_rdoc_files = [
     "LICENSE.txt",
@@ -24,30 +24,7 @@ Gem::Specification.new do |s|
     "README.rdoc",
     "Rakefile",
     "VERSION",
-    "doc/OptionsHelper.html",
-    "doc/Trackerific.html",
-    "doc/Trackerific/Configuration.html",
-    "doc/Trackerific/Details.html",
-    "doc/Trackerific/Error.html",
-    "doc/Trackerific/Event.html",
-    "doc/Trackerific/FedEx.html",
-    "doc/Trackerific/Service.html",
-    "doc/Trackerific/UPS.html",
-    "doc/Trackerific/USPS.html",
-    "doc/_index.html",
-    "doc/class_list.html",
-    "doc/css/common.css",
-    "doc/css/full_list.css",
-    "doc/css/style.css",
-    "doc/file.README.html",
-    "doc/file_list.html",
-    "doc/frames.html",
-    "doc/index.html",
-    "doc/js/app.js",
-    "doc/js/full_list.js",
-    "doc/js/jquery.js",
-    "doc/method_list.html",
-    "doc/top-level-namespace.html",
+    "changelog",
     "lib/helpers/options_helper.rb",
     "lib/trackerific.rb",
     "lib/trackerific/configuration.rb",
@@ -63,6 +40,7 @@ Gem::Specification.new do |s|
     "spec/fixtures/fedex_success_response.xml",
     "spec/fixtures/ups_error_response.xml",
     "spec/fixtures/ups_success_response.xml",
+    "spec/fixtures/usps_city_state_lookup_response.xml",
     "spec/fixtures/usps_error_response.xml",
     "spec/fixtures/usps_success_response.xml",
     "spec/lib/helpers/options_helper_spec.rb",
