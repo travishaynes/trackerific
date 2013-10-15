@@ -1,111 +1,97 @@
 require 'spec_helper'
-require 'fakeweb'
 
 USPS_URL = %r|http://testing\.shippingapis\.com/.*|
 
-describe Trackerific::USPS do
-  include Fixtures
-  
-  specify("it should descend from Trackerific::Service") {
-    Trackerific::USPS.superclass.should be Trackerific::Service
-  }
-  
-  describe :city_state_lookup do
-    
-    before(:all) do
-      @usps = Trackerific::USPS.new :user_id => '123USERID4567'
-    end
-    
-    context "with a successful response from the server" do
-      
-      before(:all) do
-        FakeWeb.register_uri(:get, USPS_URL, :body => load_fixture(:usps_city_state_lookup_response))
-      end
-      
-      before(:each) do
-        @lookup = @usps.city_state_lookup("90210")
-      end
-      
-      subject { @lookup }
-      it { should include(:city) }
-      it { should include(:state) }
-      it { should include(:zip) }
-      
-    end
-    
-    context "with an error response from the server" do
-      
-      before(:all) do
-        FakeWeb.register_uri(:get, USPS_URL, :body => load_fixture(:usps_error_response))
-      end
-      
-      specify { lambda { @usps.city_state_lookup("90210") }.should raise_error(Trackerific::Error) }
-      
-    end
+describe Trackerific::Services::USPS do
+  it { should be_a Trackerific::Services::Base }
+
+  let(:valid_ids) { ["EJ958083578US"] }
+  let(:invalid_ids) { %w[these are not valid tracking ids] }
+
+  it "should match valid tracking ids" do
+    valid_ids.all? {|id| described_class.can_track?(id) }.should be_true
   end
-  
-  describe :track_package do
-    
-    before(:all) do
-      @package_id = 'EJ958083578US'
-      @usps = Trackerific::USPS.new :user_id => '123USERID4567'
-    end
-    
-    context "with a successful response from the server" do
-      
-      before(:all) do
-        FakeWeb.register_uri(:get, USPS_URL, :body => load_fixture(:usps_success_response))
-      end
-      
-      before(:each) do
-        @tracking = @usps.track_package(@package_id)
-      end
-      
-      subject { @tracking }
-      it("should return a Trackerific::Details") { should be_a Trackerific::Details }
-      
-      describe "events.length" do
-        subject { @tracking.events.length }
-        it { should >= 1 }
-      end
-      
-      describe :summary do
-        subject { @tracking.summary }
-        it { should_not be_empty }
-      end
-      
-    end
-    
-    pending "when use_city_state_lookup == true"
-    
-    context "with an error response from the server" do
-      
-      before(:all) do
-        FakeWeb.register_uri(:get, USPS_URL, :body => load_fixture(:usps_error_response))
-      end
-      
-      specify { lambda { @usps.track_package(@package_id) }.should raise_error(Trackerific::Error) }
-      
-    end
+
+  it "should not match invalid tracking ids" do
+    invalid_ids.all? {|id| described_class.can_track?(id) }.should be_false
   end
-  
-  describe :required_parameters do
-    subject { Trackerific::USPS.required_parameters }
-    it { should include(:user_id) }
-  end
-  
-  describe :valid_options do
-    it "should include required_parameters" do
-      valid = Trackerific::USPS.valid_options
-      Trackerific::USPS.required_parameters.each do |opt|
-        valid.should include opt
+
+  let(:credentials) { { user_id: '123USERID4567' } }
+  let(:usps) { described_class.new(credentials) }
+
+  describe "#city_state_lookup" do
+    before do
+      FakeWeb.register_uri(:get, USPS_URL, body: fixture)
+    end
+
+    after(:all) { FakeWeb.clean_registry }
+
+    context "with a successful response" do
+      let(:fixture) { Fixture.read('usps/city_state_lookup.xml') }
+      subject { usps.city_state_lookup("90210") }
+      it "should have the correct values" do
+        subject[:city].should eq "BEVERLY HILLS"
+        subject[:state].should eq "CA"
+        subject[:zip].should eq "90210"
+      end
+    end
+
+    context "with an error response" do
+      let(:fixture) { Fixture.read('usps/error.xml') }
+      it "should raise a Trackerific::Error" do
+        expect {
+          usps.city_state_lookup("90210")
+        }.to raise_error Trackerific::Error
       end
     end
   end
-  
-  describe :package_id_matchers do
-    subject { Trackerific::UPS.package_id_matchers }
-    it("should be an Array of Regexp") { should each { |m| m.should be_a Regexp } }
+
+  describe "#track" do
+    let(:id) { 'EJ958083578US' }
+
+    before do
+      FakeWeb.register_uri(:get, USPS_URL, body: fixture)
+    end
+
+    after(:all) { FakeWeb.clean_registry }
+
+    context "with a successful response" do
+      let(:fixture) { Fixture.read('usps/success.xml') }
+
+      subject { usps.track(id) }
+
+      it { should be_a Trackerific::Details }
+
+      its(:package_id) { should eq id }
+      its(:summary) { should eq "Your item was delivered at 8:10 am on June 1 in Wilmington DE 19801." }
+      its(:events) { should be_a Array }
+      its(:weight) { should be_nil }
+      its(:via) { should be_nil }
+
+      describe "#events" do
+        subject { usps.track(id).events }
+        its(:length) { should eq 3 }
+        it "should have the correct values" do
+          subject[0].date.to_s.should eq "2013-05-30T11:07:00+00:00"
+          subject[0].description.should eq "Notice left"
+          subject[0].location.should eq "WILMINGTON, DE 19801"
+          subject[1].date.to_s.should eq "2013-05-30T10:08:00+00:00"
+          subject[1].description.should eq "Arrival at unit"
+          subject[1].location.should eq "WILMINGTON, DE 19850"
+          subject[2].date.to_s.should eq "2013-05-29T09:55:00+00:00"
+          subject[2].description.should eq "Accept or pickup"
+          subject[2].location.should eq "EDGEWATER, NJ 07020"
+        end
+      end
+    end
+
+    context "with an error response" do
+      let(:fixture) { Fixture.read('usps/error.xml') }
+      it "should raise a Trackerific::Error" do
+        expect {
+          usps.track(id)
+        }.to raise_error Trackerific::Error
+      end
+    end
   end
-  
 end

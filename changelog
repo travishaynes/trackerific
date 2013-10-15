@@ -1,9 +1,0 @@
-Mon Jun 27 2011 - Travis Haynes <travis.j.haynes@gmail.com>
-
- * Added support for USPS City / State API for looking up a city and state by
-its zipcode.
- * Renamed required_options to required_parameters. (Makes much more sense.)
- * Added a lot more specs for more code coverage.
- * Changed the way that Details and Events are initialized. Using options
-instead of parameters.
- * Removed doc folder from git, since it is automatically generated with yard

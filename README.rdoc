@@ -5,30 +5,22 @@ To use this gem, add this line to your Gemfile
 and then run
   bundle install
 
-== Usage
-
-If you would like to see a functional example of this gem in action, check out the
-sample Rails app here: {package-tracker}[https://github.com/travishaynes/package-tracker]
-
 === Configuration
 
-To take advantage of Trackerific's automatic service discovery, you will need to
-configure your credentials for each service.
+You will need to configure your credentials for each service:
 
-  # config/initializers/trackerific.rb
-  require 'trackerific'
   Trackerific.configure do |config|
     config.fedex  :account  => 'account',
                   :meter    => '123456789'
-    
+
     config.ups    :key      => 'key',
                   :user_id  => 'userid',
                   :password => 'secret'
-    
+
     config.usps   :user_id  => 'userid',
                   :use_city_state_lookup => true
   end
-  
+
 For USPS packages, the option :use_city_state_lookup defaults to false, and will
 only work if you have access to USPS's CityStateLookup API. If you can enable
 it, this feature will provide the location for USPS package events.
@@ -37,36 +29,36 @@ it, this feature will provide the location for USPS package events.
 
 Once you configured the services, tracking a package is as easy as
 
-  include Trackerific
-  details = track_package "package id"
+  details = Trackerific.track("package id")
 
 === Finding a Tracking Service Provider
 
-If you do not know the tracking service provider of a package id, or you used
-track_package, and you need to know which service was used to track it, you can
-use the tracking_service helper method.
+If you do not know the tracking service provider of a package id you can use
+Trackerific::Services.find_by_tracking_id:
 
-  include Trackerific
-  tracking_service "183689015000001"    # => Trackerific::FedEx
-  tracking_service "1Z12345E0291980793" # => Trackerific::UPS
-  tracking_service "EJ958083578US"      # => Trackerific::USPS
-  tracking_service "unknown package id" # => nil
+  Trackerific::Services.find_by_tracking_id("183689015000001")    # => Trackerific::Services::FedEx
+  Trackerific::Services.find_by_tracking_id("1Z12345E0291980793") # => Trackerific::Services::UPS
+  Trackerific::Services.find_by_tracking_id("EJ958083578US")      # => Trackerific::Services::USPS
+  Trackerific::Services.find_by_tracking_id("unknown package id") # => nil
 
 === Tracking a Package with a Specific Service
 
 Use this method if you need to specify exactly which service to track a package.
 
   # Track a FedEx package:
-  fedex = Trackerific::FedEx.new :account => '123456789', :meter => '123456789'
-  details = fedex.track_package('183689015000001')
-  
+  details = Trackerific::Services::FedEx.track('183689015000001')
+
   # Track a USPS package:
-  usps = Trackerific::USPS.new :user_id => '123USERID4567'
-  details = usps.track_package('EJ958083578US')
-  
+  details = Trackerific::Services::USPS.track('EJ958083578US')
+
   # Track a UPS package:
-  ups = Trackerific::UPS.new :user_id => 'userid', :key => 'kQdEJwuHBjtQ7g2', :password => 'secret'
-  details = ups.track_package('1Z12345E0291980793')
+  details = Trackerific::Services::UPS.track('1Z12345E0291980793')
+
+Using #track will automatically read the credentials from
+`Trackerific.configuration`. If you need to assign them manually, use #new:
+
+  fedex = Trackerific::Services::FedEx.new account: "account", meter: "123456789"
+  details = fedex.track('183689015000001')
 
 === Tracking Details
 
@@ -100,7 +92,7 @@ recent events will always be at the top of the list.
 If you have access to the USPS CityStateLookup API, you can use Trackerific to
 look up the city and state of a zipcode.
 
-  usps = Trackerific::USPS.new :user_id => 'userid'
+  usps = Trackerific::Services::USPS.new :user_id => 'userid'
   usps.city_state_lookup "90210" # => { :city => 'BEVERLY HILLS', :state => 'CA', :zip => '90210' }
 
 === Exception handling
@@ -111,43 +103,25 @@ tracking number to their system, a Trackerific::Error will be raised. Here's an
 example on how to handle Trackerific::Errors:
 
   begin
-    usps.track_package('EJ958083578US')
+    details = Trackerific.track('EJ958083578US')
+    # handle details here
   rescue Trackerific::Error => e
     puts e.message
   end
 
-or for a Rails application:
-
-  # in app/controllers/application_controller.rb
-  rescue_from Trackerific::Error do |exception|
-    redirect_to root_url, :alert => exception.message
-  end
-
-== Writing a Custom Service
-
-See the examples folder for an example of a custom service.
-
-=== Testing with Trackerific
+=== Testing
 
 Trackerific provides a mocked service you can use in your unit tests of your
-application. The mocked service will be available in development and test
-environments only, and disabled in production.
+application. You must require the service manually.
 
+  require 'trackerific/services/mock_service'
   details = track_package("XXXXXXXXXX") # => returns a populated Trackerific::Details
-  details = track_package("XXXxxxxxxx") # => throws a Trackerific::Errror exception
+  details = track_package("XXXxxxxxxx") # => throws a Trackerific::Error exception
 
-== Contributing to trackerific
+== Contributing
 
-* Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet
-* Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it
-* Fork the project
-* Start a feature/bugfix branch
-* Commit and push until you are happy with your contribution
-* Make sure to add tests for it. This is important so I don't break it in a future version unintentionally.
-* Please try not to mess with the Rakefile, version, or history. If you want to have your own version, or is otherwise necessary, that is fine, but please isolate to its own commit so I can cherry-pick around it.
-
-== Copyright
-
-Copyright (c) 2011 Travis Haynes. See LICENSE.txt for
-further details.
-
+1. Fork it
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Add some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create new Pull Request

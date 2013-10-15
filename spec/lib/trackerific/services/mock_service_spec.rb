@@ -1,56 +1,43 @@
 require 'spec_helper'
+require 'trackerific/services/mock_service'
 
-describe Trackerific::MockService do
+describe Trackerific::Services::MockService do
+  it { should be_a Trackerific::Services::Base }
 
-  specify("it should descend from Trackerific::Service") {
-    Trackerific::MockService.superclass.should be Trackerific::Service
-  }
-  
-  describe :required_parameters do
-    subject { Trackerific::MockService.required_parameters }
-    it { should be_empty }
+  it "should be registered" do
+    Trackerific::Services[:mock_service].should eq described_class
   end
-  
-  describe :package_id_matchers do
-  
-    context "when in development or test mode" do
-      subject { Trackerific::MockService.package_id_matchers }
-      it("should be an Array of Regexp") { should each { |m| m.should be_a Regexp } }
-    end
-    
-    context "when in production mode" do
-      before { Rails.env = "production" }
-      subject { Trackerific::MockService.package_id_matchers }
-      it { should be_empty }
-      after { Rails.env = "test"}
-    end
+
+  describe "#package_id_matchers" do
+    subject { described_class.package_id_matchers }
+    it { should include /XXXXXXXXXX/ }
+    it { should include /XXXxxxxxxx/ }
   end
-  
-  describe :track_package do
-    before(:all) do
-      @service = Trackerific::MockService.new
-    end
-    
-    context "with valid package_id" do
-      before { @tracking = @service.track_package("XXXXXXXXXX") }
-      subject { @tracking }
-      it("should return a Trackerific::Details") { should be_a Trackerific::Details }
-      
-      describe "events.length" do
-        subject { @tracking.events.length }
-        it { should >= 1}
-      end
-      
-      describe :summary do
-        subject { @tracking.summary }
-        it { should_not be_empty }
+
+  describe "#track" do
+    let(:service) { described_class.new }
+
+    context "with a valid id" do
+      let(:id) { "XXXXXXXXXX" }
+      subject { service.track(id) }
+      it { should be_a Trackerific::Details }
+      its(:package_id) { should eq id }
+      its(:summary) { should eq "Your package was delivered." }
+      its(:events) { should be_a Array }
+
+      describe "#events" do
+        subject { service.track(id).events }
+        it { should be_a Array }
+        its(:count) { should eq 3 }
       end
     end
-    
-    context "with invalid package_id" do
-      specify { lambda { @service.track_package("XXXxxxxxxx") }.should raise_error(Trackerific::Error) }
+
+    context "with an invalid id" do
+      it "should raise a Trackerific::Error" do
+        expect {
+          service.track("XXXxxxxxxx")
+        }.to raise_error Trackerific::Error
+      end
     end
-    
   end
-  
 end
