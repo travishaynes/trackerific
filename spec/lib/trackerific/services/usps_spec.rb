@@ -19,33 +19,6 @@ describe Trackerific::Services::USPS do
   let(:credentials) { { user_id: '123USERID4567' } }
   let(:usps) { described_class.new(credentials) }
 
-  describe "#city_state_lookup" do
-    before do
-      FakeWeb.register_uri(:get, USPS_URL, body: fixture)
-    end
-
-    after(:all) { FakeWeb.clean_registry }
-
-    context "with a successful response" do
-      let(:fixture) { Fixture.read('usps/city_state_lookup.xml') }
-      subject { usps.city_state_lookup("90210") }
-      it "should have the correct values" do
-        subject[:city].should eq "BEVERLY HILLS"
-        subject[:state].should eq "CA"
-        subject[:zip].should eq "90210"
-      end
-    end
-
-    context "with an error response" do
-      let(:fixture) { Fixture.read('usps/error.xml') }
-      it "should raise a Trackerific::Error" do
-        expect {
-          usps.city_state_lookup("90210")
-        }.to raise_error Trackerific::Error
-      end
-    end
-  end
-
   describe "#track" do
     let(:id) { 'EJ958083578US' }
 
@@ -73,13 +46,13 @@ describe Trackerific::Services::USPS do
         its(:length) { should eq 3 }
         it "should have the correct values" do
           subject[0].date.to_s.should eq "2013-05-30T11:07:00+00:00"
-          subject[0].description.should eq "Notice left"
+          subject[0].description.should eq "NOTICE LEFT"
           subject[0].location.should eq "WILMINGTON, DE 19801"
           subject[1].date.to_s.should eq "2013-05-30T10:08:00+00:00"
-          subject[1].description.should eq "Arrival at unit"
+          subject[1].description.should eq "ARRIVAL AT UNIT"
           subject[1].location.should eq "WILMINGTON, DE 19850"
           subject[2].date.to_s.should eq "2013-05-29T09:55:00+00:00"
-          subject[2].description.should eq "Accept or pickup"
+          subject[2].description.should eq "ACCEPT OR PICKUP"
           subject[2].location.should eq "EDGEWATER, NJ 07020"
         end
       end

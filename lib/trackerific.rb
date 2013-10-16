@@ -1,8 +1,17 @@
+require 'active_support/core_ext/object/to_query'
+
+require 'httparty'
+require 'builder'
+require 'date'
+
 require 'trackerific/version'
 require 'trackerific/configuration'
 require 'trackerific/error'
 require 'trackerific/details'
 require 'trackerific/event'
+require 'trackerific/builders/xml_builder'
+require 'trackerific/parsers/xml_parser'
+require 'trackerific/services/concerns/xml'
 require 'trackerific/services'
 require 'trackerific/services/base'
 
@@ -36,7 +45,8 @@ module Trackerific
     # @api public
     def track(id)
       Trackerific::Services.find_by_package_id(id).map do |service|
-        service.new.track(id)
+        options = Trackerific.configuration[service.name]
+        service.new(options).track(id)
       end
     end
   end

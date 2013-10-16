@@ -40,7 +40,7 @@ describe Trackerific::Services::UPS do
         subject { ups.track(id).events }
         its(:length) { should eq 1 }
         it "should have the correct values" do
-          subject[0].date.to_s.should eq "2003-03-13T16:00:00+00:00"
+          subject[0].date.should be_a DateTime
           subject[0].description.should eq "DELIVERED"
           subject[0].location.should eq "MAYSVILLE 26833   9700 US"
         end

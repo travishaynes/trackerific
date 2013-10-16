@@ -10,20 +10,14 @@ and then run
 You will need to configure your credentials for each service:
 
   Trackerific.configure do |config|
-    config.fedex  :account  => 'account',
-                  :meter    => '123456789'
-
-    config.ups    :key      => 'key',
-                  :user_id  => 'userid',
-                  :password => 'secret'
-
-    config.usps   :user_id  => 'userid',
-                  :use_city_state_lookup => true
+    config.fedex  = { account: 'account', meter: '123456789' }
+    config.ups    = { key: 'key', user_id: 'userid', password: 'secret' }
+    config.usps   = { user_id: 'userid', use_city_state_lookup: true }
   end
 
-For USPS packages, the option :use_city_state_lookup defaults to false, and will
-only work if you have access to USPS's CityStateLookup API. If you can enable
-it, this feature will provide the location for USPS package events.
+For USPS packages, the option `:use_city_state_lookup` defaults to false, and
+will only work if you have access to USPS's CityStateLookup API. If you can
+enable it, this feature will provide the location for USPS package events.
 
 === Tracking with Automatic Service Discovery
 
@@ -36,23 +30,18 @@ Once you configured the services, tracking a package is as easy as
 If you do not know the tracking service provider of a package id you can use
 Trackerific::Services.find_by_tracking_id:
 
-  Trackerific::Services.find_by_tracking_id("183689015000001")    # => Trackerific::Services::FedEx
-  Trackerific::Services.find_by_tracking_id("1Z12345E0291980793") # => Trackerific::Services::UPS
-  Trackerific::Services.find_by_tracking_id("EJ958083578US")      # => Trackerific::Services::USPS
-  Trackerific::Services.find_by_tracking_id("unknown package id") # => nil
+  Trackerific::Services.find_by_tracking_id("183689015000001")
+  Trackerific::Services.find_by_tracking_id("1Z12345E0291980793")
+  Trackerific::Services.find_by_tracking_id("EJ958083578US")
+
+Each of the above examples will return an Array of Trackerific::Service::Base
+subclasses that are capable of tracking the given package ID.
 
 === Tracking a Package with a Specific Service
 
 Use this method if you need to specify exactly which service to track a package.
 
-  # Track a FedEx package:
   details = Trackerific::Services::FedEx.track('183689015000001')
-
-  # Track a USPS package:
-  details = Trackerific::Services::USPS.track('EJ958083578US')
-
-  # Track a UPS package:
-  details = Trackerific::Services::UPS.track('1Z12345E0291980793')
 
 Using #track will automatically read the credentials from
 `Trackerific.configuration`. If you need to assign them manually, use #new:

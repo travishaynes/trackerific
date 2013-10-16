@@ -1,6 +1,8 @@
 module Trackerific
   module Services
     class Base
+      @name = nil
+
       class << self
         attr_accessor :name
 
@@ -31,15 +33,10 @@ module Trackerific
             "You must implement this method in your service", caller
         end
       end
-    end
 
-    # Gets the tracking information for the package from the server
-    # @param [String] id The package identifier
-    # @return [Trackerific::Details] The tracking details
-    # @api semipublic
-    def track(id)
-      raise NotImplementedError,
-        "You must implement this method in your service", caller
+      def initialize(options={})
+        @options = options
+      end
     end
   end
 end
