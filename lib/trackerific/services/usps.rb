@@ -10,7 +10,7 @@ module Trackerific
 
       self.xml_parser = Parsers::USPS
       self.xml_builder = Builders::USPS
-      self.xml_builder_keys = %i[user_id]
+      self.xml_builder_keys = [:user_id]
 
       case ENV['RAILS_ENV'] || 'production'
       when 'production'

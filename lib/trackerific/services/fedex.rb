@@ -11,7 +11,7 @@ module Trackerific
       self.xml_endpoint = "/GatewayDC"
       self.xml_parser = Parsers::FedEx
       self.xml_builder = Builders::FedEx
-      self.xml_builder_keys = %i[account meter]
+      self.xml_builder_keys = [:account, :meter]
 
       format :xml
 
