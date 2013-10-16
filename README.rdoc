@@ -1,6 +1,4 @@
-= Trackerific
-
-{<img src="https://travis-ci.org/travishaynes/trackerific.png" />}[https://travis-ci.org/travishaynes/trackerific]
+= Trackerific {<img src="https://travis-ci.org/travishaynes/trackerific.png" />}[https://travis-ci.org/travishaynes/trackerific]
 
 Package tracking in a gem. Currently supported carriers are:
 
