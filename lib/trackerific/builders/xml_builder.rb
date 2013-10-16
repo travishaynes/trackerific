@@ -27,7 +27,7 @@ module Trackerific
       def builder
         @builder ||= begin
           builder = ::Builder::XmlMarkup.new(target: @xml)
-          builder.instruct! :xml, version: @xml_version
+          builder.instruct! :xml, version: self.class.xml_version
           builder
         end
       end
