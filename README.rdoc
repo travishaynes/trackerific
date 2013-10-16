@@ -6,6 +6,20 @@ Package tracking in a gem. Currently supported carriers are:
 * UPS
 * USPS
 
+== Prerequisites
+
+You will need to sign up to each carrier you wish to utilize. They each have
+their own requirements and license agreements, so it's up to you to make sure
+you follow their terms of agreement. For example, at the time this was written
+UPS requires that you include their logo on your website when you use their
+API.
+
+You'll also need the proper credentials from each carrier, which requires
+signing up through their individual websites, and is not always free, depending
+on which portion of their API you plan on using. Trackerific focuses primarily
+on the tracking APIs, so that's all you'll need to use this gem, unless you
+plan on implementing additional features.
+
 == Installation
 
 To use this gem, add this line to your Gemfile
@@ -15,17 +29,14 @@ and then run
 
 === Configuration
 
-You will need to configure your credentials for each service:
+You will need to configure the credentials for each service you're utilizing.
+Services without credentials will not be accessed by the gem.
 
   Trackerific.configure do |config|
     config.fedex  = { account: 'account', meter: '123456789' }
     config.ups    = { key: 'key', user_id: 'userid', password: 'secret' }
     config.usps   = { user_id: 'userid', use_city_state_lookup: true }
   end
-
-For USPS packages, the option `:use_city_state_lookup` defaults to false, and
-will only work if you have access to USPS's CityStateLookup API. If you can
-enable it, this feature will provide the location for USPS package events.
 
 === Tracking with Automatic Service Discovery
 
@@ -42,8 +53,9 @@ Trackerific::Services.find_by_tracking_id:
   Trackerific::Services.find_by_tracking_id("1Z12345E0291980793")
   Trackerific::Services.find_by_tracking_id("EJ958083578US")
 
-Each of the above examples will return an Array of Trackerific::Service::Base
-subclasses that are capable of tracking the given package ID.
+Each of the above examples will return an `Array` of
+`Trackerific::Service::Base` subclasses that are capable of tracking the given
+package ID.
 
 === Tracking a Package with a Specific Service
 
@@ -54,43 +66,49 @@ Use this method if you need to specify exactly which service to track a package.
 Using #track will automatically read the credentials from
 `Trackerific.configuration`. If you need to assign them manually, use #new:
 
-  fedex = Trackerific::Services::FedEx.new account: "account", meter: "123456789"
+  fedex = Trackerific::Services::FedEx.new(
+    :account  => "account",
+    :meter    => "123456789"
+  )
   details = fedex.track('183689015000001')
 
 === Tracking Details
 
 The tracking information is returned in a Trackerific::Details instance.
 
-  details.summary # => a summary of the tracking events
-  details.events  # => an Array of Trackerific::Events
+<table>
+  <tr>
+    <th>`details.summary`</th>
+    <td>Summary of the tracking events</td>
+  </tr>
+  <tr>
+    <th>`details.events`
+    <td>Array of Trackerific::Events</td>
+  </tr>
+</table>
 
-You can easily print out the tracking events just by doing:
+=== Tracking Events
 
-  puts details.events         # for all the events
-  puts details.events.first   # for just one event
+`Tracking::Details` has an events `Array` with the following properties:
 
-Or, if you need specific information about an event:
+<table>
+  <tr>
+    <th>`event.date`</th>
+    <td>The date the package was shipped.</td>
+  </tr>
+    <th>`event.date`
+    <td>The date/time of the event.</td>
+  </tr>
+    <th>`event.description`
+    <td>Description of an event.</td>
+  </tr>
+    <th>`event.location`
+    <td>The location of the package during that event.</td>
+  </tr>
+</table>
 
-  details.events.last.date         # => the date the package was shipped
-  details.events.first.date        # => the last date the package was updated
-  details.events.first.description # => a description of an event
-  details.events.first.location    # => the location of the package during that event
-
-location will not work for USPS packages, because USPS does not provide that
-information seperately from the description. So for USPS packages, the location
-will always be at the end of the description.
-
-Note that events.last will return the first event the tracking provider
-supplied. This is because the events are listed in LIFO order, so the most
-recent events will always be at the top of the list.
-
-=== City / State Lookup Via USPS
-
-If you have access to the USPS CityStateLookup API, you can use Trackerific to
-look up the city and state of a zipcode.
-
-  usps = Trackerific::Services::USPS.new :user_id => 'userid'
-  usps.city_state_lookup "90210" # => { :city => 'BEVERLY HILLS', :state => 'CA', :zip => '90210' }
+Note that events are in last-in-first-out order, so the last event will always
+be the first event the carrier supplied.
 
 === Exception handling
 
@@ -112,8 +130,10 @@ Trackerific provides a mocked service you can use in your unit tests of your
 application. You must require the service manually.
 
   require 'trackerific/services/mock_service'
-  details = track_package("XXXXXXXXXX") # => returns a populated Trackerific::Details
-  details = track_package("XXXxxxxxxx") # => throws a Trackerific::Error exception
+  # Get a populated Trackerific::Details
+  details = track_package("XXXXXXXXXX")
+  # Throw a Trackerific::Error exception
+  details = track_package("XXXxxxxxxx")
 
 == Contributing
 
