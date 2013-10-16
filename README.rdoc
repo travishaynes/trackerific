@@ -76,36 +76,17 @@ Using #track will automatically read the credentials from
 
 The tracking information is returned in a Trackerific::Details instance.
 
-<table>
-  <tr>
-    <th>`details.summary`</th>
-    <td>Summary of the tracking events</td>
-  </tr>
-  <tr>
-    <th>`details.events`
-    <td>Array of Trackerific::Events</td>
-  </tr>
-</table>
+`details.summary` - Summary of the tracking events
+`details.events` - Array of Trackerific::Events
 
 === Tracking Events
 
 `Tracking::Details` has an events `Array` with the following properties:
 
-<table>
-  <tr>
-    <th>`event.date`</th>
-    <td>The date the package was shipped.</td>
-  </tr>
-    <th>`event.date`
-    <td>The date/time of the event.</td>
-  </tr>
-    <th>`event.description`
-    <td>Description of an event.</td>
-  </tr>
-    <th>`event.location`
-    <td>The location of the package during that event.</td>
-  </tr>
-</table>
+`event.date` - The date the package was shipped.
+`event.date` - The date/time of the event.
+`event.description` - Description of an event.
+`event.location` - The location of the package during that event.
 
 Note that events are in last-in-first-out order, so the last event will always
 be the first event the carrier supplied.
