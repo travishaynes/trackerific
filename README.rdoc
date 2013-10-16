@@ -1,3 +1,13 @@
+= Trackerific
+
+{<img src="https://travis-ci.org/travishaynes/trackerific.png" />}[https://travis-ci.org/travishaynes/trackerific]
+
+Package tracking in a gem. Currently supported carriers are:
+
+* FedEx
+* UPS
+* USPS
+
 == Installation
 
 To use this gem, add this line to your Gemfile
