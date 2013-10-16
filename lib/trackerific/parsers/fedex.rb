@@ -30,7 +30,7 @@ module Trackerific
       end
 
       def parse_date_time(e)
-        Time.parse("#{e["Date"]} #{e["Time"]}")
+        DateTime.parse("#{e["Date"]} #{e["Time"]}")
       end
 
       def track_reply

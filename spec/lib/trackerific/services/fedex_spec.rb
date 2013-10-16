@@ -48,13 +48,13 @@ describe Trackerific::Services::FedEx do
         end
 
         it "should have the correct event values" do
-          subject[0].date.to_s.should eq "2010-07-01 10:43:51 -0600"
+          subject[0].date.to_s.should eq "2010-07-01T10:43:51+00:00"
           subject[0].description.should eq "Delivered"
           subject[0].location.should eq "GA 30506"
-          subject[1].date.to_s.should eq "2010-07-01 08:48:00 -0600"
+          subject[1].date.to_s.should eq "2010-07-01T08:48:00+00:00"
           subject[1].description.should eq "On FedEx vehicle for delivery"
           subject[1].location.should eq "GA 30601"
-          subject[2].date.to_s.should eq "2010-07-01 05:07:00 -0600"
+          subject[2].date.to_s.should eq "2010-07-01T05:07:00+00:00"
           subject[2].description.should eq "At local FedEx facility"
           subject[2].location.should eq "GA 30601"
         end
