@@ -11,7 +11,7 @@ module Trackerific
       self.xml_parser = Parsers::USPS
       self.xml_builder = Builders::USPS
 
-      case ENV['RAILS_ENV'] || 'production'
+      case ENV['RAILS_ENV'] || ENV['RACK_ENV'] || 'production'
       when 'production'
         self.xml_endpoint = '/ShippingAPI.dll'
         base_uri 'http://production.shippingapis.com'

@@ -14,7 +14,7 @@ module Trackerific
 
       format :xml
 
-      base_uri case (ENV['RAILS_ENV'] || 'production')
+      base_uri case ENV['RAILS_ENV'] || ENV['RACK_ENV'] || 'production'
       when 'production' then 'https://www.ups.com/ups.app/xml'
       else 'https://wwwcie.ups.com/ups.app/xml'
       end
