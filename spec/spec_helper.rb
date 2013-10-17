@@ -12,7 +12,7 @@ SimpleCov.start do
   add_filter 'spec'
 end
 
-ENV['RAILS_ENV'] = 'test'
+ENV['RACK_ENV'] = 'test'
 
 require 'rubygems'
 require 'bundler/setup'
