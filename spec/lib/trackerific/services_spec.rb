@@ -35,8 +35,8 @@ describe Trackerific::Services do
     it { should include AnotherTestService }
 
     context "with a service that has no credentials" do
-      before { Trackerific.configuration.test = nil }
-      after { Trackerific.configuration.test = { user: 'test' } }
+      before { Trackerific.config.test = nil }
+      after { Trackerific.config.test = { user: 'test' } }
       it { should_not include TestService }
       it { should include AnotherTestService }
     end

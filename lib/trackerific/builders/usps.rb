@@ -1,6 +1,6 @@
 module Trackerific
   module Builders
-    class USPS < XmlBuilder.new(:user_id, :package_id)
+    class USPS < Base::XML.new(:user_id, :package_id)
       protected
 
       def build

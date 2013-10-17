@@ -23,7 +23,7 @@ module Trackerific
         # @return [Trackerific::Details] The tracking details
         # @api semipublic
         def track(id)
-          response = self.class.xml_parser.new(id, http_response(id)).result
+          response = self.class.xml_parser.new(id, http_response(id)).parse
           raise(response) if response.is_a?(Trackerific::Error)
           return response
         end
@@ -35,9 +35,9 @@ module Trackerific
         end
 
         def builder(id)
-          options = @options.values_at(self.class.xml_builder_keys)
-          options << id
-          self.class.xml_builder.new(*options)
+          credentials = @credentials.values_at(self.class.xml_builder_keys)
+          credentials << id
+          self.class.xml_builder.new(*credentials)
         end
       end
     end

@@ -1,10 +1,12 @@
 module Trackerific
   module Parsers
-    class USPS < XmlParser
+    class USPS < Parsers::Base
       protected
 
       def response_error
-        if @response['Error']
+        @response_error ||= if @response.code != 200
+          Trackerific::Error.new("HTTP returned status #{@response.code}")
+        elsif @response['Error']
           Trackerific::Error.new(@response['Error']['Description'])
         elsif @response['TrackResponse'].nil? && @response['CityStateLookupResponse'].nil?
           Trackerific::Error.new("Invalid response from server.")

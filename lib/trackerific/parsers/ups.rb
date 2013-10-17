@@ -1,13 +1,17 @@
 module Trackerific
   module Parsers
-    class UPS < XmlParser
+    class UPS < Parsers::Base
       protected
 
       def response_error
-        @response_error ||= case response_status_code
-          when :error   then Trackerific::Error.new(error_response)
-          when :success then false
-          else Trackerific::Error.new("Unknown status code from server.")
+        @response_error ||= if @response.code != 200
+          Trackerific::Error.new("HTTP returned status #{@response.code}")
+        elsif response_status_code == :error
+          Trackerific::Error.new(error_response)
+        elsif response_status_code == :success
+          false
+        else
+          Trackerific::Error.new("Unknown status code from server.")
         end
       end
 

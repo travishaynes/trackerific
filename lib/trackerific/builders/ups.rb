@@ -1,6 +1,6 @@
 module Trackerific
   module Builders
-    class UPS < XmlBuilder.new(:key, :user_id, :password, :package_id)
+    class UPS < Base::XML.new(:key, :user_id, :password, :package_id)
       protected
 
       def build

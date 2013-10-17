@@ -4,18 +4,14 @@ module Trackerific
       require 'trackerific/builders/fedex'
       require 'trackerific/parsers/fedex'
 
-      include Concerns::XML, HTTParty
+      include Concerns::SOAP
 
       register :fedex
 
-      self.xml_endpoint = "/GatewayDC"
-      self.xml_parser = Parsers::FedEx
-      self.xml_builder = Builders::FedEx
-      self.xml_builder_keys = [:account, :meter]
-
-      format :xml
-
-      base_uri "https://gateway.fedex.com"
+      self.soap_track_operation = :track
+      self.soap_builder = Builders::FedEx
+      self.soap_parser = Parsers::FedEx
+      self.soap_wsdl = 'fedex/TrackService_v8'
 
       def self.package_id_matchers
         [ /^[0-9]{15}$/ ]

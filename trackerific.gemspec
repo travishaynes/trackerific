@@ -21,9 +21,11 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'httparty', '>= 0.12.0'
   spec.add_dependency 'builder', '>= 3.1.4'
   spec.add_dependency 'activesupport'
+  spec.add_dependency 'savon', '~> 2.3.0'
 
   spec.add_development_dependency 'bundler', '>= 1.3.5'
   spec.add_development_dependency 'rake'
   spec.add_development_dependency 'rspec', '~> 2.6.0'
   spec.add_development_dependency 'fakeweb', '~> 1.3.0'
+  spec.add_development_dependency 'codeclimate-test-reporter'
 end

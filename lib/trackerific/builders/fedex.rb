@@ -1,37 +1,55 @@
 module Trackerific
   module Builders
-    class FedEx < XmlBuilder.new(:account, :meter, :package_id)
+    class FedEx < Base::SOAP.new(:key, :password, :account_number, :meter_number, :package_id)
       protected
 
       def build
-        namespace do |r|
-          add_request_header(r)
-          add_package_identifier(r)
-        end
+        { :WebAuthenticationDetail => web_authentication_detail,
+          :ClientDetails => client_details,
+          :TransactionDetail => transaction_detail,
+          :Version => version,
+          :SelectionDetails => selection_details,
+          :ProcessingOptions => processing_options }
       end
 
       private
 
-      def namespace(&block)
-        builder.FDXTrack2Request \
-          "xmlns:api" => "http://www.fedex.com/fsmapi",
-          "xmlns:xsi" => "http://www.w3.org/2001/XMLSchema-instance",
-          "xsi:noNamespaceSchemaLocation" => "FDXTrack2Request.xsd" \
-        do |r| yield(r); end
+      def customer_transaction_id
+        @customer_transaction_id ||= SecureRandom.hex(8)
       end
 
-      def add_request_header(r)
-        r.RequestHeader do |rh|
-          rh.AccountNumber account
-          rh.MeterNumber meter
-        end
+      def web_authentication_detail
+        { :UserCredential => { :Key => key, :Password => password } }
       end
 
-      def add_package_identifier(r)
-        r.PackageIdentifier do |pi|
-          pi.Value package_id
-        end
-        r.DetailScans true
+      def client_details
+        { :AccountNumber => account_number,
+          :MeterNumber => meter_number }
+      end
+
+      def transaction_detail
+        { :CustomerTransactionId => customer_transaction_id }
+      end
+
+      def version
+        { :ServiceId => 'trck',
+          :Major => '7',
+          :Intermediate => '0',
+          :Minor => '0' }
+      end
+
+      def selection_details
+        { :CarrierCode => 'FDXE',
+          :PackageIdentifier => package_identifier }
+      end
+
+      def package_identifier
+        { :Type => 'TRACKING_NUMBER_OR_DOORTAG',
+          :Value => package_id }
+      end
+
+      def processing_options
+        'INCLUDE_DETAILED_SCANS'
       end
     end
   end

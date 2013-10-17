@@ -5,6 +5,7 @@ PATH
       activesupport
       builder (>= 3.1.4)
       httparty (>= 0.12.0)
+      savon (~> 2.3.0)
 
 GEM
   remote: https://rubygems.org/
@@ -15,18 +16,31 @@ GEM
       multi_json (~> 1.3)
       thread_safe (~> 0.1)
       tzinfo (~> 0.3.37)
+    akami (1.2.0)
+      gyoku (>= 0.4.0)
+      nokogiri (>= 1.4.0)
     atomic (1.1.14)
     builder (3.2.2)
+    codeclimate-test-reporter (0.1.1)
+      simplecov (>= 0.7.1, < 1.0.0)
     diff-lcs (1.1.3)
     fakeweb (1.3.0)
+    gyoku (1.1.0)
+      builder (>= 2.1.2)
     httparty (0.12.0)
       json (~> 1.8)
       multi_xml (>= 0.5.2)
+    httpi (2.1.0)
+      rack
+      rubyntlm (~> 0.3.2)
     i18n (0.6.5)
     json (1.8.0)
     minitest (4.7.5)
     multi_json (1.8.2)
     multi_xml (0.5.5)
+    nokogiri (1.5.10)
+    nori (2.3.0)
+    rack (1.5.2)
     rake (10.1.0)
     rspec (2.6.0)
       rspec-core (~> 2.6.0)
@@ -36,15 +50,32 @@ GEM
     rspec-expectations (2.6.0)
       diff-lcs (~> 1.1.2)
     rspec-mocks (2.6.0)
+    rubyntlm (0.3.4)
+    savon (2.3.0)
+      akami (~> 1.2.0)
+      builder (>= 2.1.2)
+      gyoku (~> 1.1.0)
+      httpi (~> 2.1.0)
+      nokogiri (>= 1.4.0, < 1.6)
+      nori (~> 2.3.0)
+      wasabi (~> 3.2.0)
+    simplecov (0.7.1)
+      multi_json (~> 1.0)
+      simplecov-html (~> 0.7.1)
+    simplecov-html (0.7.1)
     thread_safe (0.1.3)
       atomic
     tzinfo (0.3.38)
+    wasabi (3.2.0)
+      httpi (~> 2.0)
+      nokogiri (>= 1.4.0, < 1.6)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   bundler (>= 1.3.5)
+  codeclimate-test-reporter
   fakeweb (~> 1.3.0)
   rake
   rspec (~> 2.6.0)

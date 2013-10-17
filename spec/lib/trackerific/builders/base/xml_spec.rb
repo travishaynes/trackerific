@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe Trackerific::Builders::XmlBuilder do
-  class TestBuilder < Trackerific::Builders::XmlBuilder.new(:hello, :world)
+describe Trackerific::Builders::Base::XML do
+  class TestBuilder < Trackerific::Builders::Base::XML.new(:hello, :world)
     xml_version = "1.1"
 
     protected

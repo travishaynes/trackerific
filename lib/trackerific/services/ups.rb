@@ -11,7 +11,6 @@ module Trackerific
       self.xml_endpoint = '/Track'
       self.xml_parser = Parsers::UPS
       self.xml_builder = Builders::UPS
-      self.xml_builder_keys = [:key, :user_id, :password]
 
       format :xml
 
