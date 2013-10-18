@@ -35,7 +35,7 @@ Services without credentials will not be accessed by the gem.
   Trackerific.configure do |config|
     config.fedex  = { account: 'account', meter: '123456789' }
     config.ups    = { key: 'key', user_id: 'userid', password: 'secret' }
-    config.usps   = { user_id: 'userid', use_city_state_lookup: true }
+    config.usps   = { user_id: 'userid' }
   end
 
 === Tracking with Automatic Service Discovery
