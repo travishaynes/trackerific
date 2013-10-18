@@ -112,9 +112,9 @@ application. You must require the service manually.
 
   require 'trackerific/services/mock_service'
   # Get a populated Trackerific::Details
-  details = track_package("XXXXXXXXXX")
+  details = Trackerific.track("XXXXXXXXXX")
   # Throw a Trackerific::Error exception
-  details = track_package("XXXxxxxxxx")
+  details = Trackerific.track("XXXxxxxxxx")
 
 == Contributing
 
