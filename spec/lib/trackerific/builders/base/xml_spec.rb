@@ -1,24 +1,35 @@
 require 'spec_helper'
 
 describe Trackerific::Builders::Base::XML do
-  class TestBuilder < Trackerific::Builders::Base::XML.new(:hello, :world)
-    xml_version = "1.1"
+  let(:builder) { described_class.new(:hello, :world) }
 
-    protected
+  subject { builder }
 
-    def build
-      builder.Hello hello
-      builder.World world
+  it { should respond_to :xml_version }
+  it { should respond_to :xml_version= }
+
+  context "when #build is not implemented in the subclass" do
+    it "should raise a NotImplementedError on initialize" do
+      expect {
+        builder.new
+      }.to raise_error NotImplementedError
     end
   end
 
-  let(:builder) { TestBuilder.new('hi', 'earth') }
+  context "when #build is implemented in the subclass" do
+    subject { builder.new('hi', 'earth') }
 
-  describe "#xml" do
-    subject { builder.xml }
-    let(:xml) do
-      "<?xml encoding=\"UTF-8\"?><Hello>hi</Hello><World>earth</World>"
+    before do
+      builder.send(:define_method, :build) do
+        builder.Hello hello
+        builder.World world
+      end
     end
-    it { should eq xml }
+
+    let(:xml) do
+      '<?xml encoding="UTF-8"?><Hello>hi</Hello><World>earth</World>'
+    end
+
+    its(:xml) { should eq xml }
   end
 end

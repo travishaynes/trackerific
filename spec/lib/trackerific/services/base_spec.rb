@@ -10,4 +10,60 @@ describe Trackerific::Services::Base do
       AnotherTestService.name.should eq :another_test_service
     end
   end
+
+  describe "#track" do
+    it "should create a new instance and call #track with the given id" do
+      TestService.any_instance.should_receive(:track).with('ID')
+      TestService.track('ID')
+    end
+  end
+
+  describe "#credentials" do
+    it "should read the credentials for the service from Trackerific.config" do
+      TestService.credentials.should eq({ :user => 'test' })
+    end
+  end
+
+  describe "#can_track?" do
+    context "when #credentials is nil" do
+      before { TestService.stub(:credentials).and_return(nil) }
+
+      it "should return false even if it matches one of #package_id_matchers" do
+        TestService.can_track?("TEST").should be_false
+      end
+    end
+
+    context "when #credentials is defined" do
+      before { Trackerific.stub(:credentials).and_return({:user => 'test'}) }
+
+      subject { TestService.can_track?(id) }
+
+      context "when the given id matches one of #package_id_matchers" do
+        let(:id) { 'TEST' }
+        it { should be_true }
+      end
+
+      context "when the given id doesn't match any of #package_id_matchers" do
+        let(:id) { 'invalid' }
+        it { should be_false }
+      end
+    end
+  end
+
+  describe "#package_id_matchers" do
+    it "should raise a NotImplementedError when not overridden" do
+      expect {
+        Trackerific::Services::Base.package_id_matchers
+      }.to raise_error NotImplementedError
+    end
+  end
+
+  context "when creating a new instance without credentials" do
+    before { TestService.stub(:credentials).and_return(nil) }
+    it "should raise a Trackerific::Error" do
+      expect {
+        TestService.new
+      }.to raise_error Trackerific::Error
+    end
+  end
 end

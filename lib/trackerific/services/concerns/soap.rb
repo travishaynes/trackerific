@@ -22,24 +22,21 @@ module Trackerific
           operation = self.class.soap_track_operation
           request = client.call(operation, message: builder(id).hash)
           response = self.class.soap_parser.new(id, request).parse
-          raise(response) if response.is_a?(Trackerific::Error)
-          return response
+          response.is_a?(Trackerific::Error) ? raise(response) : response
         end
 
         protected
 
         def builder(id)
           members = self.class.soap_builder.members - [:package_id]
-          credentials = @credentials.values_at(members)
+          credentials = @credentials.values_at(*members)
           credentials << id
           self.class.soap_builder.new(*credentials)
         end
 
         def client
-          @client ||= begin
-            path = Trackerific::SOAP::WSDL.path(self.class.soap_wsdl)
-            Savon.client(wsdl: path)
-          end
+          @client ||= Savon.client(
+            wsdl: Trackerific::SOAP::WSDL.path(self.class.soap_wsdl))
         end
       end
     end

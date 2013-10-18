@@ -5,7 +5,6 @@ module Trackerific
         extend ActiveSupport::Concern
 
         included do
-          @xml_builder_keys = []
           @xml_endpoint = ""
           @xml_parser = nil
           @xml_builder = nil
@@ -15,7 +14,6 @@ module Trackerific
           attr_accessor :xml_endpoint
           attr_accessor :xml_parser
           attr_accessor :xml_builder
-          attr_accessor :xml_builder_keys
         end
 
         # Gets the tracking information for the package from the server
@@ -35,7 +33,8 @@ module Trackerific
         end
 
         def builder(id)
-          credentials = @credentials.values_at(self.class.xml_builder_keys)
+          members = self.class.xml_builder.members - [:package_id]
+          credentials = @credentials.values_at(*members)
           credentials << id
           self.class.xml_builder.new(*credentials)
         end

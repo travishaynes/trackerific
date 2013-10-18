@@ -1,9 +1,46 @@
 require 'spec_helper'
 
-USPS_URL = %r|http://testing\.shippingapis\.com/.*|
-
 describe Trackerific::Services::USPS do
+  let(:usps_url) { %r|http://testing\.shippingapis\.com/.*| }
+
   it { should be_a Trackerific::Services::Base }
+
+  describe "environment dependent methods/properties" do
+    before do
+      Trackerific.stub(:env).and_return(env)
+      Trackerific.reload!('trackerific/services/usps.rb')
+    end
+
+    after(:all) { Trackerific.reload!('trackerific/services/usps.rb') }
+
+    context "when Trackerific.env is 'production'" do
+      let(:env) { 'production' }
+
+      describe "#base_uri" do
+        subject { described_class.base_uri }
+        it { should eq 'http://production.shippingapis.com' }
+      end
+
+      describe "#xml_endpoint" do
+        subject { described_class.xml_endpoint }
+        it { should eq '/ShippingAPI.dll' }
+      end
+    end
+
+    context "when Trackerific.env is not 'production'" do
+      let(:env) { 'development' }
+
+      describe "#base_uri" do
+        subject { described_class.base_uri }
+        it { should eq 'http://testing.shippingapis.com' }
+      end
+
+      describe "#xml_endpoint" do
+        subject { described_class.xml_endpoint }
+        it { should eq '/ShippingAPITest.dll' }
+      end
+    end
+  end
 
   let(:valid_ids) { ["EJ958083578US"] }
   let(:invalid_ids) { %w[these are not valid tracking ids] }
@@ -23,7 +60,7 @@ describe Trackerific::Services::USPS do
     let(:id) { 'EJ958083578US' }
 
     before do
-      FakeWeb.register_uri(:get, USPS_URL, body: fixture)
+      FakeWeb.register_uri(:get, usps_url, body: fixture)
     end
 
     after(:all) { FakeWeb.clean_registry }
@@ -44,7 +81,7 @@ describe Trackerific::Services::USPS do
       describe "#events" do
         subject { usps.track(id).events }
         its(:length) { should eq 3 }
-        it "should have the correct values" do
+        it "should populate the properties from the XML" do
           subject[0].date.to_s.should eq "2013-05-30T11:07:00+00:00"
           subject[0].description.should eq "NOTICE LEFT"
           subject[0].location.should eq "WILMINGTON, DE 19801"

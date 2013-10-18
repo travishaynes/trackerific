@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<TrackResponse>
+  <Response>
+    <ResponseStatusCode>3</ResponseStatusCode>
+    <ResponseStatusDescription>Failure</ResponseStatusDescription>
+    <Error>
+      <ErrorCode>10002</ErrorCode>
+    </Error>
+  </Response>
+</TrackResponse>

@@ -5,6 +5,27 @@ UPS_TRACK_URL = 'https://wwwcie.ups.com/ups.app/xml/Track'
 describe Trackerific::Services::UPS do
   it { should be_a Trackerific::Services::Base }
 
+  describe "#base_uri" do
+    subject { described_class.base_uri }
+
+    before do
+      Trackerific.stub(:env).and_return(env)
+      Trackerific.reload!('trackerific/services/ups.rb')
+    end
+
+    after(:all) { Trackerific.reload!('trackerific/services/ups.rb') }
+
+    context "when Trackerific.env is 'production'" do
+      let(:env) { 'production' }
+      it { should eq "https://www.ups.com/ups.app/xml" }
+    end
+
+    context "when Trackerific.env is not 'production'" do
+      let(:env) { 'development' }
+      it { should eq 'https://wwwcie.ups.com/ups.app/xml' }
+    end
+  end
+
   let(:valid_ids) { ["1Z12345E0291980793"] }
   let(:invalid_ids) { %w[these are not valid tracking ids] }
 
@@ -39,7 +60,7 @@ describe Trackerific::Services::UPS do
       describe "#events" do
         subject { ups.track(id).events }
         its(:length) { should eq 1 }
-        it "should have the correct values" do
+        it "should populate the properties from the XML" do
           subject[0].date.should be_a DateTime
           subject[0].description.should eq "DELIVERED"
           subject[0].location.should eq "MAYSVILLE 26833   9700 US"
