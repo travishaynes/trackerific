@@ -1,4 +1,4 @@
-= Trackerific {<img src="https://badge.fury.io/rb/trackerific.png" alt="Gem Version" />}[http://badge.fury.io/rb/trackerific]{<img src="https://travis-ci.org/travishaynes/trackerific.png" />}[https://travis-ci.org/travishaynes/trackerific]{<img src="https://coveralls.io/repos/travishaynes/trackerific/badge.png" alt="Coverage Status" />}[https://coveralls.io/r/travishaynes/trackerific]
+= Trackerific {<img src="https://badge.fury.io/rb/trackerific.png" alt="Gem Version" />}[http://badge.fury.io/rb/trackerific] {<img src="https://travis-ci.org/travishaynes/trackerific.png" />}[https://travis-ci.org/travishaynes/trackerific] {<img src="https://coveralls.io/repos/travishaynes/trackerific/badge.png" alt="Coverage Status" />}[https://coveralls.io/r/travishaynes/trackerific]
 
 Package tracking in a gem. Currently supported carriers are:
 
