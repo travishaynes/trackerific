@@ -1,49 +1,59 @@
 module Trackerific
   module Parsers
     class FedEx < Parsers::Base
+      protected
+
+      def response_error
+        @response_error ||= if highest_severity == 'ERROR'
+          Trackerific::Error.new(notifications[:message])
+        else
+          false
+        end
+      end
+
+      def summary
+        nil
+      end
+
+      def events
+        track_details.map do |detail|
+          Trackerific::Event.new(parse_date(detail), nil, location(detail))
+        end
+      end
+
+      private
+
+      def location(detail)
+        a = detail[:destination_address]
+        "#{a[:city]}, #{a[:state_or_province_code]} #{a[:country_code]}"
+      end
+
+      def parse_date(detail)
+        detail[:ship_timestamp]
+      end
+
+      def track_reply
+        @response.hash[:envelope][:body][:track_reply]
+      end
+
+      def track_details
+        @track_details ||= begin
+          details = track_reply[:completed_track_details][:track_details]
+          details.select do |d|
+            d[:ship_timestamp].present? && d[:destination_address].present? &&
+            d[:destination_address][:city].present? &&
+            d[:destination_address][:state_or_province_code].present?
+          end
+        end
+      end
+
+      def highest_severity
+        track_reply[:highest_severity]
+      end
+
+      def notifications
+        track_reply[:notifications]
+      end
     end
   end
 end
-#    class FedEx < XmlParser
-#      protected
-
-#      def response_error
-#        return false if track_reply["Error"].nil?
-#        Trackerific::Error.new(track_reply["Error"]["Message"])
-#      end
-
-#      def summary
-#        details["StatusDescription"]
-#      end
-
-#      def events
-#        details["Event"].map do |e|
-#          Trackerific::Event.new(
-#            parse_date_time(e), description(e), location(e))
-#        end
-#      end
-
-#      private
-
-#      def description(e)
-#        e["Description"]
-#      end
-
-#      def location(e)
-#        e["Address"].values_at('StateOrProvinceCode', 'PostalCode').join(" ")
-#      end
-
-#      def parse_date_time(e)
-#        DateTime.parse("#{e["Date"]} #{e["Time"]}")
-#      end
-
-#      def track_reply
-#        @response["FDXTrack2Reply"]
-#      end
-
-#      def details
-#        track_reply["Package"]
-#      end
-#    end
-#  end
-#end

@@ -36,6 +36,7 @@ module Trackerific
 
         def client
           @client ||= Savon.client(
+            convert_request_keys_to: :camelcase,
             wsdl: Trackerific::SOAP::WSDL.path(self.class.soap_wsdl))
         end
       end

@@ -47,7 +47,7 @@ describe Trackerific::Services::Concerns::SOAP do
       builder.should_receive(:new).with("USER ID", package_id).and_return(builder_instance)
       builder_instance.stub(:hash).and_return(builder_hash)
 
-      Savon.should_receive(:client).with(wsdl: wsdl_path).and_return(client)
+      Savon.should_receive(:client).with(convert_request_keys_to: :camelcase, wsdl: wsdl_path).and_return(client)
       client.should_receive(:call).with(track_operation, message: builder_hash).and_return(soap_request)
 
       parser.should_receive(:new).with(package_id, soap_request).and_return(parser_instance)

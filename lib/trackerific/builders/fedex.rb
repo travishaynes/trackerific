@@ -4,48 +4,38 @@ module Trackerific
       protected
 
       def build
-        { :WebAuthenticationDetail => web_authentication_detail,
-          :ClientDetails => client_details,
-          :TransactionDetail => transaction_detail,
-          :Version => version,
-          :SelectionDetails => selection_details,
-          :ProcessingOptions => processing_options }
+        root_elements.inject({}) {|r, k| r[k] = send(k); r }
       end
 
       private
 
-      def customer_transaction_id
-        @customer_transaction_id ||= SecureRandom.hex(8)
+      def root_elements
+        [ :web_authentication_detail, :client_detail, :transaction_detail,
+          :version, :selection_details, :processing_options ]
       end
 
       def web_authentication_detail
-        { :UserCredential => { :Key => key, :Password => password } }
+        { user_credential: { key: key, password: password } }
       end
 
-      def client_details
-        { :AccountNumber => account_number,
-          :MeterNumber => meter_number }
+      def client_detail
+        { account_number: account_number, meter_number: meter_number }
       end
 
       def transaction_detail
-        { :CustomerTransactionId => customer_transaction_id }
+        { customer_transaction_id: "Trackerific" }
       end
 
       def version
-        { :ServiceId => 'trck',
-          :Major => '7',
-          :Intermediate => '0',
-          :Minor => '0' }
+        { service_id: 'trck', major: '8', intermediate: '0', minor: '0' }
       end
 
       def selection_details
-        { :CarrierCode => 'FDXE',
-          :PackageIdentifier => package_identifier }
+        { carrier_code: 'FDXE', package_identifier: package_identifier }
       end
 
       def package_identifier
-        { :Type => 'TRACKING_NUMBER_OR_DOORTAG',
-          :Value => package_id }
+        { type: 'TRACKING_NUMBER_OR_DOORTAG', value: package_id }
       end
 
       def processing_options

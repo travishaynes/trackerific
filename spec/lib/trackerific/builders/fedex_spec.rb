@@ -21,53 +21,49 @@ describe Trackerific::Builders::FedEx do
     let(:instance) { described_class.new(*params) }
     let(:hash) { instance.hash }
 
-    before do
-      described_class.any_instance.stub(:customer_transaction_id).and_return(transaction_id)
-    end
+    describe "Web Authentication Detail" do
+      let(:web_authentication_detail) { hash[:web_authentication_detail] }
 
-    describe "WebAuthenticationDetail" do
-      let(:web_authentication_detail) { hash[:WebAuthenticationDetail] }
-
-      describe "UserCredential" do
-        subject { web_authentication_detail[:UserCredential] }
-        its([:Key]) { should eq "KEY" }
-        its([:Password]) { should eq "PASSWORD" }
+      describe "User Credential" do
+        subject { web_authentication_detail[:user_credential] }
+        its([:key]) { should eq "KEY" }
+        its([:password]) { should eq "PASSWORD" }
       end
     end
 
-    describe "ClientDetails" do
-      subject { hash[:ClientDetails] }
-      its([:AccountNumber]) { should eq "ACCOUNT NUMBER" }
-      its([:MeterNumber]) { should eq "METER NUMBER" }
+    describe "Client Detail" do
+      subject { hash[:client_detail] }
+      its([:account_number]) { should eq "ACCOUNT NUMBER" }
+      its([:meter_number]) { should eq "METER NUMBER" }
     end
 
-    describe "TransactionDetail" do
-      subject { hash[:TransactionDetail] }
-      its([:CustomerTransactionId]) { should eq transaction_id }
+    describe "Transaction Detail" do
+      subject { hash[:transaction_detail] }
+      its([:customer_transaction_id]) { should eq "Trackerific" }
     end
 
     describe "Version" do
-      subject { hash[:Version] }
-      its([:ServiceId]) { should eq "trck" }
-      its([:Major]) { should eq "7" }
-      its([:Intermediate]) { should eq "0" }
-      its([:Minor]) { should eq "0" }
+      subject { hash[:version] }
+      its([:service_id]) { should eq "trck" }
+      its([:major]) { should eq "8" }
+      its([:intermediate]) { should eq "0" }
+      its([:minor]) { should eq "0" }
     end
 
-    describe "SelectionDetails" do
-      let(:selection_details) { hash[:SelectionDetails] }
+    describe "Selection Details" do
+      let(:selection_details) { hash[:selection_details] }
       subject { selection_details }
-      its([:CarrierCode]) { should eq "FDXE" }
+      its([:carrier_code]) { should eq "FDXE" }
 
-      describe "PackageIdentifier" do
-        subject { selection_details[:PackageIdentifier] }
-        its([:Type]) { should eq "TRACKING_NUMBER_OR_DOORTAG" }
-        its([:Value]) { should eq "PACKAGE ID" }
+      describe "Package Identifier" do
+        subject { selection_details[:package_identifier] }
+        its([:type]) { should eq "TRACKING_NUMBER_OR_DOORTAG" }
+        its([:value]) { should eq "PACKAGE ID" }
       end
     end
 
-    describe "ProcessingOptions" do
-      subject { hash[:ProcessingOptions] }
+    describe "Processing Options" do
+      subject { hash[:processing_options] }
       it { should eq "INCLUDE_DETAILED_SCANS" }
     end
   end

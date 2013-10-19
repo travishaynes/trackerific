@@ -1,4 +1,4 @@
-= Trackerific {<img src="https://travis-ci.org/travishaynes/trackerific.png" />}[https://travis-ci.org/travishaynes/trackerific] {<img src="https://coveralls.io/repos/travishaynes/trackerific/badge.png" alt="Coverage Status" />}[https://coveralls.io/r/travishaynes/trackerific]
+= Trackerific {<img src="https://badge.fury.io/rb/trackerific.png" alt="Gem Version" />}[http://badge.fury.io/rb/trackerific]{<img src="https://travis-ci.org/travishaynes/trackerific.png" />}[https://travis-ci.org/travishaynes/trackerific]{<img src="https://coveralls.io/repos/travishaynes/trackerific/badge.png" alt="Coverage Status" />}[https://coveralls.io/r/travishaynes/trackerific]
 
 Package tracking in a gem. Currently supported carriers are:
 
@@ -49,7 +49,7 @@ Once you configured the services, tracking a package is as easy as
 If you do not know the tracking service provider of a package id you can use
 Trackerific::Services.find_by_tracking_id:
 
-  Trackerific::Services.find_by_tracking_id("183689015000001")
+  Trackerific::Services.find_by_tracking_id("123456789012")
   Trackerific::Services.find_by_tracking_id("1Z12345E0291980793")
   Trackerific::Services.find_by_tracking_id("EJ958083578US")
 
@@ -61,7 +61,7 @@ package ID.
 
 Use this method if you need to specify exactly which service to track a package.
 
-  details = Trackerific::Services::FedEx.track('183689015000001')
+  details = Trackerific::Services::FedEx.track('123456789012')
 
 Using #track will automatically read the credentials from Trackerific.config.
 If you need to assign them manually, use #new:
