@@ -61,6 +61,20 @@ module Trackerific
       def config
         self.class.config
       end
+
+      def track(id)
+        response = config.parser.new(id, request(id)).parse
+        response.is_a?(Trackerific::Error) ? raise(response) : response
+      end
+
+      protected
+
+      def builder(id)
+        members = config.builder.members - [:package_id]
+        credentials = @credentials.values_at(*members)
+        credentials << id
+        config.builder.new(*credentials)
+      end
     end
   end
 end

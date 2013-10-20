@@ -12,23 +12,21 @@ module Trackerific
         config.parser = Parsers::USPS
         config.builder = Builders::USPS
         config.package_id_matchers = [ /^E\D{1}\d{9}\D{2}$|^9\d{15,21}$/ ]
-        config.endpoint = case Trackerific.env
-        when 'production' then '/ShippingAPI.dll'
-        else '/ShippingAPITest.dll'
+
+        case Trackerific.env
+        when 'production'
+          config.endpoint = '/ShippingAPI.dll'
+          config.base_uri = 'http://production.shippingapis.com'
+        else
+          config.endpoint = '/ShippingAPITest.dll'
+          config.base_uri = 'http://testing.shippingapis.com'
         end
       end
 
-      base_uri case Trackerific.env
-      when 'production' then 'http://production.shippingapis.com'
-      else 'http://testing.shippingapis.com'
-      end
-
-      format :xml
-
       protected
 
-      def http_response(id)
-        http_response = self.class.get(config.endpoint, http_query(id))
+      def request(id)
+        self.class.get(config.endpoint, http_query(id))
       end
 
       def http_query(id)

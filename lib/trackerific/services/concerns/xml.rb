@@ -6,25 +6,21 @@ module Trackerific
 
         included do
           include HTTParty
+
+          format :xml
         end
 
-        def track(id)
-          response = config.parser.new(id, http_response(id)).parse
-          raise(response) if response.is_a?(Trackerific::Error)
-          return response
+        module ClassMethods
+          def configure(&block)
+            super
+            base_uri(config.base_uri)
+          end
         end
 
         protected
 
-        def http_response(id)
+        def request(id)
           self.class.post(config.endpoint, body: builder(id).xml)
-        end
-
-        def builder(id)
-          members = config.builder.members - [:package_id]
-          credentials = @credentials.values_at(*members)
-          credentials << id
-          config.builder.new(*credentials)
         end
       end
     end
