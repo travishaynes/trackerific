@@ -4,24 +4,8 @@ module Trackerific
       module XML
         extend ActiveSupport::Concern
 
-        included do
-          @xml_endpoint = ""
-          @xml_parser = nil
-          @xml_builder = nil
-        end
-
-        module ClassMethods
-          attr_accessor :xml_endpoint
-          attr_accessor :xml_parser
-          attr_accessor :xml_builder
-        end
-
-        # Gets the tracking information for the package from the server
-        # @param [String] id The package identifier
-        # @return [Trackerific::Details] The tracking details
-        # @api semipublic
         def track(id)
-          response = self.class.xml_parser.new(id, http_response(id)).parse
+          response = config.parser.new(id, http_response(id)).parse
           raise(response) if response.is_a?(Trackerific::Error)
           return response
         end
@@ -29,14 +13,14 @@ module Trackerific
         protected
 
         def http_response(id)
-          self.class.post(self.class.xml_endpoint, body: builder(id).xml)
+          self.class.post(config.endpoint, body: builder(id).xml)
         end
 
         def builder(id)
-          members = self.class.xml_builder.members - [:package_id]
+          members = config.builder.members - [:package_id]
           credentials = @credentials.values_at(*members)
           credentials << id
-          self.class.xml_builder.new(*credentials)
+          config.builder.new(*credentials)
         end
       end
     end

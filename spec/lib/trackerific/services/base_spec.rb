@@ -11,6 +11,18 @@ describe Trackerific::Services::Base do
     end
   end
 
+  describe "#configure" do
+    it "should set @config properties passed from the given block" do
+      TestService.configure {|c| c.value = 'this' }
+      TestService.config.value.should eq 'this'
+    end
+  end
+
+  describe "#config" do
+    subject { TestService.new.config }
+    it { should eq TestService.config }
+  end
+
   describe "#track" do
     it "should create a new instance and call #track with the given id" do
       TestService.any_instance.should_receive(:track).with('ID')
@@ -51,11 +63,16 @@ describe Trackerific::Services::Base do
   end
 
   describe "#package_id_matchers" do
-    it "should raise a NotImplementedError when not overridden" do
-      expect {
-        Trackerific::Services::Base.package_id_matchers
-      }.to raise_error NotImplementedError
+    let(:matchers) { ['these','matchers'] }
+
+    before do
+      Trackerific::Services::Base.configure do |config|
+        config.package_id_matchers = matchers
+      end
     end
+
+    subject { Trackerific::Services::Base.package_id_matchers }
+    it { should eq matchers }
   end
 
   context "when creating a new instance without credentials" do

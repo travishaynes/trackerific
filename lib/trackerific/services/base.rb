@@ -1,10 +1,15 @@
 module Trackerific
   module Services
     class Base
-      @name = nil
-
       class << self
         attr_accessor :name
+        attr_accessor :config
+
+        # Configures the service
+        # @api semipublic
+        def configure(&block)
+          yield self.config = OpenStruct.new
+        end
 
         # Registers the service with Trackerific
         # @api semipublic
@@ -40,8 +45,7 @@ module Trackerific
         # An Array of Regexp that matches valid package ids for the service
         # @api semipublic
         def package_id_matchers
-          raise NotImplementedError,
-            "You must implement this method in your service", caller
+          config.package_id_matchers
         end
       end
 
@@ -52,6 +56,10 @@ module Trackerific
           raise Trackerific::Error,
             "Missing credentials for #{self.class.name}", caller
         end
+      end
+
+      def config
+        self.class.config
       end
     end
   end

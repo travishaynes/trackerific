@@ -21,8 +21,8 @@ describe Trackerific::Services::USPS do
         it { should eq 'http://production.shippingapis.com' }
       end
 
-      describe "#xml_endpoint" do
-        subject { described_class.xml_endpoint }
+      describe "#config.xml_endpoint" do
+        subject { described_class.config.endpoint }
         it { should eq '/ShippingAPI.dll' }
       end
     end
@@ -35,8 +35,8 @@ describe Trackerific::Services::USPS do
         it { should eq 'http://testing.shippingapis.com' }
       end
 
-      describe "#xml_endpoint" do
-        subject { described_class.xml_endpoint }
+      describe "#config.xml_endpoint" do
+        subject { described_class.config.endpoint }
         it { should eq '/ShippingAPITest.dll' }
       end
     end

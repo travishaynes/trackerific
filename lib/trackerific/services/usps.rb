@@ -8,28 +8,27 @@ module Trackerific
 
       register :usps
 
-      self.xml_parser = Parsers::USPS
-      self.xml_builder = Builders::USPS
+      configure do |config|
+        config.parser = Parsers::USPS
+        config.builder = Builders::USPS
+        config.package_id_matchers = [ /^E\D{1}\d{9}\D{2}$|^9\d{15,21}$/ ]
+        config.endpoint = case Trackerific.env
+        when 'production' then '/ShippingAPI.dll'
+        else '/ShippingAPITest.dll'
+        end
+      end
 
-      case Trackerific.env
-      when 'production'
-        self.xml_endpoint = '/ShippingAPI.dll'
-        base_uri 'http://production.shippingapis.com'
-      else
-        self.xml_endpoint = '/ShippingAPITest.dll'
-        base_uri 'http://testing.shippingapis.com'
+      base_uri case Trackerific.env
+      when 'production' then 'http://production.shippingapis.com'
+      else 'http://testing.shippingapis.com'
       end
 
       format :xml
 
-      def self.package_id_matchers
-        [ /^E\D{1}\d{9}\D{2}$|^9\d{15,21}$/ ]
-      end
-
       protected
 
       def http_response(id)
-        http_response = self.class.get(self.class.xml_endpoint, http_query(id))
+        http_response = self.class.get(config.endpoint, http_query(id))
       end
 
       def http_query(id)

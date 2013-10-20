@@ -1,22 +1,7 @@
 require 'spec_helper'
 
 describe Trackerific::Services::Concerns::XML do
-  class TestConcernsXML
-    include Trackerific::Services::Concerns::XML
-
-    def initialize
-      @credentials = { user_id: 'USER ID' }
-    end
-  end
-
   subject { TestConcernsXML }
-
-  it { should respond_to :xml_endpoint }
-  it { should respond_to :xml_endpoint= }
-  it { should respond_to :xml_parser }
-  it { should respond_to :xml_parser= }
-  it { should respond_to :xml_builder }
-  it { should respond_to :xml_builder= }
 
   describe "#track" do
     let(:endpoint) { "/endpoint" }
@@ -34,9 +19,11 @@ describe Trackerific::Services::Concerns::XML do
     let(:xml) { "<xml></xml>" }
 
     before do
-      TestConcernsXML.stub(:xml_endpoint).and_return(endpoint)
-      TestConcernsXML.stub(:xml_parser).and_return(parser)
-      TestConcernsXML.stub(:xml_builder).and_return(builder)
+      TestConcernsXML.configure do |config|
+        config.endpoint = endpoint
+        config.parser = parser
+        config.builder = builder
+      end
 
       builder.stub(:members).and_return([:user_id, :package_id])
       builder.should_receive(:new).with('USER ID', package_id).and_return(builder_instance)

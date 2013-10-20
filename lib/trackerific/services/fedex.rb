@@ -8,13 +8,12 @@ module Trackerific
 
       register :fedex
 
-      self.soap_track_operation = :track
-      self.soap_builder = Builders::FedEx
-      self.soap_parser = Parsers::FedEx
-      self.soap_wsdl = 'fedex/TrackService_v8'
-
-      def self.package_id_matchers
-        [ /^[0-9]{15}$/ ]
+      configure do |config|
+        config.track_operation = :track
+        config.builder = Builders::FedEx
+        config.parser = Parsers::FedEx
+        config.wsdl = 'fedex/TrackService_v8'
+        config.package_id_matchers = [ /^[0-9]{15}$/ ]
       end
     end
   end

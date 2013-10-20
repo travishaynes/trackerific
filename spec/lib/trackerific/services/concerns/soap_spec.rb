@@ -1,24 +1,7 @@
 require 'spec_helper'
 
 describe Trackerific::Services::Concerns::SOAP do
-  class TestConcernsSOAP
-    include Trackerific::Services::Concerns::SOAP
-
-    def initialize
-      @credentials = { user_id: 'USER ID' }
-    end
-  end
-
   subject { TestConcernsSOAP }
-
-  it { should respond_to :soap_track_operation }
-  it { should respond_to :soap_track_operation= }
-  it { should respond_to :soap_builder }
-  it { should respond_to :soap_builder= }
-  it { should respond_to :soap_parser }
-  it { should respond_to :soap_parser= }
-  it { should respond_to :soap_wsdl }
-  it { should respond_to :soap_wsdl= }
 
   describe "#track" do
     let(:track_operation) { double(:track_operation) }
@@ -38,10 +21,12 @@ describe Trackerific::Services::Concerns::SOAP do
     let(:soap_request) { double(:soap_request) }
 
     before do
-      TestConcernsSOAP.stub(:soap_track_operation).and_return(track_operation)
-      TestConcernsSOAP.stub(:soap_wsdl).and_return(wsdl)
-      TestConcernsSOAP.stub(:soap_builder).and_return(builder)
-      TestConcernsSOAP.stub(:soap_parser).and_return(parser)
+      TestConcernsSOAP.configure do |config|
+        config.track_operation = track_operation
+        config.wsdl = wsdl
+        config.builder = builder
+        config.parser = parser
+      end
 
       builder.stub(:members).and_return([:user_id, :package_id])
       builder.should_receive(:new).with("USER ID", package_id).and_return(builder_instance)

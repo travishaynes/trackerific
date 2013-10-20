@@ -5,6 +5,8 @@ require 'date'
 require 'savon'
 require 'httparty'
 require 'builder'
+require 'ostruct'
+
 require 'trackerific/version'
 require 'trackerific/environment'
 require 'trackerific/error'

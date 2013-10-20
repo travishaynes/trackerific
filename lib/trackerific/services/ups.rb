@@ -8,19 +8,18 @@ module Trackerific
 
       register :ups
 
-      self.xml_endpoint = '/Track'
-      self.xml_parser = Parsers::UPS
-      self.xml_builder = Builders::UPS
+      configure do |config|
+        config.endpoint = '/Track'
+        config.parser = Parsers::UPS
+        config.builder = Builders::UPS
+        config.package_id_matchers = [ /^.Z/, /^[HK].{10}$/ ]
+      end
 
       format :xml
 
       base_uri case Trackerific.env
       when 'production' then 'https://www.ups.com/ups.app/xml'
       else 'https://wwwcie.ups.com/ups.app/xml'
-      end
-
-      def self.package_id_matchers
-        [ /^.Z/, /^[HK].{10}$/ ]
       end
     end
   end

@@ -4,40 +4,28 @@ module Trackerific
       module SOAP
         extend ActiveSupport::Concern
 
-        included do
-          @soap_track_operation = :track
-          @soap_builder = nil
-          @soap_parser = nil
-          @soap_wsdl = ""
-        end
-
-        module ClassMethods
-          attr_accessor :soap_track_operation
-          attr_accessor :soap_builder
-          attr_accessor :soap_parser
-          attr_accessor :soap_wsdl
-        end
-
         def track(id)
-          operation = self.class.soap_track_operation
-          request = client.call(operation, message: builder(id).hash)
-          response = self.class.soap_parser.new(id, request).parse
+          response = config.parser.new(id, request(id)).parse
           response.is_a?(Trackerific::Error) ? raise(response) : response
         end
 
         protected
 
+        def request(id)
+          client.call(config.track_operation, message: builder(id).hash)
+        end
+
         def builder(id)
-          members = self.class.soap_builder.members - [:package_id]
+          members = config.builder.members - [:package_id]
           credentials = @credentials.values_at(*members)
           credentials << id
-          self.class.soap_builder.new(*credentials)
+          config.builder.new(*credentials)
         end
 
         def client
           @client ||= Savon.client(
             convert_request_keys_to: :camelcase,
-            wsdl: Trackerific::SOAP::WSDL.path(self.class.soap_wsdl))
+            wsdl: Trackerific::SOAP::WSDL.path(config.wsdl))
         end
       end
     end

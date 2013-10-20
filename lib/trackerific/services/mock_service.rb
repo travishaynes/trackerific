@@ -4,14 +4,14 @@ module Trackerific
     class MockService < Base
       require 'date'
 
-      self.register :mock_service
+      register :mock_service
+
+      configure do |config|
+        config.package_id_matchers = [ /XXXXXXXXXX/, /XXXxxxxxxx/ ]
+      end
 
       def self.credentials
         {}
-      end
-
-      def self.package_id_matchers
-        [ /XXXXXXXXXX/, /XXXxxxxxxx/ ]
       end
 
       def track(id)
