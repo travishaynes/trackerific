@@ -4,7 +4,7 @@ module Trackerific
       require 'trackerific/builders/usps'
       require 'trackerific/parsers/usps'
 
-      include Concerns::XML, HTTParty
+      include Concerns::XML
 
       register :usps
 

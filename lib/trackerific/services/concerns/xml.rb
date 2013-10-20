@@ -4,6 +4,10 @@ module Trackerific
       module XML
         extend ActiveSupport::Concern
 
+        included do
+          include HTTParty
+        end
+
         def track(id)
           response = config.parser.new(id, http_response(id)).parse
           raise(response) if response.is_a?(Trackerific::Error)

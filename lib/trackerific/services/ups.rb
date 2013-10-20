@@ -4,7 +4,7 @@ module Trackerific
       require 'trackerific/builders/ups'
       require 'trackerific/parsers/ups'
 
-      include Concerns::XML, HTTParty
+      include Concerns::XML
 
       register :ups
 
