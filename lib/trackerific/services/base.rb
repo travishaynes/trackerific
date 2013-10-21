@@ -10,7 +10,7 @@ class Trackerific::Services::Base
     end
 
     # Includes the service concerns for the given service type
-    # @param [Symbol] service_type The class name of the service type
+    # @param [Symbol] service_type The module name for the service type
     # @api semipublic
     def concerns(service_type)
       self.send :include,
