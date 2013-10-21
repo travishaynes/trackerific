@@ -37,5 +37,15 @@ module Trackerific
         @services.map {|n,s| s if s.can_track?(id) }.compact
       end
     end
+
+    module Concerns
+      require 'trackerific/services/concerns/soap'
+      require 'trackerific/services/concerns/xml'
+    end
+
+    require 'trackerific/services/base'
+    require 'trackerific/services/fedex'
+    require 'trackerific/services/ups'
+    require 'trackerific/services/usps'
   end
 end

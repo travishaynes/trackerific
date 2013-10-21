@@ -1,23 +1,14 @@
-module Trackerific
-  module Services
-    class UPS < Base
-      require 'trackerific/builders/ups'
-      require 'trackerific/parsers/ups'
+class Trackerific::Services::UPS < Trackerific::Services::Base
+  register :ups, as: :XML
 
-      include Concerns::XML
-
-      register :ups
-
-      configure do |config|
-        config.endpoint = '/Track'
-        config.parser = Parsers::UPS
-        config.builder = Builders::UPS
-        config.package_id_matchers = [ /^.Z/, /^[HK].{10}$/ ]
-        config.base_uri = case Trackerific.env
-        when 'production' then 'https://www.ups.com/ups.app/xml'
-        else 'https://wwwcie.ups.com/ups.app/xml'
-        end
-      end
+  configure do |config|
+    config.endpoint = '/Track'
+    config.parser = Trackerific::Parsers::UPS
+    config.builder = Trackerific::Builders::UPS
+    config.package_id_matchers = [ /^.Z/, /^[HK].{10}$/ ]
+    config.base_uri = case Trackerific.env
+    when 'production' then 'https://www.ups.com/ups.app/xml'
+    else 'https://wwwcie.ups.com/ups.app/xml'
     end
   end
 end

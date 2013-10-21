@@ -1,20 +1,11 @@
-module Trackerific
-  module Services
-    class FedEx < Base
-      require 'trackerific/builders/fedex'
-      require 'trackerific/parsers/fedex'
+class Trackerific::Services::FedEx < Trackerific::Services::Base
+  register :fedex, as: :SOAP
 
-      include Concerns::SOAP
-
-      register :fedex
-
-      configure do |config|
-        config.track_operation = :track
-        config.builder = Builders::FedEx
-        config.parser = Parsers::FedEx
-        config.wsdl = 'fedex/TrackService_v8'
-        config.package_id_matchers = [ /^[0-9]{15}$/ ]
-      end
-    end
+  configure do |config|
+    config.track_operation = :track
+    config.builder = Trackerific::Builders::FedEx
+    config.parser = Trackerific::Parsers::FedEx
+    config.wsdl = 'fedex/TrackService_v8'
+    config.package_id_matchers = [ /^[0-9]{15}$/ ]
   end
 end

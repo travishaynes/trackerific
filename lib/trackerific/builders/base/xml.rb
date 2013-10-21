@@ -1,38 +1,32 @@
-module Trackerific
-  module Builders
-    module Base
-      class XML < Struct
-        @xml_version = "1.0"
+class Trackerific::Builders::Base::XML < Struct
+  @xml_version = "1.0"
 
-        class << self
-          attr_accessor :xml_version
-        end
+  class << self
+    attr_accessor :xml_version
+  end
 
-        attr_reader :xml
+  attr_reader :xml
 
-        def initialize(*args)
-          super(*args)
-          @xml = ""
-          build
-        end
+  def initialize(*args)
+    super(*args)
+    @xml = ""
+    build
+  end
 
-        protected
+  protected
 
-        def build
-          raise NotImplementedError,
-            "Implement this method in your builder subclass", caller
-        end
+  def build
+    raise NotImplementedError,
+      "Implement this method in your builder subclass", caller
+  end
 
-        private
+  private
 
-        def builder
-          @builder ||= begin
-            builder = Builder::XmlMarkup.new(target: @xml)
-            builder.instruct! :xml, version: self.class.xml_version
-            builder
-          end
-        end
-      end
+  def builder
+    @builder ||= begin
+      builder = Builder::XmlMarkup.new(target: @xml)
+      builder.instruct! :xml, version: self.class.xml_version
+      builder
     end
   end
 end

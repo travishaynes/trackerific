@@ -1,30 +1,14 @@
-require 'active_support'
-require 'active_support/core_ext/object/to_query'
-require 'securerandom'
-require 'date'
-require 'savon'
-require 'httparty'
-require 'builder'
-require 'ostruct'
+require 'dependencies'
 
 require 'trackerific/version'
 require 'trackerific/environment'
 require 'trackerific/error'
 require 'trackerific/details'
 require 'trackerific/event'
-require 'trackerific/soap/wsdl'
-require 'trackerific/builders/base/soap'
-require 'trackerific/builders/base/xml'
-require 'trackerific/parsers/base'
-require 'trackerific/services/concerns/soap'
-require 'trackerific/services/concerns/xml'
+require 'trackerific/soap'
+require 'trackerific/builders'
+require 'trackerific/parsers'
 require 'trackerific/services'
-require 'trackerific/services/base'
-
-# add tracking services here
-require 'trackerific/services/fedex'
-require 'trackerific/services/ups'
-require 'trackerific/services/usps'
 
 module Trackerific
   include ActiveSupport::Configurable
