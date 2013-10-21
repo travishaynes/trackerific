@@ -29,6 +29,18 @@ describe Trackerific::Services::MockService do
         subject { service.track(id).events }
         it { should be_a Array }
         its(:count) { should eq 3 }
+
+        it "should have the proper event values" do
+          subject[0].date.should be_a Date
+          subject[0].description.should eq "Package delivered."
+          subject[0].location.should eq "SANTA MARIA, CA"
+          subject[1].date.should be_a Date
+          subject[1].description.should eq "Package scanned."
+          subject[1].location.should eq "SANTA BARBARA, CA"
+          subject[2].date.should be_a Date
+          subject[2].description.should eq "Package picked up for delivery."
+          subject[2].location.should eq "LOS ANGELES, CA"
+        end
       end
     end
 

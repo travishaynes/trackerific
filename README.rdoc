@@ -33,7 +33,8 @@ You will need to configure the credentials for each service you're utilizing.
 Services without credentials will not be accessed by the gem.
 
   Trackerific.configure do |config|
-    config.fedex  = { account: 'account', meter: '123456789' }
+    config.fedex  = { key: 'key', password: 'password', account_number: 'acct',
+                      meter_number: '123' }
     config.ups    = { key: 'key', user_id: 'userid', password: 'secret' }
     config.usps   = { user_id: 'userid' }
   end

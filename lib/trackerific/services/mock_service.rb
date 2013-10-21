@@ -14,27 +14,20 @@ class Trackerific::Services::MockService < Trackerific::Services::Base
 
   def track(id)
     if id == "XXXXXXXXXX"
-      Trackerific::Details.new(id, "Your package was delivered.",
-        [
-          Trackerific::Event.new(
-            :date         => Date.today,
-            :description  => "Package delivered.",
-            :location     => "SANTA MARIA, CA"
-          ),
-          Trackerific::Event.new(
-            :date         => Date.today - 1,
-            :description  => "Package scanned.",
-            :location     => "SANTA BARBARA, CA"
-          ),
-          Trackerific::Event.new(
-            :date         => Date.today - 2,
-            :description  => "Package picked up for delivery.",
-            :location     => "LOS ANGELES, CA"
-          )
-        ]
-      )
+      Trackerific::Details.new(id, "Your package was delivered.", events)
     else
       raise Trackerific::Error, "Package not found."
+    end
+  end
+
+  private
+
+  def events
+    [ [Date.today, "Package delivered.", "SANTA MARIA, CA"],
+      [Date.today - 1, "Package scanned.", "SANTA BARBARA, CA"],
+      [Date.today - 2, "Package picked up for delivery.", "LOS ANGELES, CA"]
+    ].map do |event|
+      Trackerific::Event.new(*event)
     end
   end
 end
