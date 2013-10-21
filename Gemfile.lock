@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    trackerific (0.7.2)
+    trackerific (0.7.3)
       activesupport
       builder (>= 3.1.4)
       httparty (>= 0.12.0)
