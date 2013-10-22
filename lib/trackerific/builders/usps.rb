@@ -1,6 +1,8 @@
 class Trackerific::Builders::USPS < Trackerific::Builders::Base::XML.new(
   :user_id, :package_id)
 
+  self.xml_version = nil
+
   protected
 
   # Builds the USPS track request XML

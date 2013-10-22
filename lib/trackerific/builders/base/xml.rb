@@ -1,6 +1,4 @@
 class Trackerific::Builders::Base::XML < Struct
-  @xml_version = "1.0"
-
   class << self
     attr_accessor :xml_version
   end
@@ -25,8 +23,14 @@ class Trackerific::Builders::Base::XML < Struct
   def builder
     @builder ||= begin
       builder = Builder::XmlMarkup.new(target: @xml)
-      builder.instruct! :xml, version: self.class.xml_version
+      add_xml_instruct(builder)
       builder
+    end
+  end
+
+  def add_xml_instruct(builder)
+    unless self.class.xml_version.nil?
+      builder.instruct! :xml, version: self.class.xml_version
     end
   end
 end

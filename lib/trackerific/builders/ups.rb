@@ -1,6 +1,8 @@
 class Trackerific::Builders::UPS < Trackerific::Builders::Base::XML.new(
   :key, :user_id, :password, :package_id)
 
+  self.xml_version = "1.0"
+
   protected
 
   # Builds the UPS track request XML

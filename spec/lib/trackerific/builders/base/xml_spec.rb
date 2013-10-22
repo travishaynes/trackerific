@@ -26,10 +26,15 @@ describe Trackerific::Builders::Base::XML do
       end
     end
 
-    let(:xml) do
-      '<?xml encoding="UTF-8"?><Hello>hi</Hello><World>earth</World>'
+    context "when xml_version is not present" do
+      let(:xml) { '<Hello>hi</Hello><World>earth</World>' }
+      its(:xml) { should eq xml }
     end
 
-    its(:xml) { should eq xml }
+    context "when xml_version is present" do
+      before { builder.xml_version = '1.0' }
+      let(:xml) { "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Hello>hi</Hello><World>earth</World>" }
+      its(:xml) { should eq xml }
+    end
   end
 end
