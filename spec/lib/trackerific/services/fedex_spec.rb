@@ -3,14 +3,25 @@ require 'spec_helper'
 describe Trackerific::Services::FedEx do
   include Savon::SpecHelper
 
-  let(:valid_ids) { ["183689015000001", "999999999999999"] }
-  let(:invalid_ids) { %w[these are not valid tracking ids] }
+  let(:valid_ids) {
+    [ "123456789012", "123456789012345", "9612345678901234567890",
+      "98123456 1234 1234", "9812 1234 1234", "98123456 1234 1234 123",
+      "9812 1234 1234 123" ]
+  }
 
-  it "should match valid tracking ids" do
+  let(:invalid_ids) {
+    [ "1234567890123456", "1234567890", "96123456789012345678901",
+      "961234567890123456789", "9812345 1234 1234", "981234567 1234 1234",
+      "981 1234 1234", "98123 1234 1234", "981234567 1234 1234 123",
+      "9812345 1234 1234 123", "981 1234 1234 123", "98123 1234 1234 123",
+      "1Z12345E0291980793", "EJ958083578US", "XXXXXXXXXX" ]
+  }
+
+  it "should match valid tracking ids", :wip do
     valid_ids.all? {|id| described_class.can_track?(id) }.should be_true
   end
 
-  it "should not match invalid tracking ids" do
+  it "should not match invalid tracking ids", :wip do
     invalid_ids.all? {|id| described_class.can_track?(id) }.should be_false
   end
 
@@ -69,3 +80,4 @@ describe Trackerific::Services::FedEx do
     end
   end
 end
+
