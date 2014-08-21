@@ -23,3 +23,8 @@ require 'active_support/core_ext/hash/conversions'
 
 # load all the support files
 Dir["spec/support/**/*.rb"].each { |f| require File.expand_path(f) }
+
+RSpec.configure do |config|
+  config.treat_symbols_as_metadata_keys_with_true_values = true
+end
+

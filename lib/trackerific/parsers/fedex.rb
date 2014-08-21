@@ -14,9 +14,10 @@ class Trackerific::Parsers::FedEx < Trackerific::Parsers::Base
   end
 
   def events
-    track_details.map do |detail|
-      Trackerific::Event.new(parse_date(detail), nil, location(detail))
-    end
+    # FIXME: The API has changed, this needs to be updated
+    #track_details[:events].map do |event|
+      # Trackerific::Event.new(parse_date(detail), nil, location(detail))
+    #end
   end
 
   private
@@ -31,18 +32,11 @@ class Trackerific::Parsers::FedEx < Trackerific::Parsers::Base
   end
 
   def track_reply
-    @response.hash[:envelope][:body][:track_reply]
+    @response.hash[:track_reply]
   end
 
   def track_details
-    @track_details ||= begin
-      details = track_reply[:completed_track_details][:track_details]
-      details.select do |d|
-        d[:ship_timestamp].present? && d[:destination_address].present? &&
-        d[:destination_address][:city].present? &&
-        d[:destination_address][:state_or_province_code].present?
-      end
-    end
+    @track_details ||= track_reply[:completed_track_details][:track_details]
   end
 
   def highest_severity
@@ -53,3 +47,4 @@ class Trackerific::Parsers::FedEx < Trackerific::Parsers::Base
     track_reply[:notifications]
   end
 end
+
