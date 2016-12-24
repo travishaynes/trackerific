@@ -82,13 +82,14 @@ describe Trackerific::Services::USPS do
         subject { usps.track(id).events }
         its(:length) { should eq 3 }
         it "should populate the properties from the XML" do
-          subject[0].date.to_s.should eq "2013-05-30T11:07:00+00:00"
+          year = Date.today.year
+          subject[0].date.to_s.should eq "#{year}-05-30T11:07:00+00:00"
           subject[0].description.should eq "NOTICE LEFT"
           subject[0].location.should eq "WILMINGTON, DE 19801"
-          subject[1].date.to_s.should eq "2013-05-30T10:08:00+00:00"
+          subject[1].date.to_s.should eq "#{year}-05-30T10:08:00+00:00"
           subject[1].description.should eq "ARRIVAL AT UNIT"
           subject[1].location.should eq "WILMINGTON, DE 19850"
-          subject[2].date.to_s.should eq "2013-05-29T09:55:00+00:00"
+          subject[2].date.to_s.should eq "#{year}-05-29T09:55:00+00:00"
           subject[2].description.should eq "ACCEPT OR PICKUP"
           subject[2].location.should eq "EDGEWATER, NJ 07020"
         end
