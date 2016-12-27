@@ -6,7 +6,7 @@ class Trackerific::Builders::FedEx < Trackerific::Builders::Base::SOAP.new(
   # Builds the FedEx track request XML
   # @api private
   def build
-    root_nodes.inject({}) {|r, k| r[k] = send(k); r }
+    root_nodes.inject({}) { |r, k| r[k] = send(k); r }
   end
 
   private
@@ -43,7 +43,7 @@ class Trackerific::Builders::FedEx < Trackerific::Builders::Base::SOAP.new(
   # The version of the FedEx API being used
   # @api private
   def version
-    { service_id: 'trck', major: '8', intermediate: '0', minor: '0' }
+    { service_id: 'trck', major: '12', intermediate: '0', minor: '0' }
   end
 
   # Specifies the details needed to select the shipment being requested to

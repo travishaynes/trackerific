@@ -10,33 +10,43 @@ class Trackerific::Parsers::FedEx < Trackerific::Parsers::Base
   end
 
   def summary
-    nil
+    description(activity.first)
   end
 
   def events
-    # FIXME: The API has changed, this needs to be updated
-    #track_details[:events].map do |event|
-      # Trackerific::Event.new(parse_date(detail), nil, location(detail))
-    #end
+    activity.map do |event|
+      Trackerific::Event.new parse_date(event), description(event), location(event)
+    end
   end
 
   private
 
-  def location(detail)
-    a = detail[:destination_address]
+  def description(event)
+    event[:event_description]
+  end
+
+  def location(event)
+    a = event[:address]
     "#{a[:city]}, #{a[:state_or_province_code]} #{a[:country_code]}"
   end
 
-  def parse_date(detail)
-    detail[:ship_timestamp]
+  def parse_date(event)
+    event[:timestamp]
   end
 
   def track_reply
-    @response.hash[:track_reply]
+    @response.hash[:envelope][:body][:track_reply]
   end
 
   def track_details
     @track_details ||= track_reply[:completed_track_details][:track_details]
+  end
+
+  def activity
+    @activity ||= begin
+      a = track_details[:events]
+      a.is_a?(Array) ? a : [a]
+    end
   end
 
   def highest_severity
