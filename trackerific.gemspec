@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.name          = "trackerific"
   spec.version       = Trackerific::VERSION
   spec.authors       = ["Travis Haynes"]
-  spec.email         = ["travis.j.haynes@gmail.com"]
+  spec.email         = ["travis@hi5dev.com"]
   spec.description   = %q{Package tracking made easy. Currently supported services include FedEx, UPS, and USPS.}
   spec.summary       = %q{Package tracking made easy.}
   spec.homepage      = ""
