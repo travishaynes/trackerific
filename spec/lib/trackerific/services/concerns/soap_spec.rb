@@ -15,7 +15,7 @@ describe Trackerific::Services::Concerns::SOAP do
     let(:parser_instance) { double(:parser_instance) }
     let(:parser_response) { double(:parser_response) }
 
-    let(:wsdl) { 'fedex/TrackService_v8' }
+    let(:wsdl) { 'fedex/TrackService_v12' }
     let(:wsdl_path) { Trackerific::SOAP::WSDL.path(wsdl) }
     let(:client) { double(:savon_client) }
     let(:soap_request) { double(:soap_request) }

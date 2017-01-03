@@ -61,20 +61,18 @@ describe Trackerific::Services::FedEx do
       let(:fixture) { Fixture.read('fedex/success.xml') }
 
       its(:package_id) { should eq package_id }
-      its(:summary) { should be_nil }
+      its(:summary) { should eq "Delivered" }
       its(:weight) { should be_nil }
       its(:via) { should be_nil }
 
       describe "#events" do
         subject { fedex.track(package_id).events }
-        its(:length) { should eq 5 }
+        its(:length) { should eq 1 }
 
         it "should populate its properties with values from the response" do
-          subject.all? {|e| e.description.nil? }.should be_true
+          subject.all? {|e| e.description.nil? }.should be_false
           subject.all? {|e| e.date.is_a?(DateTime) }.should be_true
-          subject.map(&:location).should eq [
-            "new york, NY US", "Memphis, TN US", "CITY OF INDUSTRY, CA US",
-            "ST JACKSON, MS US", "Ontonagon, MI US" ]
+          subject.map(&:location).should eq ["Prov, RI US"]
         end
       end
     end

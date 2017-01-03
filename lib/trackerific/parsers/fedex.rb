@@ -10,24 +10,28 @@ class Trackerific::Parsers::FedEx < Trackerific::Parsers::Base
   end
 
   def summary
-    nil
+    description(activity.first)
   end
 
   def events
-    track_details.map do |detail|
-      Trackerific::Event.new(parse_date(detail), nil, location(detail))
+    activity.map do |event|
+      Trackerific::Event.new parse_date(event), description(event), location(event)
     end
   end
 
   private
 
-  def location(detail)
-    a = detail[:destination_address]
+  def description(event)
+    event[:event_description]
+  end
+
+  def location(event)
+    a = event[:address]
     "#{a[:city]}, #{a[:state_or_province_code]} #{a[:country_code]}"
   end
 
-  def parse_date(detail)
-    detail[:ship_timestamp]
+  def parse_date(event)
+    event[:timestamp]
   end
 
   def track_reply
@@ -35,13 +39,13 @@ class Trackerific::Parsers::FedEx < Trackerific::Parsers::Base
   end
 
   def track_details
-    @track_details ||= begin
-      details = track_reply[:completed_track_details][:track_details]
-      details.select do |d|
-        d[:ship_timestamp].present? && d[:destination_address].present? &&
-        d[:destination_address][:city].present? &&
-        d[:destination_address][:state_or_province_code].present?
-      end
+    @track_details ||= track_reply[:completed_track_details][:track_details]
+  end
+
+  def activity
+    @activity ||= begin
+      a = track_details[:events]
+      a.is_a?(Array) ? a : [a]
     end
   end
 
@@ -53,3 +57,4 @@ class Trackerific::Parsers::FedEx < Trackerific::Parsers::Base
     track_reply[:notifications]
   end
 end
+

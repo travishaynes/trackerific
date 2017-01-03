@@ -1,1 +1,155 @@
-<SOAP-ENV:Envelope xmlns:SOAP-ENV='http://schemas.xmlsoap.org/soap/envelope/'><SOAP-ENV:Header/><SOAP-ENV:Body><TrackReply xmlns='http://fedex.com/ws/track/v8'><HighestSeverity>SUCCESS</HighestSeverity><Notifications><Severity>SUCCESS</Severity><Source>trck</Source><Code>0</Code><Message>Request was successfully processed.</Message><LocalizedMessage>Request was successfully processed.</LocalizedMessage></Notifications><TransactionDetail><CustomerTransactionId>d7200b02a2d97651</CustomerTransactionId></TransactionDetail><Version><ServiceId>trck</ServiceId><Major>8</Major><Intermediate>0</Intermediate><Minor>0</Minor></Version><CompletedTrackDetails><HighestSeverity>SUCCESS</HighestSeverity><DuplicateWaybill>true</DuplicateWaybill><MoreData>false</MoreData><TrackDetailsCount>0</TrackDetailsCount><TrackDetails><Notification><Severity>SUCCESS</Severity><Source>trck</Source><Code>0</Code><Message>Request was successfully processed.</Message><LocalizedMessage>Request was successfully processed.</LocalizedMessage></Notification><TrackingNumber>123456789012</TrackingNumber><TrackingNumberUniqueIdentifier>22013~123456789012~FDEG</TrackingNumberUniqueIdentifier><CarrierCode>FDXG</CarrierCode><OperatingCompanyOrCarrierDescription>FedEx Ground</OperatingCompanyOrCarrierDescription><PackageSequenceNumber>0</PackageSequenceNumber><PackageCount>0</PackageCount><DeliveryAttempts>0</DeliveryAttempts><TotalUniqueAddressCountInConsolidation>0</TotalUniqueAddressCountInConsolidation></TrackDetails><TrackDetails><Notification><Severity>SUCCESS</Severity><Source>trck</Source><Code>0</Code><Message>Request was successfully processed.</Message><LocalizedMessage>Request was successfully processed.</LocalizedMessage></Notification><TrackingNumber>123456789012</TrackingNumber><TrackingNumberUniqueIdentifier>2456464000~123456789012~FX</TrackingNumberUniqueIdentifier><CarrierCode>FDXE</CarrierCode><OperatingCompanyOrCarrierDescription>FedEx Express</OperatingCompanyOrCarrierDescription><PackageSequenceNumber>0</PackageSequenceNumber><PackageCount>0</PackageCount><ShipTimestamp>2013-06-25T00:00:00</ShipTimestamp><DestinationAddress><City>new york</City><StateOrProvinceCode>NY</StateOrProvinceCode><CountryCode>US</CountryCode><CountryName>United States</CountryName><Residential>false</Residential></DestinationAddress><DeliveryAttempts>0</DeliveryAttempts><TotalUniqueAddressCountInConsolidation>0</TotalUniqueAddressCountInConsolidation></TrackDetails><TrackDetails><Notification><Severity>SUCCESS</Severity><Source>trck</Source><Code>0</Code><Message>Request was successfully processed.</Message><LocalizedMessage>Request was successfully processed.</LocalizedMessage></Notification><TrackingNumber>123456789012</TrackingNumber><TrackingNumberUniqueIdentifier>2456470000~123456789012~FX</TrackingNumberUniqueIdentifier><CarrierCode>FDXE</CarrierCode><OperatingCompanyOrCarrierDescription>FedEx Express</OperatingCompanyOrCarrierDescription><PackageSequenceNumber>0</PackageSequenceNumber><PackageCount>0</PackageCount><ShipTimestamp>2013-06-27T00:00:00</ShipTimestamp><DestinationAddress><City>Memphis</City><StateOrProvinceCode>TN</StateOrProvinceCode><CountryCode>US</CountryCode><CountryName>United States</CountryName><Residential>false</Residential></DestinationAddress><DeliveryAttempts>0</DeliveryAttempts><TotalUniqueAddressCountInConsolidation>0</TotalUniqueAddressCountInConsolidation></TrackDetails><TrackDetails><Notification><Severity>SUCCESS</Severity><Source>trck</Source><Code>0</Code><Message>Request was successfully processed.</Message><LocalizedMessage>Request was successfully processed.</LocalizedMessage></Notification><TrackingNumber>123456789012</TrackingNumber><TrackingNumberUniqueIdentifier>2456490000~123456789012~FX</TrackingNumberUniqueIdentifier><CarrierCode>FDXE</CarrierCode><OperatingCompanyOrCarrierDescription>FedEx Express</OperatingCompanyOrCarrierDescription><PackageSequenceNumber>0</PackageSequenceNumber><PackageCount>0</PackageCount><ShipTimestamp>2013-07-16T00:00:00</ShipTimestamp><DestinationAddress><Residential>false</Residential></DestinationAddress><DeliveryAttempts>0</DeliveryAttempts><TotalUniqueAddressCountInConsolidation>0</TotalUniqueAddressCountInConsolidation></TrackDetails><TrackDetails><Notification><Severity>SUCCESS</Severity><Source>trck</Source><Code>0</Code><Message>Request was successfully processed.</Message><LocalizedMessage>Request was successfully processed.</LocalizedMessage></Notification><TrackingNumber>123456789012</TrackingNumber><TrackingNumberUniqueIdentifier>2456492000~123456789012~FX</TrackingNumberUniqueIdentifier><CarrierCode>FDXE</CarrierCode><OperatingCompanyOrCarrierDescription>FedEx Express</OperatingCompanyOrCarrierDescription><PackageSequenceNumber>0</PackageSequenceNumber><PackageCount>0</PackageCount><ShipTimestamp>2013-07-17T00:00:00</ShipTimestamp><DestinationAddress><Residential>false</Residential></DestinationAddress><DeliveryAttempts>0</DeliveryAttempts><TotalUniqueAddressCountInConsolidation>0</TotalUniqueAddressCountInConsolidation></TrackDetails><TrackDetails><Notification><Severity>SUCCESS</Severity><Source>trck</Source><Code>0</Code><Message>Request was successfully processed.</Message><LocalizedMessage>Request was successfully processed.</LocalizedMessage></Notification><TrackingNumber>123456789012</TrackingNumber><TrackingNumberUniqueIdentifier>2456493000~123456789012~FX</TrackingNumberUniqueIdentifier><CarrierCode>FDXE</CarrierCode><OperatingCompanyOrCarrierDescription>FedEx Express</OperatingCompanyOrCarrierDescription><PackageSequenceNumber>0</PackageSequenceNumber><PackageCount>0</PackageCount><ShipTimestamp>2013-07-19T00:00:00</ShipTimestamp><DestinationAddress><Residential>false</Residential></DestinationAddress><DeliveryAttempts>0</DeliveryAttempts><TotalUniqueAddressCountInConsolidation>0</TotalUniqueAddressCountInConsolidation></TrackDetails><TrackDetails><Notification><Severity>SUCCESS</Severity><Source>trck</Source><Code>0</Code><Message>Request was successfully processed.</Message><LocalizedMessage>Request was successfully processed.</LocalizedMessage></Notification><TrackingNumber>123456789012</TrackingNumber><TrackingNumberUniqueIdentifier>2456514000~123456789012~FX</TrackingNumberUniqueIdentifier><CarrierCode>FDXE</CarrierCode><OperatingCompanyOrCarrierDescription>FedEx Express</OperatingCompanyOrCarrierDescription><PackageSequenceNumber>0</PackageSequenceNumber><PackageCount>0</PackageCount><ShipTimestamp>2013-08-09T00:00:00</ShipTimestamp><DestinationAddress><Residential>false</Residential></DestinationAddress><DeliveryAttempts>0</DeliveryAttempts><TotalUniqueAddressCountInConsolidation>0</TotalUniqueAddressCountInConsolidation></TrackDetails><TrackDetails><Notification><Severity>SUCCESS</Severity><Source>trck</Source><Code>0</Code><Message>Request was successfully processed.</Message><LocalizedMessage>Request was successfully processed.</LocalizedMessage></Notification><TrackingNumber>123456789012</TrackingNumber><TrackingNumberUniqueIdentifier>2456525000~123456789012~FX</TrackingNumberUniqueIdentifier><CarrierCode>FDXE</CarrierCode><OperatingCompanyOrCarrierDescription>FedEx Express</OperatingCompanyOrCarrierDescription><PackageSequenceNumber>0</PackageSequenceNumber><PackageCount>0</PackageCount><ShipTimestamp>2013-08-20T00:00:00</ShipTimestamp><DestinationAddress><City>CITY OF INDUSTRY</City><StateOrProvinceCode>CA</StateOrProvinceCode><CountryCode>US</CountryCode><CountryName>United States</CountryName><Residential>false</Residential></DestinationAddress><DeliveryAttempts>0</DeliveryAttempts><TotalUniqueAddressCountInConsolidation>0</TotalUniqueAddressCountInConsolidation></TrackDetails><TrackDetails><Notification><Severity>SUCCESS</Severity><Source>trck</Source><Code>0</Code><Message>Request was successfully processed.</Message><LocalizedMessage>Request was successfully processed.</LocalizedMessage></Notification><TrackingNumber>123456789012</TrackingNumber><TrackingNumberUniqueIdentifier>2456539000~123456789012~FX</TrackingNumberUniqueIdentifier><CarrierCode>FDXE</CarrierCode><OperatingCompanyOrCarrierDescription>FedEx Express</OperatingCompanyOrCarrierDescription><PackageSequenceNumber>0</PackageSequenceNumber><PackageCount>0</PackageCount><ShipTimestamp>2013-09-03T00:00:00</ShipTimestamp><DestinationAddress><Residential>false</Residential></DestinationAddress><DeliveryAttempts>0</DeliveryAttempts><TotalUniqueAddressCountInConsolidation>0</TotalUniqueAddressCountInConsolidation></TrackDetails><TrackDetails><Notification><Severity>SUCCESS</Severity><Source>trck</Source><Code>0</Code><Message>Request was successfully processed.</Message><LocalizedMessage>Request was successfully processed.</LocalizedMessage></Notification><TrackingNumber>123456789012</TrackingNumber><TrackingNumberUniqueIdentifier>2456540000~123456789012~FX</TrackingNumberUniqueIdentifier><CarrierCode>FDXE</CarrierCode><OperatingCompanyOrCarrierDescription>FedEx Express</OperatingCompanyOrCarrierDescription><PackageSequenceNumber>0</PackageSequenceNumber><PackageCount>0</PackageCount><ShipTimestamp>2013-08-24T00:00:00</ShipTimestamp><DestinationAddress><Residential>false</Residential></DestinationAddress><DeliveryAttempts>0</DeliveryAttempts><TotalUniqueAddressCountInConsolidation>0</TotalUniqueAddressCountInConsolidation></TrackDetails><TrackDetails><Notification><Severity>SUCCESS</Severity><Source>trck</Source><Code>0</Code><Message>Request was successfully processed.</Message><LocalizedMessage>Request was successfully processed.</LocalizedMessage></Notification><TrackingNumber>123456789012</TrackingNumber><TrackingNumberUniqueIdentifier>2456560000~123456789012~FX</TrackingNumberUniqueIdentifier><CarrierCode>FDXE</CarrierCode><OperatingCompanyOrCarrierDescription>FedEx Express</OperatingCompanyOrCarrierDescription><PackageSequenceNumber>0</PackageSequenceNumber><PackageCount>0</PackageCount><ShipTimestamp>2013-10-10T00:00:00</ShipTimestamp><DestinationAddress><City>ST JACKSON</City><StateOrProvinceCode>MS</StateOrProvinceCode><CountryCode>US</CountryCode><CountryName>United States</CountryName><Residential>false</Residential></DestinationAddress><DeliveryAttempts>0</DeliveryAttempts><TotalUniqueAddressCountInConsolidation>0</TotalUniqueAddressCountInConsolidation></TrackDetails><TrackDetails><Notification><Severity>SUCCESS</Severity><Source>trck</Source><Code>0</Code><Message>Request was successfully processed.</Message><LocalizedMessage>Request was successfully processed.</LocalizedMessage></Notification><TrackingNumber>123456789012</TrackingNumber><TrackingNumberUniqueIdentifier>2456570000~123456789012~FX</TrackingNumberUniqueIdentifier><CarrierCode>FDXE</CarrierCode><OperatingCompanyOrCarrierDescription>FedEx Express</OperatingCompanyOrCarrierDescription><PackageSequenceNumber>0</PackageSequenceNumber><PackageCount>0</PackageCount><ShipTimestamp>2013-10-03T00:00:00</ShipTimestamp><DestinationAddress><City>Ontonagon</City><StateOrProvinceCode>MI</StateOrProvinceCode><CountryCode>US</CountryCode><CountryName>United States</CountryName><Residential>false</Residential></DestinationAddress><DeliveryAttempts>0</DeliveryAttempts><TotalUniqueAddressCountInConsolidation>0</TotalUniqueAddressCountInConsolidation></TrackDetails></CompletedTrackDetails></TrackReply></SOAP-ENV:Body></SOAP-ENV:Envelope>
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+   <SOAP-ENV:Header/>
+   <SOAP-ENV:Body>
+      <TrackReply xmlns="http://fedex.com/ws/track/v10">
+         <HighestSeverity>SUCCESS</HighestSeverity>
+         <Notifications>
+            <Severity>SUCCESS</Severity>
+            <Source>trck</Source>
+            <Code>0</Code>
+            <Message>Request was successfully processed.</Message>
+            <LocalizedMessage>Request was successfully processed.</LocalizedMessage>
+         </Notifications>
+         <TransactionDetail>
+            <CustomerTransactionId>Track By Number_v10_29thOct</CustomerTransactionId>
+            <Localization>
+                <LanguageCode>EN</LanguageCode>
+               <LocaleCode>US</LocaleCode>
+            </Localization>
+         </TransactionDetail>
+         <Version>
+            <ServiceId>trck</ServiceId>
+            <Major>10</Major>
+            <Intermediate>0</Intermediate>
+            <Minor>0</Minor>
+         </Version>
+         <CompletedTrackDetails>
+            <HighestSeverity>SUCCESS</HighestSeverity>
+            <Notifications>
+               <Severity>SUCCESS</Severity>
+               <Source>trck</Source>
+               <Code>0</Code>
+               <Message>Request was successfully processed.</Message>
+               <LocalizedMessage>Request was successfully processed.</LocalizedMessage>
+            </Notifications>
+            <DuplicateWaybill>false</DuplicateWaybill>
+            <MoreData>false</MoreData>
+            <TrackDetailsCount>0</TrackDetailsCount>
+            <TrackDetails>
+               <Notification>
+                  <Severity>SUCCESS</Severity>
+                  <Source>trck</Source>
+                  <Code>0</Code>
+                  <Message>Request was successfully processed.</Message>
+                  <LocalizedMessage>Request was successfully processed.</LocalizedMessage>
+               </Notification>
+               <TrackingNumber>XXXXXXXXXX</TrackingNumber>
+               <TrackingNumberUniqueIdentifier>2456850000~845102211554~FX</TrackingNumberUniqueIdentifier>
+               <StatusDetail>
+                  <CreationTime>2014-07-16T00:00:00</CreationTime>
+                  <Code>DL</Code>
+                  <Description>Delivered</Description>
+                  <Location>
+                     <StreetLines>32 EXCHANGE TER</StreetLines>
+                      <City>Prov</City>
+                     <StateOrProvinceCode>RI</StateOrProvinceCode>
+                     <CountryCode>US</CountryCode>
+                     <CountryName>United States</CountryName>
+                     <Residential>false</Residential>
+                  </Location>
+               </StatusDetail>
+               <CarrierCode>FDXE</CarrierCode>
+               <OperatingCompanyOrCarrierDescription>FedEx Express</OperatingCompanyOrCarrierDescription>
+               <Service>
+                  <Type>FEDEX_EXPRESS_SAVER</Type>
+                  <Description>FedEx Express Saver</Description>
+                  <ShortDescription>XS</ShortDescription>
+               </Service>
+               <PackageWeight>
+                  <Units>LB</Units>
+                  <Value>52.0</Value>
+               </PackageWeight>
+               <PackageDimensions>
+                  <Length>25</Length>
+                  <Width>21</Width>
+                  <Height>19</Height>
+                  <Units>IN</Units>
+               </PackageDimensions>
+               <ShipmentWeight>
+                  <Units>LB</Units>
+                  <Value>49.0</Value>
+               </ShipmentWeight>
+               <Packaging>Your Packaging</Packaging>
+               <PackagingType>YOUR_PACKAGING</PackagingType>
+               <PackageSequenceNumber>1</PackageSequenceNumber>
+               <PackageCount>1</PackageCount>
+               <SpecialHandlings>
+                  <Type>DELIVER_WEEKDAY</Type>
+                  <Description>Deliver Weekday</Description>
+                  <PaymentType>OTHER</PaymentType>
+               </SpecialHandlings>
+               <SpecialHandlings>
+                  <Type>NO_SIGNATURE_REQUIRED_SIGNATURE_OPTION</Type>
+                  <Description>No Signature Required</Description>
+                  <PaymentType>OTHER</PaymentType>
+                </SpecialHandlings>
+               <ShipTimestamp>2014-07-11T16:04:00-07:00</ShipTimestamp>
+               <DestinationAddress>
+                  <City>Prov</City>
+                  <StateOrProvinceCode>RI</StateOrProvinceCode>
+                  <CountryCode>US</CountryCode>
+                  <CountryName>United States</CountryName>
+                  <Residential>false</Residential>
+               </DestinationAddress>
+               <ActualDeliveryTimestamp>2014-07-16T12:35:00-04:00</ActualDeliveryTimestamp>
+               <ActualDeliveryAddress>
+                  <City>Prov</City>
+                 <StateOrProvinceCode>RI</StateOrProvinceCode>
+                  <CountryCode>US</CountryCode>
+                  <CountryName>United States</CountryName>
+                  <Residential>false</Residential>
+               </ActualDeliveryAddress>
+               <DeliveryLocationType>RECEPTIONIST_OR_FRONT_DESK</DeliveryLocationType>
+               <DeliveryLocationDescription>Receptionist/Front Desk</DeliveryLocationDescription>
+               <DeliveryAttempts>0</DeliveryAttempts>
+               <DeliverySignatureName>J.ELLIOTT</DeliverySignatureName>
+               <TotalUniqueAddressCountInConsolidation>0</TotalUniqueAddressCountInConsolidation>
+               <AvailableImages>SIGNATURE_PROOF_OF_DELIVERY</AvailableImages>
+               <NotificationEventsAvailable>ON_DELIVERY</NotificationEventsAvailable>
+               <DeliveryOptionEligibilityDetails>
+                  <Option>INDIRECT_SIGNATURE_RELEASE</Option>
+                  <Eligibility>INELIGIBLE</Eligibility>
+               </DeliveryOptionEligibilityDetails>
+               <DeliveryOptionEligibilityDetails>
+                  <Option>REDIRECT_TO_HOLD_AT_LOCATION</Option>
+                  <Eligibility>INELIGIBLE</Eligibility>
+               </DeliveryOptionEligibilityDetails>
+               <DeliveryOptionEligibilityDetails>
+                  <Option>REROUTE</Option>
+                  <Eligibility>INELIGIBLE</Eligibility>
+               </DeliveryOptionEligibilityDetails>
+               <DeliveryOptionEligibilityDetails>
+                  <Option>RESCHEDULE</Option>
+                  <Eligibility>INELIGIBLE</Eligibility>
+                 </DeliveryOptionEligibilityDetails>
+               <Events>
+                  <Timestamp>2014-07-16T12:35:00-04:00</Timestamp>
+                  <EventType>DL</EventType>
+                  <EventDescription>Delivered</EventDescription>
+                  <Address>
+                     <City>Prov</City>
+                     <StateOrProvinceCode>RI</StateOrProvinceCode>
+                     <PostalCode>02903</PostalCode>
+                     <CountryCode>US</CountryCode>
+                     <CountryName>United States</CountryName>
+                     <Residential>false</Residential>
+                  </Address>
+                  <ArrivalLocation>DELIVERY_LOCATION</ArrivalLocation>
+               </Events>
+            </TrackDetails>
+         </CompletedTrackDetails>
+      </TrackReply>
+   </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
+

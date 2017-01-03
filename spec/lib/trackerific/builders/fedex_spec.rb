@@ -45,7 +45,7 @@ describe Trackerific::Builders::FedEx do
     describe "Version" do
       subject { hash[:version] }
       its([:service_id]) { should eq "trck" }
-      its([:major]) { should eq "8" }
+      its([:major]) { should eq "12" }
       its([:intermediate]) { should eq "0" }
       its([:minor]) { should eq "0" }
     end
