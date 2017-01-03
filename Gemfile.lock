@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    trackerific (0.7.5)
+    trackerific (0.8.0)
       activesupport
       builder
       httparty (>= 0.12.0)
@@ -19,7 +19,7 @@ GEM
       gyoku (>= 0.4.0)
       nokogiri
     builder (3.2.2)
-    concurrent-ruby (1.0.3)
+    concurrent-ruby (1.0.4)
     coveralls (0.7.12)
       multi_json (~> 1.10)
       rest-client (>= 1.6.8, < 2)
@@ -47,7 +47,7 @@ GEM
     multi_json (1.12.1)
     multi_xml (0.6.0)
     netrc (0.11.0)
-    nokogiri (1.6.8.1)
+    nokogiri (1.7.0)
       mini_portile2 (~> 2.1.0)
     nori (2.3.0)
     rack (2.0.1)
