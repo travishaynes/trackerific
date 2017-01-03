@@ -20,6 +20,7 @@ require 'trackerific'
 require 'fakeweb'
 require 'savon/mock/spec_helper'
 require 'active_support/core_ext/hash/conversions'
+require 'rspec/its'
 
 # load all the support files
 Dir["spec/support/**/*.rb"].each { |f| require File.expand_path(f) }
